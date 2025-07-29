@@ -1,0 +1,8 @@
+{
+  "redirects": [
+    {
+      "source": "/playlist.m3u",
+      "destination": "/api/redirect.js"
+    }
+  ]
+}
