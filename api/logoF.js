@@ -1,6 +1,16 @@
 export default async function handler(req, res) {
+  // ⚠️ CORS header để tránh lỗi từ frontend
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+  // Xử lý preflight request
+  if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  }
+
   try {
-    const rows = await getDataFromSheet(["STT", "name", "logo", "classify"]); // chỉ lấy các cột cần
+    const rows = await getDataFromSheet(["STT", "name", "logo", "classify"]);
     res.status(200).json(rows);
   } catch (error) {
     console.error("Lỗi khi lấy dữ liệu:", error);
@@ -17,11 +27,14 @@ async function getDataFromSheet(allowedColumns = []) {
   }
 
   const text = await response.text();
-  const jsonText = text.match(/(?<=setResponse\().*(?=\);)/s)[0];
-  const raw = JSON.parse(jsonText);
+  const jsonText = text.match(/(?<=setResponse\().*(?=\);)/s)?.[0];
+  if (!jsonText) {
+    throw new Error("Không tìm thấy dữ liệu JSON trong phản hồi");
+  }
 
+  const raw = JSON.parse(jsonText);
   const cols = raw.table.cols.map(col => col.label);
-  
+
   return raw.table.rows.map(row => {
     const obj = {};
     row.c.forEach((cell, i) => {
