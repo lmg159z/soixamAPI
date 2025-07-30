@@ -16,7 +16,7 @@ rows.forEach(item => {
   if (item.classify === "TV") {
     if (!grouped[item.idGroup]) {
       grouped[item.idGroup] = {
-        Info: {
+        info: {
           idGroup: item.idGroup,
           group: item.group || item.idGroup // fallback nếu group rỗng
         },
