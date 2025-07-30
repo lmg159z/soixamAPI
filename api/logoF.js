@@ -10,8 +10,32 @@ export default async function handler(req, res) {
   }
 
   try {
-    const rows = await getDataFromSheet(["STT", "name", "logo", "classify"]);
-    res.status(200).json(rows);
+    const rows = await getDataFromSheet(["STT","idGroup","group", "name", "logo", "classify"]);
+    let dataLogo = {}
+    rows.forEach(item => {
+      if (!dataLogo[item.idGroup]) {
+        dataLogo[item.idGroup] = [];
+      }
+      if (item.classify === "TV"){
+       dataLogo[item.idGroup].push({
+            STT: item.STT,
+            name: item.name,
+            idGroup: item.idGroup,
+            group: item.group,
+            logo: item.logo
+       });  
+       
+      }
+      
+      
+      
+      
+    });
+    const result = Object.entries(dataLogo).map(([key, value]) => {
+        return { [key]: value };
+     });
+     
+    res.status(200).json(result);
   } catch (error) {
     console.error("Lỗi khi lấy dữ liệu:", error);
     res.status(500).json({ error: "Không thể lấy dữ liệu từ Google Sheet" });
