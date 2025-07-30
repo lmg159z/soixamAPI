@@ -10,7 +10,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const rows = await getDataFromSheet(["STT", "name", "idGroup","group", "logo","streamURL",	"audioURL",	"DRM",	"key",	"keyID",	"kURL",	"typeClearnKey"]);
+    const rows = await getDataFromSheet(["STT", "name", "idGroup","group", "logo","streamURL",	"audioURL",	"DRM",	"key",	"keyID",	"kURL",	"typeClearnKey","type"]);
     const unique = [];
       for (const item of rows) {
         if (item.STT == STT && item.idGroup == idGroup){
@@ -25,7 +25,7 @@ export default async function handler(req, res) {
             drm:item.DRM,
             key: item.key,
             keyID: item.keyID,
-            
+            type: item.type
             });
         }
       }
