@@ -11,30 +11,30 @@ export default async function handler(req, res) {
 
   try {
     const rows = await getDataFromSheet(["STT","idGroup","group", "name", "logo", "classify"]);
-    let dataLogo = {}
-    rows.forEach(item => {
-      if (!dataLogo[item.idGroup]) {
-        dataLogo[item.idGroup] = [];
-      }
-      if (item.classify === "TV"){
-       dataLogo[item.idGroup].push({
-            STT: item.STT,
-            name: item.name,
-            idGroup: item.idGroup,
-            group: item.group,
-            logo: item.logo
-       });  
-       
-      }
-      
-      
-      
-      
+     let grouped = {};
+rows.forEach(item => {
+  if (item.classify === "TV") {
+    if (!grouped[item.idGroup]) {
+      grouped[item.idGroup] = {
+        Info: {
+          idGroup: item.idGroup,
+          group: item.group || item.idGroup // fallback nếu group rỗng
+        },
+        channel: []
+      };
+    }
+
+    grouped[item.idGroup].channel.push({
+      STT: item.STT,
+      name: item.name,
+      idGroup: item.idGroup,
+      group: item.group,
+      logo: item.logo
     });
-    const result = Object.entries(dataLogo).map(([key, value]) => {
-        return { [key]: value };
-     });
-     
+  }
+});
+
+const result = Object.values(grouped); 
     res.status(200).json(result);
   } catch (error) {
     console.error("Lỗi khi lấy dữ liệu:", error);
