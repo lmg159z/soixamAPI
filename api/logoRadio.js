@@ -13,7 +13,7 @@ export default async function handler(req, res) {
     const rows = await getDataFromSheet(["STT","idGroup","group", "name", "logo", "classify"]);
      let grouped = {};
 rows.forEach(item => {
-  if (item.classify === "TV_Ra") {
+  if (item.classify === "TV_RA") {
     if (!grouped[item.idGroup]) {
       grouped[item.idGroup] = {
         info: {
