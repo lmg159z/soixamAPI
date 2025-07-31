@@ -13,7 +13,7 @@ export default async function handler(req, res) {
     const rows = await getDataFromSheet(["STT", "name", "idGroup","group", "logo","classify"]);
     const unique = [];
       for (const item of rows) {
-        if (item.idGroup === idGroup && item.classify === "TV"){
+        if (item.idGroup === idGroup && item.classify === "TV" && item.classify === "TV_RA"){
           unique.push({
             STT: item.STT,
             name: item.name,
