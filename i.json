@@ -1,0 +1,319 @@
+{
+  "id": "fptplay",
+  "name": "FPT Play",
+  "color": "#FF9E2D",
+  "org_metadata": {
+    "image": "http://iptv.nhadai.org/s-banner.png",
+    "title": "FPT Play - Xem Chương Trình Truyền Hình Trực Tuyến Miễn Phí",
+    "description": "FPT PLAY - Hệ thống kênh truyền hình trực tuyến đỉnh cao, tổng hợp các nội dung giải trí, thể thao, phim ảnh và chương trình đặc sắc nhất. Mang đến trải nghiệm mượt mà, chất lượng hình ảnh vượt trội qua kết nối Internet, FPT PLAY  là lựa chọn hàng đầu cho người dùng Việt Nam và quốc tế."
+  },
+  "url": "http://iptv.nhadai.org/v1",
+  "image": {
+    "display": "contain",
+    "shape": "square",
+    "url": "http://iptv.nhadai.org/logo.png",
+    "height": 101,
+    "width": 155
+  },
+  "grid_number": 1,
+  "groups": [
+    {
+      "id": "soixamTV",
+      "name": "Sói Xám TV",
+      "display": "horizontal",
+      "channel": [
+        {
+          "id": "channel_1",
+          "name": "Sói Xám TV 1",
+          "image": {
+            "display": "cover",
+            "shape": "square",
+            "url": "https://lmg159z.github.io/soixamTV/wordspage/image/logo/logoChannel.png",
+            "height": 101,
+            "width": 155
+          },
+          "type": "single",
+          "display": "text-below",
+          "sources": [
+            {
+              "id": "channel_1",
+              "name": "",
+              "contents": [
+                {
+                  "id": "channel_1",
+                  "name": "",
+                  "streams": [
+                    {
+                      "id": "channel_1",
+                      "name": "Sói Xám TV 1",
+                      "image": {
+                        "display": "contain",
+                        "shape": "square",
+                        "url": "https://lmg159z.github.io/soixamTV/wordspage/image/logo/logoChannel.png",
+                        "height": 101,
+                        "width": 155
+                      },
+                      "stream_links": [
+                        {
+                          "id": "channel_1",
+                          "name": "https://lmg159z.github.io/soixamTV/wordspage/image/logo/logoChannel.png",
+                          "url": "https://mobile-web.stream.onlive.vn/live-stm-02/auth_playlist.m3u8?aid=.A32.9XuqmqmA9oBIj4mq.bQzirb6LbtdTHhIEDh9dH6VtFR_ziFenIciCrx-Bkv7gy4AMxpg6vGP2dUEz4s3jPDgzko5PQcVacRSXFYc0Wg",
+                          "type": "hls",
+                          "default": true
+                        }
+                      ],
+                      "remote_data": null
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "channel_2",
+          "name": "Sói Xám TV 2",
+          "image": {
+            "display": "cover",
+            "shape": "square",
+            "url": "https://lmg159z.github.io/soixamTV/wordspage/image/logo/logoChannel.png",
+            "height": 101,
+            "width": 155
+          },
+          "type": "single",
+          "display": "text-below",
+          "sources": [
+            {
+              "id": "channel_2",
+              "name": "",
+              "contents": [
+                {
+                  "id": "channel_2",
+                  "name": "",
+                  "streams": [
+                    {
+                      "id": "channel_2",
+                      "name": "Sói Xám TV 2",
+                      "image": {
+                        "display": "contain",
+                        "shape": "square",
+                        "url": "https://lmg159z.github.io/soixamTV/wordspage/image/logo/logoChannel.png",
+                        "height": 101,
+                        "width": 155
+                      },
+                      "stream_links": [
+                        {
+                          "id": "channel_2",
+                          "name": "https://lmg159z.github.io/soixamTV/wordspage/image/logo/logoChannel.png",
+                          "url": "https://mobile-web.stream.onlive.vn/live-stm-03/auth_playlist.m3u8?aid=.A32.9XuqmqmA9oBIj4mq.0Y-gskwyFPF0E1zjFj0l4LNauQ91gSLYZ8_gpOxtQP30ijl-x1MAsWurL8Zom17myz3027dFfGdGxQJ3Ej8BbA",
+                          "type": "hls",
+                          "default": true
+                        }
+                      ],
+                      "remote_data": null
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "channel_3",
+          "name": "Sói Xám TV 3",
+          "image": {
+            "display": "cover",
+            "shape": "square",
+            "url": "https://lmg159z.github.io/soixamTV/wordspage/image/logo/logoChannel.png",
+            "height": 101,
+            "width": 155
+          },
+          "type": "single",
+          "display": "text-below",
+          "sources": [
+            {
+              "id": "channel_3",
+              "name": "",
+              "contents": [
+                {
+                  "id": "channel_3",
+                  "name": "",
+                  "streams": [
+                    {
+                      "id": "channel_3",
+                      "name": "Sói Xám TV 3",
+                      "image": {
+                        "display": "contain",
+                        "shape": "square",
+                        "url": "https://lmg159z.github.io/soixamTV/wordspage/image/logo/logoChannel.png",
+                        "height": 101,
+                        "width": 155
+                      },
+                      "stream_links": [
+                        {
+                          "id": "channel_3",
+                          "name": "https://lmg159z.github.io/soixamTV/wordspage/image/logo/logoChannel.png",
+                          "url": "https://mobile-web.stream.onlive.vn/live-stm-01/auth_playlist.m3u8?aid=.A32.9XuqmqmA9oBIj4mq.8W5wAIbjrfpOq9-fKRWKL3xpEZ7te4IYRuZrVn8TKYZcQHPsFep5zNfxw-YSl1CXUuGjnkchcQ_-ah1sKPFEOQ",
+                          "type": "hls",
+                          "default": true
+                        }
+                      ],
+                      "remote_data": null
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "channel_4",
+          "name": "Sói Xám TV 4",
+          "image": {
+            "display": "cover",
+            "shape": "square",
+            "url": "https://lmg159z.github.io/soixamTV/wordspage/image/logo/logoChannel.png",
+            "height": 101,
+            "width": 155
+          },
+          "type": "single",
+          "display": "text-below",
+          "sources": [
+            {
+              "id": "channel_4",
+              "name": "",
+              "contents": [
+                {
+                  "id": "channel_4",
+                  "name": "",
+                  "streams": [
+                    {
+                      "id": "channel_4",
+                      "name": "Sói Xám TV 4",
+                      "image": {
+                        "display": "contain",
+                        "shape": "square",
+                        "url": "https://lmg159z.github.io/soixamTV/wordspage/image/logo/logoChannel.png",
+                        "height": 101,
+                        "width": 155
+                      },
+                      "stream_links": [
+                        {
+                          "id": "channel_4",
+                          "name": "https://lmg159z.github.io/soixamTV/wordspage/image/logo/logoChannel.png",
+                          "url": "https://mobile-web.stream.onlive.vn/live-stm-01/auth_playlist.m3u8?aid=.A32.9XuqmqmA9oBIj4mq.7hb-NYi1P4GsFPHZH-wtom--LIuW71wi4PwfJ6ZYLgjR8WjWRuUgukDxWZBMe_xtO4thSne-AGfckl078FjB5g",
+                          "type": "hls",
+                          "default": true
+                        }
+                      ],
+                      "remote_data": null
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "channel_5",
+          "name": "Sói Xám TV 5",
+          "image": {
+            "display": "cover",
+            "shape": "square",
+            "url": "https://lmg159z.github.io/soixamTV/wordspage/image/logo/logoChannel.png",
+            "height": 101,
+            "width": 155
+          },
+          "type": "single",
+          "display": "text-below",
+          "sources": [
+            {
+              "id": "channel_5",
+              "name": "",
+              "contents": [
+                {
+                  "id": "channel_5",
+                  "name": "",
+                  "streams": [
+                    {
+                      "id": "channel_5",
+                      "name": "Sói Xám TV 5",
+                      "image": {
+                        "display": "contain",
+                        "shape": "square",
+                        "url": "https://lmg159z.github.io/soixamTV/wordspage/image/logo/logoChannel.png",
+                        "height": 101,
+                        "width": 155
+                      },
+                      "stream_links": [
+                        {
+                          "id": "channel_5",
+                          "name": "https://lmg159z.github.io/soixamTV/wordspage/image/logo/logoChannel.png",
+                          "url": "https://mobile-web.stream.onlive.vn/live-stm-04/auth_playlist.m3u8?aid=.A32.9XuqmqmA9oBIj4mq.ZmwQ3rxJzcCb86-oZ5KLtOsG765MqffP9C6Vnyw6V1NQJ53NfM5uS_lYNaOCn14qMG40rRUvgzT6aWTnlbLKCw",
+                          "type": "hls",
+                          "default": true
+                        }
+                      ],
+                      "remote_data": null
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "channel_6",
+          "name": "Sói Xám TV 6",
+          "image": {
+            "display": "cover",
+            "shape": "square",
+            "url": "https://lmg159z.github.io/soixamTV/wordspage/image/logo/logoChannel.png",
+            "height": 101,
+            "width": 155
+          },
+          "type": "single",
+          "display": "text-below",
+          "sources": [
+            {
+              "id": "channel_6",
+              "name": "",
+              "contents": [
+                {
+                  "id": "channel_6",
+                  "name": "",
+                  "streams": [
+                    {
+                      "id": "channel_6",
+                      "name": "Sói Xám TV 6",
+                      "image": {
+                        "display": "contain",
+                        "shape": "square",
+                        "url": "https://lmg159z.github.io/soixamTV/wordspage/image/logo/logoChannel.png",
+                        "height": 101,
+                        "width": 155
+                      },
+                      "stream_links": [
+                        {
+                          "id": "channel_6",
+                          "name": "https://lmg159z.github.io/soixamTV/wordspage/image/logo/logoChannel.png",
+                          "url": "https://mobile-web.stream.onlive.vn/live-stm-02/auth_playlist.m3u8?aid=.A32.9XuqmqmA9oBIj4mq.jxU6YJZ_byNTlnBXulSoW6PtoTlaru-mmnYptO3GjJ9rCw1CnosS8qOXotLyFUj4riK-A7I2EIrVoe0ywMyjqA",
+                          "type": "hls",
+                          "default": true
+                        }
+                      ],
+                      "remote_data": null
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "preview_display": "slider",
+      "grid_columns": null,
+      "enable_detail": false
+    }
+  ]
+}
