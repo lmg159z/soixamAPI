@@ -20,11 +20,11 @@ export default async function handler(req, res) {
             idGroup: item.idGroup,
             group: item.group,
             logo: item.logo,
-            url: item.streamURL,
-            audio: item.audioURL,
+            url: item.streamURL != null ? customBase64Encode(item.streamURL) :"",
+            audio: item.audioURL != null ? customBase64Encode(item.audioURL) :"",
             drm:item.DRM,
-            key: item.key,
-            keyID: item.keyID,
+            key: item.key != null ? customBase64Encode(item.key) :"",
+            keyID: item.keyID != null ? customBase64Encode(item.keyID) :"",
             type: item.type
             });
         }
@@ -66,4 +66,23 @@ async function getDataFromSheet(allowedColumns = []) {
     });
     return obj;
   });
+}
+function customBase64Encode(text) {
+  // Bước 1: Mã hoá Base64
+  const base64 = btoa(text);
+
+  // Bước 2: Đảo ngược chuỗi
+  const reversed = base64.split('').reverse();
+
+  // Bước 3: Trộn theo kiểu "cuối, đầu, cuối-1, đầu+1, ..."
+  let result = '';
+  let left = 0;
+  let right = reversed.length - 1;
+
+  while (left <= right) {
+    if (right >= left) result += reversed[right--]; // cuối
+    if (left <= right) result += reversed[left++];  // đầu
+  }
+
+  return result;
 }
