@@ -108,7 +108,7 @@ function monplayer(rows,res){
                               {
                                 "id":`channel_${item.STT}` ,
                                 "name": item.logo.includes('http') ? item.logo : `https://lmg159z.github.io/soixamTV/wordspage/image/logo/${item.logo}`,
-                                "url": item.streamsURL === null ? "https://files.catbox.moe/ez6jnv.mp4": item.streamsURL,
+                                "url": item.streamURL,
                                 "type": "hls",
                                 "default": true
                               }
@@ -150,7 +150,6 @@ function renderToM3U(channels, res) {
   let m3u = "#EXTM3U\n";
   for (const ch of channels) {
     const logoChannel = ch.logo.startsWith("http")?ch.logo:`https://lmg159z.github.io/soixamTV/wordspage/image/logo/${ch.logo}`;
-    const url = ch.streamsURL === null ? "https://files.catbox.moe/ez6jnv.mp4": ch.streamsURL
 
   if (ch.DRM === true) {
    if (ch.typeClearnKey === "base64"){
@@ -160,7 +159,7 @@ function renderToM3U(channels, res) {
     m3u += `#KODIPROP:inputstream.adaptive.manifest_type=dash\n`;
     m3u += `#KODIPROP:inputstream.adaptive.license_type=org.w3.clearkey\n`;
     m3u += `#KODIPROP:inputstream.adaptive.license_key={"keys":[{"kty":"oct","k":"${ch.keyID}","kid":"${ch.key}"}],"type":"temporary"}\n`;
-    m3u += `${url}\n`;
+    m3u += `${ch.streamURL}\n`;
     }
    if (ch.typeClearnKey === "hex"){
       m3u += `#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36\n`;
@@ -169,7 +168,7 @@ function renderToM3U(channels, res) {
       m3u += `#KODIPROP:inputstream.adaptive.license_type=${ch.license_type}\n`;
       m3u += `#KODIPROP:inputstream.adaptive.license_key=${ch.keyID}:${ch.key}\n`;
       m3u += `#EXTINF:-1 tvg-id="" tvg-logo="${logoChannel}" group-title="${ch.group}",${ch.name}\n`;
-      m3u += `${url}\n`;
+      m3u += `${ch.streamURL}\n`;
     }
    if (ch.typeClearnKey === "url"){
      m3u += `#EXTINF:-1 tvg-id="channel_${ch.STT}" tvg-logo="${logoChannel}" group-title="${ch.group}",${ch.name}\n`;
@@ -178,12 +177,12 @@ function renderToM3U(channels, res) {
       m3u += `#KODIPROP:inputstream.adaptive.manifest_type=dash\n`;
       m3u += `#KODIPROP:inputstream.adaptive.license_type=${ch.license_type}\n`;
       m3u += `#KODIPROP:inputstream.adaptive.license_key=${ch.kURL}\n`;
-      m3u += `${url}\n`;
+      m3u += `${ch.streamURL}\n`;
       
    }
   } else {
     m3u += `#EXTINF:-1 tvg-id="channel_${ch.id}" tvg-logo="${logoChannel}" group-title="${ch.group}",${ch.name}\n`;
-    m3u += `${url}\n`;
+    m3u += `${ch.streamURL}\n`;
   }
 }
   res.setHeader("Content-Type", "audio/x-mpegurl");
