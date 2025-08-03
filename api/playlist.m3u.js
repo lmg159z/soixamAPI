@@ -151,7 +151,7 @@ function renderToM3U(channels, res) {
   let m3u = "#EXTM3U\n";
   for (const ch of channels) {
     const logoChannel = ch.logo.startsWith("http")?ch.logo:`https://lmg159z.github.io/soixamTV/wordspage/image/logo/${ch.logo}`;
-    const url = item.streamsURL == null ? "https://files.catbox.moe/ez6jnv.mp4": item.streamsURL
+    const url = ch.streamsURL == null ? "https://files.catbox.moe/ez6jnv.mp4": ch.streamsURL
 
   if (ch.DRM === true) {
    if (ch.typeClearnKey === "base64"){
