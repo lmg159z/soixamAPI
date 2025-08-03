@@ -11,50 +11,16 @@ export default async function handler(req, res) {
 
   try {
     const rows = await getDataFromSheet(["STT","idGroup","group", "name", "logo", "classify"]);
-     let grouped = {};
-rows.forEach(item => {
-  if (item.classify === type) {
-    if (!grouped[item.idGroup]) {
-      grouped[item.idGroup] = {
-        info: {
-          idGroup: item.idGroup,
-          group: item.group || item.idGroup // fallback nếu group rỗng
-        },
-        channel: []
-      };
-    }
-
-    grouped[item.idGroup].channel.push({
-      STT: item.STT,
-      name: item.name,
-      idGroup: item.idGroup,
-      group: item.group,
-      logo: item.logo === null ? "https://lmg159z.github.io/soixamTV/wordspage/image/logo/logoChannel.png" : item.logo
-    });
-  }
-  if (item.classify === type) {
-    if (!grouped[item.idGroup]) {
-      grouped[item.idGroup] = {
-        info: {
-          idGroup: item.idGroup,
-          group: item.group || item.idGroup // fallback nếu group rỗng
-        },
-        channel: []
-      };
-    }
-
-    grouped[item.idGroup].channel.push({
-      STT: item.STT,
-      name: item.name,
-      idGroup: item.idGroup,
-      group: item.group,
-      logo: item.logo === null ? "https://lmg159z.github.io/soixamTV/wordspage/image/logo/logoChannel.png" : item.logo
-    });
-  }
-});
-
-const result = Object.values(grouped); 
-    res.status(200).json(result);
+   switch (type){
+     case "TV":
+       phanLoai(rows,"TV", res)
+       break
+   case "TV_RA":
+       phanLoai(rows,"TV_RA", res)
+       break
+   }  
+    
+    
   } catch (error) {
     console.error("Lỗi khi lấy dữ liệu:", error);
     res.status(500).json({ error: "Không thể lấy dữ liệu từ Google Sheet" });
@@ -88,4 +54,32 @@ async function getDataFromSheet(allowedColumns = []) {
     });
     return obj;
   });
+}
+
+
+function phanLoai(rows,typePL, res){
+  let grouped = {};
+  rows.forEach(item => {
+  if (item.classify === typePL) {
+    if (!grouped[item.idGroup]) {
+      grouped[item.idGroup] = {
+        info: {
+          idGroup: item.idGroup,
+          group: item.group || item.idGroup // fallback nếu group rỗng
+        },
+        channel: []
+      };
+    }
+
+    grouped[item.idGroup].channel.push({
+      STT: item.STT,
+      name: item.name,
+      idGroup: item.idGroup,
+      group: item.group,
+      logo: item.logo === null ? "https://lmg159z.github.io/soixamTV/wordspage/image/logo/logoChannel.png" : item.logo
+    });
+  }
+});
+  const result = Object.values(grouped); 
+  res.status(200).json(result);
 }
