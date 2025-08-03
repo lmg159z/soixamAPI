@@ -29,7 +29,7 @@ rows.forEach(item => {
       name: item.name,
       idGroup: item.idGroup,
       group: item.group,
-      logo: item.logo
+      logo: item.logo === null ? "https://lmg159z.github.io/soixamTV/wordspage/image/logo/logoChannel.png" : item.logo
     });
   }
 });
