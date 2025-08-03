@@ -3,7 +3,7 @@ export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-
+  const { type } = req.query;
   // Xử lý preflight request
   if (req.method === "OPTIONS") {
     return res.status(200).end();
@@ -13,7 +13,26 @@ export default async function handler(req, res) {
     const rows = await getDataFromSheet(["STT","idGroup","group", "name", "logo", "classify"]);
      let grouped = {};
 rows.forEach(item => {
-  if (item.classify === "TV") {
+  if (item.classify === type) {
+    if (!grouped[item.idGroup]) {
+      grouped[item.idGroup] = {
+        info: {
+          idGroup: item.idGroup,
+          group: item.group || item.idGroup // fallback nếu group rỗng
+        },
+        channel: []
+      };
+    }
+
+    grouped[item.idGroup].channel.push({
+      STT: item.STT,
+      name: item.name,
+      idGroup: item.idGroup,
+      group: item.group,
+      logo: item.logo === null ? "https://lmg159z.github.io/soixamTV/wordspage/image/logo/logoChannel.png" : item.logo
+    });
+  }
+  if (item.classify === type) {
     if (!grouped[item.idGroup]) {
       grouped[item.idGroup] = {
         info: {
