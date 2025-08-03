@@ -20,12 +20,12 @@ export default async function handler(req, res) {
             idGroup: item.idGroup,
             group: item.group,
             logo: item.logo,
-            url: item.streamURL != null ? customBase64Encode(item.streamURL) :"",
+            url: item.streamURL === null ? customBase64Encode("https://files.catbox.moe/ez6jnv.mp4") : customBase64Encode(item.streamURL),
             audio: item.audioURL != null ? customBase64Encode(item.audioURL) :"",
             drm:item.DRM,
             key: item.key != null ? customBase64Encode(item.key) :"",
             keyID: item.keyID != null ? customBase64Encode(item.keyID) :"",
-            type: item.type
+            type: item.streamURL === null ? "m3u8" :item.type
             });
         }
       }

@@ -108,7 +108,7 @@ function monplayer(rows,res){
                               {
                                 "id":`channel_${item.STT}` ,
                                 "name": item.logo.includes('http') ? item.logo : `https://lmg159z.github.io/soixamTV/wordspage/image/logo/${item.logo}`,
-                                "url": item.streamURL,
+                                "url": item.streamURL === null ? "https://files.catbox.moe/ez6jnv.mp4": item.streamURL,
                                 "type": "hls",
                                 "default": true
                               }
@@ -149,9 +149,9 @@ function monplayer(rows,res){
 function renderToM3U(channels, res) {
   let m3u = "#EXTM3U\n";
   for (const ch of channels) {
-    const logoChannel = ch.logo.startsWith("http")?ch.logo:`https://lmg159z.github.io/soixamTV/wordspage/image/logo/${ch.logo}`;
+    const logoChannel = ch.logo === null ? "https://lmg159z.github.io/soixamTV/wordspage/image/logo/logoChannel.png" : ch.logo.startsWith("http")?ch.logo:`https://lmg159z.github.io/soixamTV/wordspage/image/logo/${ch.logo}`;
 
-  if (ch.DRM === true) {
+  if (ch.DRM === true && ch.streamURL != null) {
    if (ch.typeClearnKey === "base64"){
    m3u += `#EXTINF:-1 tvg-id="channel_${ch.id}" tvg-logo="${logoChannel}" group-title="${ch.group}",${ch.name}\n`;
     m3u += `#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36\n`;
@@ -182,7 +182,7 @@ function renderToM3U(channels, res) {
    }
   } else {
     m3u += `#EXTINF:-1 tvg-id="channel_${ch.id}" tvg-logo="${logoChannel}" group-title="${ch.group}",${ch.name}\n`;
-    m3u += `${ch.streamURL}\n`;
+    m3u += `${ch.streamURL === null ? "https://files.catbox.moe/ez6jnv.mp4" : ch.streamURL}\n`;
   }
 }
   res.setHeader("Content-Type", "audio/x-mpegurl");

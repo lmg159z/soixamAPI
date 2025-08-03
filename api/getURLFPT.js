@@ -20,7 +20,7 @@ export default async function handler(req, res) {
             idGroup: item.idGroup,
             group: item.group,
             logo: item.logo,
-            url: customBase64Encode(item.streamURL)
+            url: item.streamURL === null ? customBase64Encode("https://files.catbox.moe/ez6jnv.mp4") : customBase64Encode(item.streamURL)
             });
         }
       }
