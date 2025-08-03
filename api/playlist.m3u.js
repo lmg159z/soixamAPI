@@ -62,7 +62,6 @@ function monplayer(rows,res){
       rows.forEach(item => {
         if (item.DRM === false && item.classify != "TV_FPT") {
           if (!grouped[item.idGroup]) {
-            const url = item.streamsURL == null ? "https://files.catbox.moe/ez6jnv.mp4": item.streamsURL
             grouped[item.idGroup] = {
             "id": item.idGroup,
             "name": item.group,
@@ -109,7 +108,7 @@ function monplayer(rows,res){
                               {
                                 "id":`channel_${item.STT}` ,
                                 "name": item.logo.includes('http') ? item.logo : `https://lmg159z.github.io/soixamTV/wordspage/image/logo/${item.logo}`,
-                                "url": url,
+                                "url": item.streamsURL === null ? "https://files.catbox.moe/ez6jnv.mp4": item.streamsURL,
                                 "type": "hls",
                                 "default": true
                               }
@@ -151,7 +150,7 @@ function renderToM3U(channels, res) {
   let m3u = "#EXTM3U\n";
   for (const ch of channels) {
     const logoChannel = ch.logo.startsWith("http")?ch.logo:`https://lmg159z.github.io/soixamTV/wordspage/image/logo/${ch.logo}`;
-    const url = ch.streamsURL == null ? "https://files.catbox.moe/ez6jnv.mp4": ch.streamsURL
+    const url = ch.streamsURL === null ? "https://files.catbox.moe/ez6jnv.mp4": ch.streamsURL
 
   if (ch.DRM === true) {
    if (ch.typeClearnKey === "base64"){
@@ -161,7 +160,7 @@ function renderToM3U(channels, res) {
     m3u += `#KODIPROP:inputstream.adaptive.manifest_type=dash\n`;
     m3u += `#KODIPROP:inputstream.adaptive.license_type=org.w3.clearkey\n`;
     m3u += `#KODIPROP:inputstream.adaptive.license_key={"keys":[{"kty":"oct","k":"${ch.keyID}","kid":"${ch.key}"}],"type":"temporary"}\n`;
-    m3u += `${urlL}\n`;
+    m3u += `${url}\n`;
     }
    if (ch.typeClearnKey === "hex"){
       m3u += `#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36\n`;
