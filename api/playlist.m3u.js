@@ -61,7 +61,12 @@ function monplayer(rows,res){
    let grouped = {};
       rows.forEach(item => {
         if (item.DRM === false && item.classify != "TV_FPT") {
-          if (!grouped[item.idGroup]) {
+        const logoUrl = item.logo && item.logo.includes("http")
+          ? item.logo
+          : item.logo
+            ? `https://lmg159z.github.io/soixamTV/wordspage/image/logo/${item.logo}`
+            : "";
+        if (!grouped[item.idGroup]) {
             grouped[item.idGroup] = {
             "id": item.idGroup,
             "name": item.group,
@@ -72,14 +77,14 @@ function monplayer(rows,res){
             "enable_detail": false
             };
           }
-      
-          grouped[item.idGroup].channels.push({
+          
+        grouped[item.idGroup].channels.push({
                 "id": `channel_${item.STT}`,
                 "name": item.name,
                 "image": {
                   "display": "contain",
                   "shape": "square",
-                  "url": item.logo.includes('http') ? item.logo : `https://lmg159z.github.io/soixamTV/wordspage/image/logo/${item.logo}`,
+                  "url":logoUrl,
                   "height": 101,
                   "width": 155
                 },
@@ -100,14 +105,14 @@ function monplayer(rows,res){
                             "image": {
                               "display": "contain",
                               "shape": "square",
-                              "url": item.logo.includes('http') ? item.logo : `https://lmg159z.github.io/soixamTV/wordspage/image/logo/${item.logo}`,
+                              "url": logoUrl,
                               "height": 101,
                               "width": 155
                             },
                             "stream_links": [
                               {
                                 "id":`channel_${item.STT}` ,
-                                "name": item.logo.includes('http') ? item.logo : `https://lmg159z.github.io/soixamTV/wordspage/image/logo/${item.logo}`,
+                                "name": logoUrl,
                                 "url": item.streamURL === null ? "https://files.catbox.moe/ez6jnv.mp4": item.streamURL,
                                 "type": "hls",
                                 "default": true
@@ -121,6 +126,7 @@ function monplayer(rows,res){
                   }
                 ]
           });
+       console.log(item)
         }
       });
       const result = Object.values(grouped); 
