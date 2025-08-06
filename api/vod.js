@@ -250,19 +250,21 @@ export default async function handler(req, res) {
   }
 
   try {
-  
+   
+   const j = []
   
   for (const group of tournaments) {
     console.log(`📌 Nhóm: ${group.nameGroup}`);
     
     for (const item of group.ttournament) {
       const url = `https://tv-web.api.vinasports.com.vn/api/v2/publish/video/?league_id=${item.league_id}&page_num=1&page_size=24`
-      const data = await getAPI(url);
       
+      const data = await getAPI(url);
+      j.push(data)
       console.log(`✅ ${item.name}:`, data);
     }
   }
-  res.status(200).json([]);
+  res.status(200).json(j);
    
   } catch (error) {
     console.error("Lỗi khi lấy dữ liệu:", error);
