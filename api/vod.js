@@ -251,20 +251,35 @@ export default async function handler(req, res) {
 
   try {
    
-   const j = []
+   const sportsData = []
   
   for (const group of tournaments) {
     console.log(`📌 Nhóm: ${group.nameGroup}`);
-    
+  
     for (const item of group.ttournament) {
       const url = `https://tv-web.api.vinasports.com.vn/api/v2/publish/video/?league_id=${item.league_id}&page_num=1&page_size=24`
       
-      const data = await getAPI(url);
-      j.push(data)
-      console.log(`✅ ${item.name}:`, data);
+      const leagues = await getAPI(url);
+      const league = []
+      for (const i of leagues.data){
+        if (i.url != ""){
+          league.push({
+            "name": i.name,
+            "duration": i.duration,
+            "id": i.id,
+            "url": `https://livevlive.vtvcab.vn/hls/vod/newonsports/DISTRIBUTE/${i.url}/index.m3u8`
+          })
+        }
+      }
+      
+      sportsData.push({
+      "name": item.name,
+      "id": item.id,
+      "groups": league
+    })
     }
   }
-  res.status(200).json(j);
+  res.status(200).json(sportsData);
    
   } catch (error) {
     console.error("Lỗi khi lấy dữ liệu:", error);
