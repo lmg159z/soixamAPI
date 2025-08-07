@@ -237,145 +237,6 @@ const tournaments = [
 ]
 
 
-/*
-export default async function handler(req, res) {
-  // ⚠️ CORS header để tránh lỗi từ frontend
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  const { type } = req.query;
-  // Xử lý preflight request
-  if (req.method === "OPTIONS") {
-    return res.status(200).end();
-  }
-
-  try {
-   const sportsData = await VOD_handle(tournaments,"jsonIPTV")
-    const dataEn = {
-        "id": "soixamTV",
-        "name": "Sói Xám TV",
-        "color": "#0a192f",
-        "org_metadata": {
-          "image": "https://lmg159z.github.io/soixamTV/wordspage/image/logo/logoChannel.png",
-          "title": "Sói Xám TV – Truyền hình trong tầm tay",
-          "description": "Sói Xám TV là nền tảng giải trí trực tuyến mang đến cho bạn thế giới truyền hình sống động, đa dạng và hoàn toàn miễn phí. Từ các kênh thể thao, phim truyện, tin tức đến radio, sự kiện trực tiếp và hơn thế nữa – tất cả đều được tuyển chọn kỹ lưỡng để phục vụ trải nghiệm mượt mà, nhanh chóng, không quảng cáo gây phiền.."
-        },
-        "url": "",
-        "image": {
-          "display": "contain",
-          "shape": "square",
-          "url": "https://lmg159z.github.io/soixamTV/wordspage/image/logo/logoChannel.png",
-          "height": 101,
-          "width": 155
-        },
-        "grid_number": 92,
-        "groups":sportsData 
-      }
-  res.status(200).json(dataEn);
-   
-  } catch (error) {
-    console.error("Lỗi khi lấy dữ liệu:", error);
-    res.status(500).json({ error: "del co du lieu! loi cmnr" });
-  }
-}
-
-async function getAPI(url) {
-  try {
-    const response = await fetch(url);
-    
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error("Lỗi khi gọi API:", error);
-    return null;
-  }
-}
-async function VOD_handle(tournaments, type){
-  const sportsData = []
-  
-  for (const group of tournaments) {
-    console.log(`📌 Nhóm: ${group.nameGroup}`);
-  
-    for (const item of group.ttournament) {
-      const url = `https://tv-web.api.vinasports.com.vn/api/v2/publish/video/?league_id=${item.league_id}&page_num=1&page_size=24`
-      
-      const leagues = await getAPI(url);
-    
-      if (type === "jsonIPTV"){
-      const league = []
-      for (const i of leagues.data){
-        if (i.url != ""){
-          league.push({  
-                "id": `channel_${i.id}`,
-                "name": i.name,
-                "image": {
-                  "display": "contain",
-                  "shape": "square",
-                  "url":i.thumbnail,
-                  "height": 101,
-                  "width": 155
-                },
-                "type": "single",
-                "display": "text-below",
-                "sources": [
-                  {
-                    "id": `channel_${i.id}`,
-                    "name": "",
-                    "contents": [
-                      {
-                        "id": `channel_${i.id}`,
-                        "name": "",
-                        "streams": [
-                          {
-                            "id": `channel_${i.id}`,
-                            "name": i.name,
-                            "image": {
-                              "display": "contain",
-                              "shape": "square",
-                              "url": i.thumbnail,
-                              "height": 101,
-                              "width": 155
-                            },
-                            "stream_links": [
-                              {
-                                "id":`channel_${i.id}` ,
-                                "name":  i.thumbnail,
-                                "url": `https://livevlive.vtvcab.vn/hls/vod/newonsports/DISTRIBUTE/${i.url}/index.m3u8`,
-                                "type": "hls",
-                                "default": true
-                              }
-                            ],
-                            "remote_data": null
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-          })
-        }
-      }
-      sportsData.push({
-            "id": item.league_id,
-            "name":item.name,
-            "display": "horizontal",
-            channels: league,
-            "preview_display": "slider",
-            "grid_columns": null,
-            "enable_detail": false
-      })
-      }
-    }
-  }
-  
-  return sportsData
-}
-
-*/
 
 
 // ✅ Hàm chính xử lý API endpoint
@@ -383,39 +244,21 @@ export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-
-  const { type } = req.query;
-
-  if (req.method === "OPTIONS") {
-    return res.status(200).end();
+  let { type } = req.query;
+  if (!type) {
+    type = "iptv";
   }
 
   try {
-    const sportsData = await VOD_handle(tournaments, "jsonIPTV");
-
-    const dataEn = {
-      id: "soixamTV",
-      name: "Sói Xám TV",
-      color: "#0a192f",
-      org_metadata: {
-        image: "https://lmg159z.github.io/soixamTV/wordspage/image/logo/logoChannel.png",
-        title: "Sói Xám TV – Truyền hình trong tầm tay",
-        description:
-          "Sói Xám TV là nền tảng giải trí trực tuyến mang đến cho bạn thế giới truyền hình sống động, đa dạng và hoàn toàn miễn phí. Từ các kênh thể thao, phim truyện, tin tức đến radio, sự kiện trực tiếp và hơn thế nữa – tất cả đều được tuyển chọn kỹ lưỡng để phục vụ trải nghiệm mượt mà, nhanh chóng, không quảng cáo gây phiền.."
-      },
-      url: "",
-      image: {
-        display: "contain",
-        shape: "square",
-        url: "https://lmg159z.github.io/soixamTV/wordspage/image/logo/logoChannel.png",
-        height: 101,
-        width: 155
-      },
-      grid_number: 92,
-      groups: sportsData
-    };
-
-    res.status(200).json(dataEn);
+  
+   switch (type){
+     case "iptv":
+       VOD_handle_m3u(tournaments, res)
+       break
+     case "jsonIPTV":
+       VOD_handle_json(tournaments, res)
+       break 
+   }
   } catch (error) {
     console.error("Lỗi khi lấy dữ liệu:", error);
     res.status(500).json({ error: "del co du lieu! loi cmnr" });
@@ -440,9 +283,8 @@ async function getAPI(url, timeoutMs = 7000) {
 }
 
 // ✅ Hàm xử lý dữ liệu VOD song song
-async function VOD_handle(tournaments, type) {
+async function VOD_handle_json(tournaments, res) {
   const sportsData = [];
-
   for (const group of tournaments) {
     console.log(`📌 Nhóm: ${group.nameGroup}`);
 
@@ -520,6 +362,56 @@ async function VOD_handle(tournaments, type) {
 
     sportsData.push(...validLeagues);
   }
+  const dataEn = {
+        "id": "soixamVOD",
+        "name": "Sói Xám VOD Thể Thao",
+        "color": "#0a192f",
+        "org_metadata": {
+          "image": "https://lmg159z.github.io/soixamTV/wordspage/image/logo/logoChannel.png",
+          "title": "Sói Xám TV – Truyền hình trong tầm tay",
+          "description": "Sói Xám VOD Thể Thao – Nơi hội tụ cảm xúc thể thao đỉnh cao!\nChào mừng bạn đến với Sói Xám VOD Thể Thao – nền tảng video theo yêu cầu (VOD) dành riêng cho người hâm mộ thể thao Việt Nam!\nTại đây, bạn có thể cập nhật khoảnh khắc đáng nhớ, diễn biến nổi bật, và toàn cảnh trận đấu từ các giải đấu thể thao hàng đầu trong và ngoài nước.\nTừ bóng đá, tennis đến golf, bóng chuyền và nhiều môn thể thao khác – tất cả đều được chọn lọc và cập nhật liên tục, mang đến cho bạn trải nghiệm xem lại nhanh chóng, tiện lợi, chất lượng cao.\n\n👉 Sói Xám – Xem thể thao đúng chất, lưu giữ khoảnh khắc đỉnh cao!"
+        },
+        "url": "",
+        "image": {
+          "display": "contain",
+          "shape": "square",
+          "url": "https://lmg159z.github.io/soixamTV/wordspage/image/logo/logoChannel.png",
+          "height": 101,
+          "width": 155
+        },
+        "grid_number": 92,
+        "groups": sportsData
+      }
+  res.status(200).json(dataEn);
+}
 
-  return sportsData;
+async function VOD_handle_m3u(tournaments, res) {
+  let sportsData = "#EXTM3U\n";
+
+  // Tạo mảng các request API song song
+  const requests = [];
+  for (const group of tournaments) {
+    for (const item of group.ttournament) {
+      const url = `https://tv-web.api.vinasports.com.vn/api/v2/publish/video/?league_id=${item.league_id}&page_num=1&page_size=24`;
+      requests.push({ url, item });
+    }
+  }
+
+  // Gọi tất cả API song song
+  const results = await Promise.all(
+    requests.map(r => getAPI(r.url).then(data => ({ data, item: r.item })).catch(() => null))
+  );
+
+  // Xử lý kết quả
+  for (const result of results) {
+    if (!result || !result.data?.data) continue;
+
+    for (const i of result.data.data) {
+      sportsData += `#EXTINF:-1 tvg-id="channel_${i.id}" tvg-logo="${i.thumbnail}" group-title="${result.item.name}",${i.name}\n`;
+      sportsData += `https://livevlive.vtvcab.vn/hls/vod/newonsports/DISTRIBUTE/${i.url}/index.m3u8\n\n`;
+    }
+  }
+
+  res.setHeader("Content-Type", "application/x-mpegURL");
+  res.status(200).send(sportsData);
 }
