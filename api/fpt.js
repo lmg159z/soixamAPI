@@ -63,159 +63,48 @@ function customBase64Encode(text) {
   }
 
   return result;
-}/*
+}
+
 async function getAPI(url, timeoutMs = 7000) {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), timeoutMs);
 
-  try {
-    const response = await fetch(url, { signal: controller.signal });
-    const ok = response.ok;
-    return {
-      url,
-      status: ok
-    };
-  } catch (error) {
-    console.error("Lỗi khi gọi API:", error.message);
-    return {
-      url,
-      status: false
-    };
-  } finally {
-    clearTimeout(timeout);
-  }
-}
-async function checkURL(res){
-  const rows = await getDataFromSheet(["STT", "name", "idGroup","group", "logo","streamURL",	"audioURL",	"type"]);
-  const dataEND = []
-  for (const data of rows){
-    if (data.idGroup === "FPTplay"){
-      const url = await getAPI(data.streamURL)
-      if (url.status === true){
-        dataEND.push({
-            STT: data.STT,
-            name: data.name,
-            idGroup: data.idGroup,
-            group: data.group,
-            logo: data.logo,
-            url: data.streamURL === null ? customBase64Encode("https://files.catbox.moe/ez6jnv.mp4") : customBase64Encode(data.streamURL)
-            });
-      }
-    }
-  }
-  res.status(200).json(dataEND)
-}*/
-
-/*
-async function getAPI(url, timeoutMs = 3000) {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), timeoutMs);
-
-  try {
-    const response = await fetch(url, { signal: controller.signal });
-    return { url, status: response.ok };
-  } catch (error) {
-    return { url, status: false };
-  } finally {
-    clearTimeout(timeout);
-  }
-}
-async function checkURL(res) {
-  const rows = await getDataFromSheet([
-    "STT", "name", "idGroup", "group", "logo", "streamURL", "audioURL", "type"
-  ]);
-
-  const fptRows = rows.filter(r => r.idGroup === "FPTplay");
-
-  const results = await Promise.allSettled(
-    fptRows.map(row => getAPI(row.streamURL))
-  );
-
-  const dataEND = [];
-
-  for (let i = 0; i < results.length; i++) {
-    const result = results[i];
-
-    if (result.status === "fulfilled" && result.value.status === true) {
-      const data = fptRows[i];
-      dataEND.push({
-        STT: data.STT,
-        name: data.name,
-        idGroup: data.idGroup,
-        group: data.group,
-        logo: data.logo,
-        url: data.streamURL
-          ? customBase64Encode(data.streamURL)
-          : customBase64Encode("https://files.catbox.moe/ez6jnv.mp4")
-      });
-    }
-  }
-
-  res.status(200).json(dataEND);
-}
-*/
-
-
-
-async function fastCheckURL(url, timeoutMs = 2000) {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), timeoutMs);
-
-  try {
-    const response = await fetch(url, {
-      method: "HEAD", // nhanh hơn GET
-      signal: controller.signal
-    });
-    return { url, status: response.ok };
-  } catch {
-    return { url, status: false };
-  } finally {
-    clearTimeout(timeout);
-  }
-}
-
-// Chia mảng lớn thành mảng con
-function chunkArray(array, size) {
-  const result = [];
-  for (let i = 0; i < array.length; i += size) {
-    result.push(array.slice(i, i + size));
-  }
-  return result;
-}
-
-async function checkURL(res) {
-  const rows = await getDataFromSheet([
-    "STT", "name", "idGroup", "group", "logo", "streamURL", "audioURL", "type"
-  ]);
-
-  const fptRows = rows.filter(r => r.idGroup === "vtv");
-  const chunkedRows = chunkArray(fptRows, 4); // Mỗi nhóm 4 URL → ~25 nhóm nếu 100 URL
-
-  // Tạo các hàm xử lý nhóm song song
-  const workers = chunkedRows.map(group => async () => {
-    const results = [];
-    for (const row of group) {
-      const result = await fastCheckURL(row.streamURL);
-      if (result.status) {
-        results.push({
-          STT: row.STT,
-          name: row.name,
-          idGroup: row.idGroup,
-          group: row.group,
-          logo: row.logo,
-          url: row.streamURL
-            ? customBase64Encode(row.streamURL)
-            : customBase64Encode("https://files.catbox.moe/ez6jnv.mp4")
+    try {
+        const response = await fetch(url, {
+            signal: controller.signal
         });
-      }
+        const ok = response.ok;
+        return {
+            url,
+            status: ok
+        };
+    } catch (error) {
+        console.error("Lỗi khi gọi API:", error.message);
+        return {
+            url,
+            status: false
+        };
+    } finally {
+        clearTimeout(timeout);
     }
-    return results;
-  });
-
-  // Chạy tất cả worker song song
-  const settled = await Promise.all(workers.map(fn => fn()));
-  const dataEND = settled.flat(); // Gộp tất cả kết quả
-
-  res.status(200).json(dataEND);
 }
-
+async function checkURL(res) {
+    const rows = await getDataFromSheet(["STT", "name", "idGroup", "group", "logo", "streamURL", "audioURL", "type"]);
+    const dataEND = []
+    for (const data of rows) {
+        if (data.idGroup === "FPTplay") {
+            const url = await getAPI(data.streamURL)
+                dataEND.push({
+                    STT: data.STT,
+                    name: data.name,
+                    idGroup: data.idGroup,
+                    group: data.group,
+                    logo: data.logo,
+                    url: data.streamURL === null ? customBase64Encode("https://files.catbox.moe/ez6jnv.mp4") : customBase64Encode(data.streamURL),
+                    status: url.status
+                });
+            
+        }
+    }
+    res.status(200).json(dataEND)
+}
