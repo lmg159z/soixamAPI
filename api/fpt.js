@@ -188,7 +188,7 @@ async function checkURL(res) {
     "STT", "name", "idGroup", "group", "logo", "streamURL", "audioURL", "type"
   ]);
 
-  const fptRows = rows.filter(r => r.idGroup === "FPTplay");
+  const fptRows = rows.filter(r => r.idGroup === "vtv");
   const chunkedRows = chunkArray(fptRows, 4); // Mỗi nhóm 4 URL → ~25 nhóm nếu 100 URL
 
   // Tạo các hàm xử lý nhóm song song
