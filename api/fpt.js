@@ -63,7 +63,7 @@ function customBase64Encode(text) {
   }
 
   return result;
-}
+}/*
 async function getAPI(url, timeoutMs = 7000) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), timeoutMs);
@@ -104,4 +104,51 @@ async function checkURL(res){
     }
   }
   res.status(200).json(dataEND)
+}*/
+async function getAPI(url, timeoutMs = 3000) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    const response = await fetch(url, { signal: controller.signal });
+    return { url, status: response.ok };
+  } catch (error) {
+    return { url, status: false };
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+async function checkURL(res) {
+  const rows = await getDataFromSheet([
+    "STT", "name", "idGroup", "group", "logo", "streamURL", "audioURL", "type"
+  ]);
+
+  const fptRows = rows.filter(r => r.idGroup === "FPTplay");
+
+  const results = await Promise.allSettled(
+    fptRows.map(row => getAPI(row.streamURL))
+  );
+
+  const dataEND = [];
+
+  for (let i = 0; i < results.length; i++) {
+    const result = results[i];
+
+    if (result.status === "fulfilled" && result.value.status === true) {
+      const data = fptRows[i];
+      dataEND.push({
+        STT: data.STT,
+        name: data.name,
+        idGroup: data.idGroup,
+        group: data.group,
+        logo: data.logo,
+        url: data.streamURL
+          ? customBase64Encode(data.streamURL)
+          : customBase64Encode("https://files.catbox.moe/ez6jnv.mp4")
+      });
+    }
+  }
+
+  res.status(200).json(dataEND);
 }
