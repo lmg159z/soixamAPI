@@ -88,33 +88,30 @@ function customBase64Encode(text) {
         clearTimeout(timeout);
     }
 }*/
-async function getAPI(url, timeoutMs = 4000) {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), timeoutMs);
-
+async function getAPI(url) {
   try {
     const response = await fetch(url, {
-      method: "HEAD", // chỉ lấy header, rất nhẹ
-      signal: controller.signal,
+      method: "GET",
       headers: {
         "User-Agent":
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/115.0.0.0 Safari/537.36",
-        "Accept": "*/*"
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36",
+        "Referer": "https://fptplay.vn/",
+        "Origin": "https://fptplay.vn",
+        "Accept": "*/*",
+        "Connection": "keep-alive"
       }
     });
 
-    return {
-      url,
-      status: response.status === 200
-    };
+    if (!response.ok) {
+      console.error(`❌ HTTP ${response.status} - ${url}`);
+      return { url, status: response.status };
+    }
+
+    console.log(`✅ OK - ${url}`);
+    return { url, status: response.status };
   } catch (error) {
-    console.error("Lỗi khi gọi API:", error.message);
-    return {
-      url,
-      status: false
-    };
-  } finally {
-    clearTimeout(timeout);
+    console.error(`💥 Lỗi khi lấy dữ liệu: ${error.message}`);
+    return { url, status: null };
   }
 }
 async function checkURL(res) {
