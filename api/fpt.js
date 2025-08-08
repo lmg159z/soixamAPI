@@ -88,25 +88,24 @@ function customBase64Encode(text) {
         clearTimeout(timeout);
     }
 }*/
-async function getAPI(url, timeoutMs = 7000) {
+async function getAPI(url, timeoutMs = 4000) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), timeoutMs);
 
   try {
     const response = await fetch(url, {
+      method: "HEAD", // chỉ lấy header, rất nhẹ
       signal: controller.signal,
       headers: {
-        // Giả lập trình duyệt Chrome
         "User-Agent":
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/115.0.0.0 Safari/537.36",
         "Accept": "*/*"
-      },
+      }
     });
 
-    const ok = response.ok;
     return {
       url,
-      status: ok
+      status: response.status === 200
     };
   } catch (error) {
     console.error("Lỗi khi gọi API:", error.message);
