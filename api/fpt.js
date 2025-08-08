@@ -65,7 +65,7 @@ function customBase64Encode(text) {
   return result;
 }
 
-async function getAPI(url, timeoutMs = 7000) {
+/*async function getAPI(url, timeoutMs = 7000) {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), timeoutMs);
 
@@ -87,6 +87,36 @@ async function getAPI(url, timeoutMs = 7000) {
     } finally {
         clearTimeout(timeout);
     }
+}*/
+async function getAPI(url, timeoutMs = 7000) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    const response = await fetch(url, {
+      signal: controller.signal,
+      headers: {
+        // Giả lập trình duyệt Chrome
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/115.0.0.0 Safari/537.36",
+        "Accept": "*/*"
+      },
+    });
+
+    const ok = response.ok;
+    return {
+      url,
+      status: ok
+    };
+  } catch (error) {
+    console.error("Lỗi khi gọi API:", error.message);
+    return {
+      url,
+      status: false
+    };
+  } finally {
+    clearTimeout(timeout);
+  }
 }
 async function checkURL(res) {
     const rows = await getDataFromSheet(["STT", "name", "idGroup", "group", "logo", "streamURL", "audioURL", "type"]);
