@@ -193,7 +193,8 @@ function getXSKTNow(data) {
       "mss": null,
       "url": i.url === null ? "" : customBase64Encode(i.url),
       "timeStart": i.timeStart,
-      "timeEnd": i.timeEnd
+      "timeEnd": i.timeEnd,
+      "type": i.type
       })
     }
     return {
@@ -237,7 +238,8 @@ function getXSKTNow(data) {
       "mss": null,
       "url": i.url === null ? "" : customBase64Encode(i.url),
       "timeStart": `${d}:${m}:${y}_${startTime}`,
-      "timeEnd": `${d}:${m}:${y}_${endTime}`
+      "timeEnd": `${d}:${m}:${y}_${endTime}`,
+      "type": i.type
     })
   }
 
