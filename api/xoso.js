@@ -208,36 +208,46 @@ function getXSKTNow(data) {
 
   // ===== Hàm lấy ngày mai =====
   function getTomorrowBlock(data, thuNow, timeSV) {
-    const thuList = ["T2","T3","T4","T5","T6","T7","CN"];
-    let idx = thuList.indexOf(thuNow);
-    let nextThu = thuList[(idx+1) % 7];
-    let tomorrowData = data.filter(item => item.thu === nextThu);
-    if (tomorrowData.length === 0) return { timeSV, timeStart: null, timeEnd: null, data: [] };
+  const thuList = ["T2","T3","T4","T5","T6","T7","CN"];
+  let idx = thuList.indexOf(thuNow);
+  let nextThu = thuList[(idx+1) % 7];
 
-    const minStart = Math.min(...tomorrowData.map(i => toSec(i.timeStart.split("_")[1])));
-    const group = tomorrowData.filter(i => toSec(i.timeStart.split("_")[1]) === minStart);
-    
-    const channels = []
-    for (const i of group){
-      channels.push({
+  // Tính ngày mai thực sự
+  const today = new Date();
+  today.setDate(today.getDate() + 1);
+  const d = String(today.getDate()).padStart(2, "0");
+  const m = String(today.getMonth() + 1).padStart(2, "0");
+  const y = today.getFullYear();
+
+  let tomorrowData = data.filter(item => item.thu === nextThu);
+  if (tomorrowData.length === 0) return { timeSV, timeStart: null, timeEnd: null, data: [] };
+
+  const minStart = Math.min(...tomorrowData.map(i => toSec(i.timeStart.split("_")[1])));
+  const group = tomorrowData.filter(i => toSec(i.timeStart.split("_")[1]) === minStart);
+
+  const channels = []
+  for (const i of group){
+    const startTime = i.timeStart.split("_")[1];
+    const endTime = i.timeEnd.split("_")[1];
+    channels.push({
       "thu": i.thu,
       "danhMuc": i.danhMuc,
       "kenh": i.kenh,
       "logo": i.logo === null ? "" : i.logo,
       "mss": null,
       "url": i.url === null ? "" : customBase64Encode(i.url),
-      "timeStart": i.timeStart,
-      "timeEnd": i.timeEnd
-      })
-    }
-    console.log(channels)
-    return {
-      timeSV,
-      timeStart: group[0].timeStart,
-      timeEnd: group[0].timeEnd,
-      data: channels
-    };
+      "timeStart": `${d}:${m}:${y}_${startTime}`,
+      "timeEnd": `${d}:${m}:${y}_${endTime}`
+    })
   }
+
+  return {
+    timeSV,
+    timeStart: channels[0].timeStart,
+    timeEnd: channels[0].timeEnd,
+    data: channels
+  };
+}
 }
 
 
