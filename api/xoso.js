@@ -5,7 +5,7 @@ export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   
   try {
-   const rows = await getDataFromSheet(["thu", "danhMuc", "kenh", "mss", "url", "timeStart", "timeEnd", "logo"]);
+   const rows = await getDataFromSheet(["thu", "danhMuc", "kenh", "mss", "url", "timeStart", "timeEnd", "logo", "type"]);
    
     res.status(200).json(getXSKTNow(rows));
   } catch (error) {
