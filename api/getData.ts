@@ -1,10 +1,10 @@
-// /api/proxy.ts
+// /api/getData.ts
 export const config = { runtime: "edge" };
 
-const ALLOW_ORIGIN = "*"; // có thể đổi sang domain của bạn để an toàn hơn
+const ALLOW_ORIGIN = "*"; // đổi thành domain của bạn nếu muốn an toàn hơn
 
 export default async function handler(req: Request): Promise<Response> {
-  // Xử lý CORS preflight
+  // Xử lý preflight (OPTIONS)
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders() });
   }
@@ -27,23 +27,42 @@ export default async function handler(req: Request): Promise<Response> {
     return json({ error: "Chỉ cho phép http/https" }, 400);
   }
 
-  // Chuẩn bị yêu cầu upstream (chỉ GET cho an toàn)
+  // Chọn method: mặc định GET, nếu ?t=post thì POST
+  const method = searchParams.get("t")?.toLowerCase() === "post" ? "POST" : "GET";
+
+  // Chuẩn bị request upstream
   const upstreamInit: RequestInit = {
-    method: "GET",
+    method,
     headers: new Headers(),
   };
 
-  // Truyền một số header hữu ích
+  // Forward body nếu là POST
+  if (method === "POST") {
+    upstreamInit.body = req.body;
+
+    // Forward Content-Type
+    const contentType = req.headers.get("content-type");
+    if (contentType) upstreamInit.headers!.set("content-type", contentType);
+
+    // Forward thêm các header quan trọng
+    const forwardHeaders = ["authorization", "x-api-key"];
+    forwardHeaders.forEach(h => {
+      const val = req.headers.get(h);
+      if (val) upstreamInit.headers!.set(h, val);
+    });
+  }
+
+  // Forward Accept nếu có
   const accept = req.headers.get("accept");
   if (accept) upstreamInit.headers!.set("accept", accept);
 
   try {
     const upstream = await fetch(targetURL.toString(), upstreamInit);
 
-    // Trả body stream + status, thêm CORS
+    // Copy response headers + thêm CORS
     const respHeaders = new Headers(upstream.headers);
     respHeaders.set("Access-Control-Allow-Origin", ALLOW_ORIGIN);
-    respHeaders.set("Access-Control-Allow-Methods", "GET,OPTIONS");
+    respHeaders.set("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
     respHeaders.set("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With");
 
     return new Response(upstream.body, {
@@ -56,10 +75,11 @@ export default async function handler(req: Request): Promise<Response> {
   }
 }
 
+// Helpers
 function corsHeaders(): HeadersInit {
   return {
     "Access-Control-Allow-Origin": ALLOW_ORIGIN,
-    "Access-Control-Allow-Methods": "GET,OPTIONS",
+    "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With",
     "Access-Control-Max-Age": "86400",
   };
