@@ -1,85 +1,93 @@
+// /api/get-sheet.js
 export default async function handler(req, res) {
   // ⚠️ CORS header để tránh lỗi từ frontend
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  const { type } = req.query;
-  // Xử lý preflight request
-  if (req.method === "OPTIONS") {
-    return res.status(200).end();
-  }
+
+  if (req.method === "OPTIONS") return res.status(200).end();
 
   try {
-    const rows = await getDataFromSheet(["STT","idGroup","group", "name", "logo", "classify"]);
-   switch (type){
-     case "TV":
-       phanLoai(rows,"TV", res)
-       break
-   case "TV_RA":
-       phanLoai(rows,"TV_RA", res)
-       break
-   }  
-    
-    
+    const rows = await getDataFromSheetAsKeyValue();
+
+
+
+    res.status(200).json(Object.values(classifyChannels(rows)));
   } catch (error) {
     console.error("Lỗi khi lấy dữ liệu:", error);
     res.status(500).json({ error: "Không thể lấy dữ liệu từ Google Sheet" });
   }
 }
 
-async function getDataFromSheet(allowedColumns = []) {
-  const url = `https://docs.google.com/spreadsheets/d/1hSEcXxxEkbgq8203f_sTKAi3ZNEnFNoBnr7f3fsfzYE/gviz/tq?gid=0&tqx=out:json`;
+async function getDataFromSheetAsKeyValue() {
+  const url = `https://docs.google.com/spreadsheets/d/1hSEcXxxEkbgq8203f_sTKAi3ZNEnFNoBnr7f3fsfzYE/gviz/tq?gid=2102567147&tqx=out:json`;
 
   const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
+  if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
   const text = await response.text();
   const jsonText = text.match(/(?<=setResponse\().*(?=\);)/s)?.[0];
-  if (!jsonText) {
-    throw new Error("Không tìm thấy dữ liệu JSON trong phản hồi");
-  }
+  if (!jsonText) throw new Error("Không tìm thấy dữ liệu JSON trong phản hồi");
 
   const raw = JSON.parse(jsonText);
-  const cols = raw.table.cols.map(col => col.label);
 
-  return raw.table.rows.map(row => {
+  // Lấy dữ liệu thô
+  const rows = raw.table.rows;
+
+  if (!rows || rows.length === 0) return [];
+
+  // Hàng đầu tiên là key
+  const keys = rows[0].c.map(cell => cell?.v ?? null);
+
+  // Các hàng còn lại là value
+  const data = rows.slice(1).map(row => {
     const obj = {};
     row.c.forEach((cell, i) => {
-      const colName = cols[i];
-      if (allowedColumns.includes(colName)) {
-        obj[colName] = cell ? cell.v : null;
-      }
+      obj[keys[i]] = cell?.v ?? null;
     });
     return obj;
   });
+
+  return data;
 }
 
 
-function phanLoai(rows,typePL, res){
-  let grouped = {};
-  rows.forEach(item => {
-  if (item.classify === typePL) {
-    if (!grouped[item.idGroup]) {
-      grouped[item.idGroup] = {
-        info: {
-          idGroup: item.idGroup,
-          group: item.group || item.idGroup // fallback nếu group rỗng
-        },
-        channel: []
-      };
-    }
 
-    grouped[item.idGroup].channel.push({
-      STT: item.STT,
-      name: item.name,
-      idGroup: item.idGroup,
-      group: item.group,
-      logo: item.logo === null ? "https://lmg159z.github.io/soixamTV/wordspage/image/logo/logoChannel.png" : item.logo
+function classifyChannels(channels) {
+  const result = [];
+  let sttCounter = 1;
+
+  const groupMap = {};
+
+  channels.forEach(channel => {
+    // Lấy danh sách nhóm, tách bằng '|', loại bỏ khoảng trắng thừa
+    const groups = channel.idGroup.split('|').map(g => g.trim());
+
+    groups.forEach(g => {
+      if (!groupMap[g]) {
+        groupMap[g] = {
+          info: {
+            "nameGroup": channel.nameGroup,
+            "idGroup": channel.idGroup,
+          },
+          channel: []
+        };
+        result.push(groupMap[g]);
+      }
+
+      // Thêm channel vào group tương ứng
+      groupMap[g].channel.push({
+        "id": channel.id,
+        "name": channel.name || channel.acronym,
+        "acronym": channel.acronym,
+        "nameGroup": channel.nameGroup,
+        "idGroup": channel.idGroup,
+        "logo": channel.logo || "",
+        "status": channel.status
+
+      });
     });
-  }
-});
-  const result = Object.values(grouped); 
-  res.status(200).json(result);
+  });
+
+  return result;
 }
