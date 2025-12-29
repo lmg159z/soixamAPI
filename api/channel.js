@@ -71,7 +71,7 @@ function channels(id, data) {
                     "schedule": item.schedule,
                     "drm": item.drm === "action" ? true : false,
                     "urlStream": encodeCustom(item.urlStream || ""),
-                    "origin": encodeCustom(item.origin || ""),
+                    "origin": item.origin || "",
                     "keyID": encodeCustom(item.keyID || ""),
                     "key": encodeCustom(item.key || ""),
                     "hex": item.hex || ""
