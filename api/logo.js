@@ -52,39 +52,38 @@ async function getDataFromSheetAsKeyValue() {
 }
 
 
-
 function classifyChannels(channels) {
   const result = [];
-  let sttCounter = 1;
-
   const groupMap = {};
 
-  channels.forEach(channel => {
-    // Lấy danh sách nhóm, tách bằng '|', loại bỏ khoảng trắng thừa
+  // ✅ CHỈ LẤY KÊNH LIVE
+  const liveChannels = channels.filter(
+    ch => String(ch.status).toLowerCase() === "live"
+  );
+
+  liveChannels.forEach(channel => {
     const groups = channel.idGroup.split('|').map(g => g.trim());
 
     groups.forEach(g => {
       if (!groupMap[g]) {
         groupMap[g] = {
           info: {
-            "nameGroup": channel.nameGroup,
-            "idGroup": channel.idGroup,
+            nameGroup: channel.nameGroup,
+            idGroup: channel.idGroup,
           },
           channel: []
         };
         result.push(groupMap[g]);
       }
 
-      // Thêm channel vào group tương ứng
       groupMap[g].channel.push({
-        "id": channel.id,
-        "name": channel.name || channel.acronym,
-        "acronym": channel.acronym,
-        "nameGroup": channel.nameGroup,
-        "idGroup": channel.idGroup,
-        "logo": channel.logo || "",
-        "status": channel.status
-
+        id: channel.id,
+        name: channel.name || channel.acronym,
+        acronym: channel.acronym,
+        nameGroup: channel.nameGroup,
+        idGroup: channel.idGroup,
+        logo: channel.logo || "",
+        status: channel.status
       });
     });
   });
