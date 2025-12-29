@@ -4,7 +4,7 @@ export default async function handler(req, res) {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-    const { id } = req.query;
+    
     if (req.method === "OPTIONS") return res.status(200).end();
 
     try {
@@ -12,7 +12,7 @@ export default async function handler(req, res) {
 
 
 
-        res.status(200).json(Object.values(channels(id, rows)));
+        res.status(200).json(Object.values(channels(rows)));
         // res.status(200).json(Object.values(rows));
     } catch (error) {
         console.error("Lỗi khi lấy dữ liệu:", error);
@@ -21,7 +21,7 @@ export default async function handler(req, res) {
 }
 
 async function getDataFromSheetAsKeyValue() {
-    const url = `https://docs.google.com/spreadsheets/d/1hSEcXxxEkbgq8203f_sTKAi3ZNEnFNoBnr7f3fsfzYE/gviz/tq?gid=2102567147&tqx=out:json`;
+    const url = `https://docs.google.com/spreadsheets/d/1hSEcXxxEkbgq8203f_sTKAi3ZNEnFNoBnr7f3fsfzYE/gviz/tq?gid=595761795&tqx=out:json`;
 
     const response = await fetch(url);
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
@@ -55,32 +55,21 @@ async function getDataFromSheetAsKeyValue() {
 
 
 
-function channels(id, data) {
-
+function channels(data) {
+    const arr = []
     for (const item of data) {
-        if (item.id === id) {
-            return [
-                {
-                    "id": item.id,
-                    "name": item.name || "",
-                    "acronym": item.acronym || "",
-                    "nameGroup": item.nameGroup || "",
-                    "idGroup": item.idGroup || "",
-                    "logo": item.logo || "",
-                    "status": item.status,
-                    "schedule": item.schedule,
-                    "drm": item.drm === "action" ? true : false,
-                    "urlStream": encodeCustom(item.urlStream || ""),
-                    "origin": encodeCustom(item.origin || ""),
-                    "keyID": encodeCustom(item.keyID || ""),
-                    "key": encodeCustom(item.key || ""),
-                    "hex": item.hex || ""
-                }
-            ];            // trả ra object tìm được
-        }
+        console.log(item)
+        arr.push({
+            id : item.id,
+            url: encodeCustom(item.url),
+            name: item.name
+        })
     }
-    return {};                // không tìm thấy
+    return arr;                // không tìm thấy
 }
+
+
+
 
 
 
