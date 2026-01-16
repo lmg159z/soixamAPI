@@ -83,6 +83,7 @@ function classifyChannels(channels) {
         nameGroup: channel.nameGroup,
         idGroup: channel.idGroup,
         logo: channel.logo || "",
+        thumb: channel.thumb || "",
         status: channel.status
       });
     });
