@@ -11,7 +11,7 @@ export default async function handler(req, res) {
         const rows = await getDataFromSheetAsKeyValue();
 
 
-
+        console.log(rows)
         res.status(200).json(Object.values(channels(id, rows)));
         // res.status(200).json(Object.values(rows));
     } catch (error) {
@@ -21,44 +21,45 @@ export default async function handler(req, res) {
 }
 
 async function getDataFromSheetAsKeyValue() {
-    const url = `https://docs.google.com/spreadsheets/d/1hSEcXxxEkbgq8203f_sTKAi3ZNEnFNoBnr7f3fsfzYE/gviz/tq?gid=2102567147&tqx=out:json`;
+  const url = `https://docs.google.com/spreadsheets/d/1hSEcXxxEkbgq8203f_sTKAi3ZNEnFNoBnr7f3fsfzYE/gviz/tq?gid=2102567147&tqx=out:json`;
 
-    const response = await fetch(url);
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
-    const text = await response.text();
-    const jsonText = text.match(/(?<=setResponse\().*(?=\);)/s)?.[0];
-    if (!jsonText) throw new Error("Không tìm thấy dữ liệu JSON trong phản hồi");
+  const text = await response.text();
+  const jsonText = text.match(/(?<=setResponse\().*(?=\);)/s)?.[0];
+  if (!jsonText) throw new Error("Không tìm thấy dữ liệu JSON trong phản hồi");
 
-    const raw = JSON.parse(jsonText);
+  const raw = JSON.parse(jsonText);
 
-    // Lấy dữ liệu thô
-    const rows = raw.table.rows;
+  // Lấy dữ liệu thô
+  const rows = raw.table.rows;
 
-    if (!rows || rows.length === 0) return [];
+  if (!rows || rows.length === 0) return [];
 
-    // Hàng đầu tiên là key
-    const keys = rows[0].c.map(cell => cell?.v ?? null);
+  // Hàng đầu tiên là key
+  const keys = rows[0].c.map(cell => cell?.v ?? null);
 
-    // Các hàng còn lại là value
-    const data = rows.slice(1).map(row => {
-        const obj = {};
-        row.c.forEach((cell, i) => {
-            obj[keys[i]] = cell?.v ?? null;
-        });
-        return obj;
+  // Các hàng còn lại là value
+  const data = rows.slice(1).map(row => {
+    const obj = {};
+    row.c.forEach((cell, i) => {
+      obj[keys[i]] = cell?.v ?? null;
     });
+    return obj;
+  });
 
-    return data;
+  return data;
 }
 
 
 
 
 function channels(id, data) {
-
+//   console.log(data)
     for (const item of data) {
         if (item.id === id) {
+            console.log(item.key)
             return [
                 {
                     "id": item.id,

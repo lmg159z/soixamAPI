@@ -84,6 +84,7 @@ function classifyChannels(channels) {
         idGroup: channel.idGroup,
         logo: channel.logo || "",
         thumb: channel.thumb || "",
+        watermark: channel.watermark || "",
         status: channel.status
       });
     });
