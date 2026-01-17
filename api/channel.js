@@ -68,6 +68,7 @@ function channels(id, data) {
                     "nameGroup": item.nameGroup || "",
                     "idGroup": item.idGroup || "",
                     "logo": item.logo || "",
+                    "watermark": item.watermark || "",
                     "status": item.status,
                     "schedule": item.schedule,
                     "drm": item.drm === "action" ? true : false,
