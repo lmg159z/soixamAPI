@@ -76,7 +76,7 @@ function channels(id, data) {
                     "origin": item.origin || "",
                     "keyID": encodeCustom(item.keyID || ""),
                     "key": encodeCustom(item.key || ""),
-                    "hex": item.hex || ""
+                    "license": encodeCustom(item.license || "")
                 }
             ];            // trả ra object tìm được
         }
