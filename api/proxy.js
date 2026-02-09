@@ -1,34 +1,24 @@
 export default async function handler(req, res) {
-  const { url, origin, referer } = req.query;
+  const { url } = req.query;
 
   if (!url) {
-    return res.status(400).json({
-      error: "Missing required parameter: url"
-    });
+    return res.status(400).send("Missing url");
   }
 
   try {
-    const response = await fetch(url, {
-      method: "GET",
-      redirect: "follow", // QUAN TRỌNG
+    const r = await fetch(url, {
+      redirect: "follow",
       headers: {
-        "User-Agent":
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
-        ...(origin && { Origin: origin }),
-        ...(referer && { Referer: referer }),
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
       },
     });
 
-    // Lấy URL cuối sau redirect
-    const finalUrl = response.url;
-res.setHeader("Access-Control-Allow-Origin", "*");
-res.redirect(finalUrl);
+    // Redirect trình duyệt sang url2
+    res.statusCode = 302;
+    res.setHeader("Location", r.url);
+    res.end();
 
-
-  } catch (err) {
-    res.status(500).json({
-      error: "Resolve failed",
-      message: err.message
-    });
+  } catch (e) {
+    res.status(500).send(e.message);
   }
 }
