@@ -909,10 +909,10 @@ function sortByStartTime(arr) {
 async function data(){
   const data_tv360 = await tv360()
   const data_onplus = await onplus()
-  const data_mytv = await mytv()
+  // const data_mytv = await mytv()
 
 
-  const data = [...data_tv360.data, ...data_onplus.data, ...data_mytv.data, ]
+  const data = [...data_tv360.data, ...data_onplus.data ]
 
   return {
     src: "",
