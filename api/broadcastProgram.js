@@ -705,9 +705,9 @@ const whiteListChannel = {
 
 
     const CTTH = await getAPI
-    ("https://andanh.site/proxyipvn.php?url=https%3A%2F%2Ftv360.vn%2Fpublic%2Fv1%2Fwatch-log%2Fget-recommend%3Fid%3Drcm_program_playing%26page%3Dhome%26itemType%3DLIVE_NOW%26boxType%3DRECOMMEND%26offset%3D0%26limit%3D2000")
+    ("https://re.ghiminh1.workers.dev/?url=https%3A%2F%2Ftv360.vn%2Fpublic%2Fv1%2Fwatch-log%2Fget-recommend%3Fid%3Drcm_program_playing%26page%3Dhome%26itemType%3DLIVE_NOW%26boxType%3DRECOMMEND%26offset%3D0%26limit%3D2000")
     const TT = await getAPI
-    ("https://andanh.site/proxyipvn.php?url=https%3A%2F%2Ftv360.vn%2Fpublic%2Fv1%2Fwatch-log%2Fget-recommend%3Fid%3Drcm_live_now%26page%3Dhome%26itemType%3DLIVE_NOW%26boxType%3DRECOMMEND%26offset%3D0%26limit%3D2000")
+    ("https://re.ghiminh1.workers.dev/?url=https%3A%2F%2Ftv360.vn%2Fpublic%2Fv1%2Fwatch-log%2Fget-recommend%3Fid%3Drcm_live_now%26page%3Dhome%26itemType%3DLIVE_NOW%26boxType%3DRECOMMEND%26offset%3D0%26limit%3D2000")
     const dataAPI = [...CTTH.data.content,...TT.data.content ]
 
     const data =  dataAPI
@@ -907,12 +907,12 @@ function sortByStartTime(arr) {
 
 
 async function data(){
-  // const data_tv360 = await tv360()
+  const data_tv360 = await tv360()
   const data_onplus = await onplus()
   const data_mytv = await mytv()
 
 
-  const data = [...data_onplus.data, ...data_mytv.data ]
+  const data = [...data_onplus.data, ...data_mytv.data, ...data_tv360.data ]
 
   return {
     src: "",
