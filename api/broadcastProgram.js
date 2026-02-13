@@ -912,7 +912,7 @@ async function data(){
   // const data_mytv = await mytv()
 
 
-  const data = [...data_tv360.data, ...data_onplus.data ]
+  const data = [...data_onplus.data ]
 
   return {
     src: "",
