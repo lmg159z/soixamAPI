@@ -716,7 +716,7 @@ const whiteListChannel = {
             id: `tv360-${i.id}`,
             name: i.name +  "|" + i.description,
             start_time: formatDateTime(i.beginTime),
-            over_time:  formatDateTime(i.beginTime),
+            over_time:  formatDateTime(i.endTime),
             thumbnail: i.coverImage,
             channel_id: whiteListChannel[i.itemId]?.id || i.itemId,
             channel_name: whiteListChannel[i.itemId]?.name || "",
@@ -853,6 +853,29 @@ function formatDate(input) {
   return `${dd}:${mm}:${yy}-${hh}:${min}`;
 }
 
+
+function checkTimeStatus(timeStart, timeEnd) {
+    // Hàm convert "YYYY-MM-DD HH:mm:ss" sang Date theo GMT+7
+    function parseGMT7(dateStr) {
+        // thêm +07:00 để JS hiểu đúng timezone
+        return new Date(dateStr.replace(" ", "T") + "+07:00");
+    }
+
+    const now = new Date(); // thời gian hiện tại (theo hệ thống)
+    
+    const start = parseGMT7(timeStart);
+    const end = parseGMT7(timeEnd);
+
+    if (now < start) {
+        return 0; // chưa tới
+    } else if (now >= start && now <= end) {
+        return 1; // đang diễn ra
+    } else {
+        return 2; // đã kết thúc
+    }
+}
+
+
  const data =  dataAPI.data.data
         .filter(i => Object.hasOwn(whiteListChannel, String(i.CHANNEL_ID)))
         .map(i => ({
@@ -863,8 +886,10 @@ function formatDate(input) {
             thumbnail: i.CONTENT_HOR_POSTER,
             channel_id: whiteListChannel[String(i.CHANNEL_ID)]?.id || "",
             channel_name: whiteListChannel[String(i.CHANNEL_ID)]?.name || "",
-            status:   matchValue(i.order_group, ["1-now", "2-future"], [1, 0])
+            status: checkTimeStatus(i.START_TIME, i.END_TIME)
         }));
+
+
 
 
 
