@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   try {
     const on = await data()
-    res.status(200).json(Object.values({ on }));
+    res.status(200).json(on);
     // res.status(200).json(Object.values(rows));
   } catch (error) {
     console.error("Lỗi khi lấy dữ liệu:", error);
@@ -31,6 +31,49 @@ async function getAPI(url) {
   }
 }
 
+
+async function getGoogleSheetData() {
+  const sheetId = '1hSEcXxxEkbgq8203f_sTKAi3ZNEnFNoBnr7f3fsfzYE';
+  const gid = '2134035673';
+  
+  // URL để export ra CSV (dễ xử lý hơn)
+  const url = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}`;
+
+  try {
+    const response = await fetch(url);
+    const csvText = await response.text();
+    
+    // Parse CSV thành JSON
+    const rows = csvText.split('\n').map(row => row.split(',')); // Lưu ý: Cách split này đơn giản, sẽ lỗi nếu nội dung ô có dấu phẩy
+    const headers = rows[0].map(h => h.trim().replace(/^"|"$/g, '')); // Xóa ngoặc kép thừa nếu có
+    
+    const jsonData = rows.slice(1).map(row => {
+      let obj = {};
+      row.forEach((cell, index) => {
+        if (headers[index]) {
+          // Xử lý cell (xóa ký tự lạ, ngoặc kép CSV)
+          obj[headers[index]] = cell.trim().replace(/^"|"$/g, '');
+        }
+      });
+      return obj;
+    }).filter(obj => Object.keys(obj).length > 0); // Lọc bỏ hàng rỗng
+
+    const output = {
+      src: "sheet",
+      data: jsonData
+    };
+
+    console.log(output);
+    return output;
+
+  } catch (error) {
+    console.error("Lỗi khi lấy dữ liệu:", error);
+  }
+}
+
+
+
+// ======================================================================/
 
 // function đổi thời gian 
 function formatDateGMT7(isoString) {
@@ -736,7 +779,7 @@ async function tv360() {
       .filter(i => !backListChannel.includes(i.itemId))
       .map(i => ({
         id: `tv360-${i.id}`,
-        name: i.name + "|" + i.description,
+        name: i.description,
         start_time: formatDateTime(i.beginTime),
         over_time:  formatDateTime(i.endTime),
         thumbnail: i.coverImage,
@@ -903,16 +946,6 @@ let data = []
   };
 }
 
-
-
-
-
-
-
-
-
-
-
 function sortByStartTime(arr) {
   function toTimestamp(str) {
     const [datePart, timePart] = str.split("-");
@@ -929,15 +962,13 @@ function sortByStartTime(arr) {
 
 
 
-
-
-
 async function data() {
   const data_tv360 = await tv360()
   const data_onplus = await onplus()
   const data_mytv = await mytv()
+  const data_sheet = await getGoogleSheetData()
 
-  console.log(data_tv360.data)
+  // console.log(data_tv360.data)
   const data = [...data_onplus.data, ...data_mytv.data, ...data_tv360.data]
   const src =[
   [data_tv360.src],
@@ -946,7 +977,9 @@ async function data() {
 
   return {
     src: src,
-    data: sortByStartTime(data)
+    broadCast: sortByStartTime(data),
+    liveThumB: data_sheet.data
+
   };
 }
 
