@@ -62,35 +62,30 @@ function matchValue(value, conditions, results) {
   return map[value] ?? null; // không có thì trả null
 }
 
-
 function checkTimeStatus(timeStart, timeEnd) {
-
-  function parseCustomFormat(dateStr) {
-    // Tách ngày và giờ
-    const [datePart, timePart] = dateStr.split("-");
-
-    const [day, month, yearShort] = datePart.split(":");
-    const [hour, minute] = timePart.split(":");
-
-    // Chuyển năm 2 số -> 4 số (2000+)
-    const year = 2000 + parseInt(yearShort);
-
-    // Tạo ISO string chuẩn GMT+7
-    const isoString = `${year}-${month}-${day}T${hour}:${minute}:00+07:00`;
-
-    return new Date(isoString);
+  // Hàm con: Parse chuỗi DD:MM:YY-HH:MM sang số (Timestamp) giả định
+  function parseToVnTimestamp(timeString) {
+    if (!timeString) return 0;
+    const parts = timeString.split('-'); 
+    if (parts.length !== 2) return 0;
+    const [d, m, y] = parts[0].split(':').map(Number);
+    const [h, min] = parts[1].split(':').map(Number);
+    // Luôn dùng Date.UTC để lấy mốc thời gian tuyệt đối, không phụ thuộc server
+    return Date.UTC(2000 + y, m - 1, d, h, min);
   }
 
-  const now = new Date();
+  const startMs = parseToVnTimestamp(timeStart);
+  const endMs = parseToVnTimestamp(timeEnd);
 
-  const start = parseCustomFormat(timeStart);
-  const end = parseCustomFormat(timeEnd);
+  // MẤU CHỐT Ở ĐÂY:
+  // Lấy giờ UTC hiện tại + 7 tiếng cứng. 
+  // Không quan tâm server đang ở Mỹ hay Singapore.
+  const nowVnMs = Date.now() + (7 * 3600000); 
 
-  if (now < start) return 0;       // chưa tới
-  if (now <= end) return 1;        // đang diễn ra
-  return 2;                        // đã kết thúc
+  if (nowVnMs < startMs) return 0;
+  if (nowVnMs >= startMs && nowVnMs <= endMs) return 1;
+  return 2;
 }
-
 
 
 
@@ -743,11 +738,11 @@ async function tv360() {
         id: `tv360-${i.id}`,
         name: i.name + "|" + i.description,
         start_time: formatDateTime(i.beginTime),
-        over_time: formatDateTime(i.endTime),
+        over_time:  formatDateTime(i.endTime),
         thumbnail: i.coverImage,
         channel_id: whiteListChannel[i.itemId]?.id || i.itemId,
         channel_name: whiteListChannel[i.itemId]?.name || "",
-        status: checkTimeStatus(i.beginTime, i.endTime)
+        status: checkTimeStatus(formatDateTime(i.beginTime), formatDateTime(i.endTime))
       }));
   }
 
@@ -891,7 +886,7 @@ let data = []
         thumbnail: i.CONTENT_HOR_POSTER,
         channel_id: whiteListChannel[String(i.CHANNEL_ID)]?.id || "",
         channel_name: whiteListChannel[String(i.CHANNEL_ID)]?.name || "",
-        status: checkTimeStatus(String(i.START_TIME), String(i.END_TIME))
+        status: checkTimeStatus(formatDate(i.START_TIME), formatDate(i.END_TIME))
       }));
   }
 
