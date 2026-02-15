@@ -1,4 +1,6 @@
+
 export default async function handler(req, res) {
+    // 1. Cấu hình CORS
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type");
@@ -9,15 +11,36 @@ export default async function handler(req, res) {
 
     try {
         const { id } = req.query;
-        const rows = await ALLData();
+        
+        // 2. Lấy dữ liệu
+        const rows = await ALLData(); 
+        // Giả sử rows trả về { data: [...] } như dữ liệu mẫu của bạn
+        // Nếu ALLData() trả về mảng trực tiếp thì sửa thành const dataList = rows;
+        const dataList = rows.data || []; 
 
+        // TRƯỜNG HỢP 1: Không có ID -> Trả về toàn bộ JSON
         if (!id) {
             return res.status(200).json(rows);
         }
 
-        const data = rows.data.find(item => item.id == id) || null;
+        // TRƯỜNG HỢP 2: ID là "iptv" -> Trả về file M3U (dạng text)
+        if (id === "iptv") {
+            const m3uContent = generateM3U(dataList);
+            
+            // Quan trọng: Set header là text/plain hoặc application/x-mpegurl để trình duyệt hiểu
+            res.setHeader("Content-Type", "text/plain; charset=utf-8");
+            return res.status(200).send(m3uContent); // Dùng .send() cho text
+        }
 
-        return res.status(200).json(data);
+        // TRƯỜNG HỢP 3: ID là số (hoặc string khác) -> Tìm item và trả về JSON
+        // Tìm item có id trùng khớp
+        const matchItem = dataList.find(item => item.id == id);
+        
+        if (matchItem) {
+            return res.status(200).json(matchItem);
+        } else {
+            return res.status(404).json({ error: "Không tìm thấy trận đấu" });
+        }
 
     } catch (error) {
         console.error("Lỗi khi lấy dữ liệu:", error);
@@ -26,7 +49,6 @@ export default async function handler(req, res) {
         });
     }
 }
-
 
 
 
@@ -105,7 +127,7 @@ async function ALLData() {
             getID.data.map(async (i) => {
                 try {
                     const data = await getAPI(
-                        `https://apigw.bunchatv2.com/sport/matches?category_id=${i.id}&page=1&page_size=20&status=100&sort=hot&start_time=${time.newTime}&end_time=${time.backTime}&withfollow=binhluan`
+                        `https://apigw.bunchatv2.com/sport/matches?category_id=${i.id}&page=1&page_size=100&status=100&sort=hot&start_time=${time.newTime}&end_time=${time.backTime}`
                     );
 
                     // Kiểm tra có phải mảng và có phần tử
@@ -143,3 +165,50 @@ async function ALLData() {
 
 
 
+
+
+
+function generateM3U(arr) {
+    // Header bắt buộc của file M3U
+    let m3uList = "#EXTM3U\n";
+    
+    // Logo cố định theo yêu cầu
+    const logoUrl = "http://127.0.0.1:5501/media/logo/SXTV.png";
+
+    arr.forEach(match => {
+        // Lấy thông tin cơ bản
+        const homeName = match.home_team ? match.home_team.name : "Unknown Home";
+        const awayName = match.away_team ? match.away_team.name : "Unknown Away";
+        const time = match.match_time;
+        const leagueName = match.league ? match.league.name : "Unknown League";
+
+        // Tạo tên hiển thị chuẩn
+        // Định dạng: LIVE | Tên Đội 1 vs Đội 2 | Thời gian
+        const baseTitle = `LIVE | ${homeName} vs ${awayName} | ${time}`;
+
+        // 1. Xử lý Main Stream Link (stream_link)
+        if (match.stream_link && match.stream_link.trim() !== "") {
+            // Kiểm tra ngoại lệ: bỏ qua nếu link chứa "ytb"
+            if (!match.stream_link.includes("ytb")) {
+                m3uList += `#EXTINF:-1 tvg-logo="${logoUrl}" group-title="${leagueName}",${baseTitle} (Main)\n`;
+                m3uList += `${match.stream_link}\n`;
+            }
+        }
+
+        // 2. Xử lý Commentary Links (commentary_links)
+        if (match.commentary_links && Array.isArray(match.commentary_links)) {
+            match.commentary_links.forEach((comItem, index) => {
+                const link = comItem.link;
+                
+                // Kiểm tra link tồn tại và không chứa "ytb"
+                if (link && link.trim() !== "" && !link.includes("ytb")) {
+                    // Đặt tên cho các link phụ, thêm số thứ tự để không bị trùng tên
+                    m3uList += `#EXTINF:-1 tvg-logo="${logoUrl}" group-title="${leagueName}",${baseTitle} (VIP ${index + 1})\n`;
+                    m3uList += `${link}\n`;
+                }
+            });
+        }
+    });
+
+    return m3uList;
+}
