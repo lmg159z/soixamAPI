@@ -63,7 +63,6 @@ async function getGoogleSheetData() {
       data: jsonData
     };
 
-    console.log(output);
     return output;
 
   } catch (error) {
@@ -135,10 +134,10 @@ function checkTimeStatus(timeStart, timeEnd) {
 
 async function onplus() {
   const backListChannel = [
-    "https://onsportlive.vtvcab.vn/hls/ONQUOCPHONG_CL/index.m3u8", // => qpvn
-    "https://onsportlive.vtvcab.vn/hls/ONANTV_CL/index.m3u8", // => antv
-    "https://livevlive.vtvcab.vn/hls/VTV1_HD_CL/index.m3u8", // => vtv1
-    "https://cdn.vtvcab.vn/hls/OS_VTV5/index.m3u8", // => vtv5
+    "https://onsportlive.vtvcab.vn/hls/ONQUOCPHONG_CL", // => qpvn
+    "https://onsportlive.vtvcab.vn/hls/ONANTV_CL", // => antv
+    "VTV1_HD_CL", // => vtv1
+    "OS_VTV5", // => vtv5
     "eddd7b89-1a5e-44ca-98f3-d6aa993e0bf9", //  => sctv15
     "a595913f-5b14-42ef-9958-74aa993e0bf9", //  => sctv17
     "d210302f-b013-41e4-8b16-ecaa993e0bf9", //  => htvkey
@@ -146,74 +145,91 @@ async function onplus() {
 
   const whiteListChannel = {
 
-    "https://livevlive.vtvcab.vn/hls/OS_BONGDA_HD/index.m3u8": {
+    "OS_BONGDA_HD": {
       id: "onfootball",
       name: "ON Football"
     },
-    "https://livevlive.vtvcab.vn/hls/OS_THETHAO_TINTUC_HD/index.m3u8": {
+    "OS_THETHAO_TINTUC_HD": {
       id: "onsportsnews",
       name: "ON Sportsnews"
     },
-    "https://livevlive.vtvcab.vn/hls/OS_THETHAO_HD/index.m3u8": {
+    "OS_THETHAO_HD": {
       id: "onsports",
       name: "ON Sports"
     },
-    "https://livevlive.vtvcab.vn/hls/OS_HAY_TV/index.m3u8": {
+    "OS_HAY_TV": {
       id: "onsportsplus",
       name: "ON Sportsplus"
     },
-    "https://livevlive.vtvcab.vn/hls/OS_THETHAO_GOLF_HD/index.m3u8": {
+    "OS_THETHAO_GOLF_HD": {
       id: "ongolf",
       name: "ON Golf"
     },
-    "https://cdn.vtvcab.vn/hls/OS_ONSPORT1/index.m3u8": {
+    "OS_ONSPORT1": {
       id: "onsport1",
       name: "ONSport 1"
     },
-    "https://livevlive.vtvcab.vn/hls/OS_ONSPORT1/index.m3u8": {
-      id: "onsport1",
-      name: "ONSport 1"
-    },
-    "https://cdn.vtvcab.vn/hls/OS_ONSPORT2/index.m3u8": {
+    "OS_ONSPORT2": {
       id: "onsport2",
       name: "ONSport 2"
     },
-    "https://livevlive.vtvcab.vn/hls/OS_ONSPORT3/index.m3u8": {
+    "OS_ONSPORT3": {
       id: "onsport3",
       name: "ONSport 3"
     },
-    "https://cdn.vtvcab.vn/hls/OS_ONSPORT4/index.m3u8": {
+    "OS_ONSPORT4": {
       id: "onsport4",
       name: "ONSport 4"
     },
-    "https://cdn.vtvcab.vn/hls/OS_ONSPORT5/index.m3u8": {
+    "OS_ONSPORT5": {
       id: "onsport5",
       name: "ONSport 5"
     },
-    "https://cdn.vtvcab.vn/hls/OS_ONSPORT6/index.m3u8": {
+    "OS_ONSPORT6": {
       id: "onsport6",
       name: "ONSport 6"
     },
-    "https://cdn.vtvcab.vn/hls/OS_ONSPORT7/index.m3u8": {
+    "OS_ONSPORT7": {
       id: "onsport7",
       name: "ONSport 7"
     },
-    "https://cdn.vtvcab.vn/hls/OS_ONSPORT8/index.m3u8": {
+    "OS_ONSPORT8": {
       id: "onsport8",
       name: "ONSport 8"
     },
-    "https://cdn.vtvcab.vn/hls/OS_ONSPORT9/index.m3u8": {
+    "OS_ONSPORT9": {
       id: "onsport9",
       name: "ONSport 9"
     },
-    "https://cdn.vtvcab.vn/hls/OS_ONSPORT10/index.m3u8": {
+    "OS_ONSPORT10": {
       id: "onplus10",
       name: "ONSport 10"
     },
-    "https://cdn.vtvcab.vn/hls/SKTTONSPORT11/index.m3u8": {
+    "SKTTONSPORT11": {
       id: "onsport11",
       name: "ONSport 11"
     },
+    "SKTTONSPORT12": {
+      id: "onsport12",
+      name: "ONSport 12"
+    },
+    "SKTTONSPORT13": {
+      id: "onsport13",
+      name: "ONSport 13"
+    },
+    "SKTTONSPORT14": {
+      id: "onsport14",
+      name: "ONSport 14"
+    },
+    "SKTTONSPORT15": {
+      id: "onsport15",
+      name: "ONSport 15"
+    },
+    "SKTTONSPORT16": {
+      id: "onsport16",
+      name: "ONSport 16"
+    },
+    
 
   }
 
@@ -221,18 +237,22 @@ async function onplus() {
 
   const dataAPI = await getAPI("https://re.ghiminh1.workers.dev/?url=https://tv-web.api.vinasports.com.vn/api/v2/publish/see-more/events/2")
   let data = [];
+function getBetweenSlash(url) {
+  const parts = url.split('/');
+  return parts[4]; 
+}
 
   if (Array.isArray(dataAPI.data) && dataAPI.data.length > 0) {
     data = dataAPI.data
-      .filter(i => !backListChannel.includes(i.url) && i.url !== "")
+      .filter(i => !backListChannel.includes(getBetweenSlash(i.url)) && getBetweenSlash(i.url) !== "")
       .map(i => ({
         id: `onplus-${i.id}`,
         name: i.name,
         start_time: formatDateGMT7(i.start_time),
         over_time: formatDateGMT7(i.over_time),
         thumbnail: i.thumbnail,
-        channel_id: whiteListChannel[i.url]?.id || "",
-        channel_name: whiteListChannel[i.url]?.name || "",
+        channel_id: whiteListChannel[getBetweenSlash(i.url)]?.id || "",
+        channel_name: whiteListChannel[getBetweenSlash(i.url)]?.name || "",
         status: matchValue(i.status, ["live", "not_started"], [1, 0])
       }));
   }
@@ -968,7 +988,7 @@ async function data() {
   const data_mytv = await mytv()
   const data_sheet = await getGoogleSheetData()
 
-  // console.log(data_tv360.data)
+  console.log(data_onplus.data)
   const data = [...data_onplus.data, ...data_mytv.data, ...data_tv360.data]
   const src =[
   [data_tv360.src],

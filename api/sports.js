@@ -97,21 +97,29 @@ function getTimeObject() {
 }
 
 
-function convertToVNFormat(isoString) {
-    // Tạo date từ UTC
-    const date = new Date(isoString);
+function convertToGMT7Format(isoString) {
+    // Tạo Date từ ISO (ISO có Z => luôn là UTC chuẩn)
+    const utc = new Date(isoString);
+
+    // Lấy timestamp tuyệt đối (không phụ thuộc timezone máy)
+    const utcTimestamp = utc.getTime();
 
     // Cộng thêm 7 giờ (GMT+7)
-    const vnTime = new Date(date.getTime() + (7 * 60 * 60 * 1000));
+    const gmt7Timestamp = utcTimestamp + (7 * 60 * 60 * 1000);
 
-    const day = String(vnTime.getDate()).padStart(2, '0');
-    const month = String(vnTime.getMonth() + 1).padStart(2, '0');
-    const year = String(vnTime.getFullYear()).slice(-2);
-    const hours = String(vnTime.getHours()).padStart(2, '0');
-    const minutes = String(vnTime.getMinutes()).padStart(2, '0');
+    // Tạo lại Date từ timestamp mới
+    const gmt7 = new Date(gmt7Timestamp);
+
+    // LUÔN dùng getUTC* để tránh lệch môi trường
+    const day = String(gmt7.getUTCDate()).padStart(2, '0');
+    const month = String(gmt7.getUTCMonth() + 1).padStart(2, '0');
+    const year = String(gmt7.getUTCFullYear()).slice(-2);
+    const hours = String(gmt7.getUTCHours()).padStart(2, '0');
+    const minutes = String(gmt7.getUTCMinutes()).padStart(2, '0');
 
     return `${day}:${month}:${year}-${hours}:${minutes}`;
 }
+
 
 
 function getObjectById(arr, id) {
@@ -130,14 +138,16 @@ async function ALLData() {
                         `https://apigw.bunchatv2.com/sport/matches?category_id=${i.id}&page=1&page_size=100&status=100&sort=hot&start_time=${time.newTime}&end_time=${time.backTime}`
                     );
 
+                    console.log(`https://apigw.bunchatv2.com/sport/matches?category_id=${i.id}&page=1&page_size=100&status=100&sort=hot&start_time=${time.newTime}&end_time=${time.backTime}`)
+
                     // Kiểm tra có phải mảng và có phần tử
                     if (Array.isArray(data?.data) && data.data.length > 0) {
                         // return data.data[0];
                         return data.data.map(i => {
                             return {
                                 id: i.id,
-                                match_time: convertToVNFormat(i.match_time),
-                                status: i.status,
+                                match_time: convertToGMT7Format(i.match_time),
+                                status: checkTimeGMT7(convertToGMT7Format(i.match_time))   === 2 &  i.stream_link === "" ? 3 : 2,
                                 stream_link: i.stream_link,
                                 commentary_links: i.commentary_links,
                                 league: i.league,
@@ -158,7 +168,7 @@ async function ALLData() {
     ).filter(Boolean); // loại null
     return {
         src: "bunchatv",
-        data: await Promise.all(ALL.flat())
+        data:sortByNearestTime( await Promise.all(ALL.flat()))
     }
 
 }
@@ -211,4 +221,58 @@ function generateM3U(arr) {
     });
 
     return m3uList;
+}
+
+
+
+
+
+function checkTimeGMT7(inputTime) {
+    // ---- 1. Lấy thời gian hiện tại theo GMT+7 ----
+    const now = new Date();
+    const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+    const nowGMT7 = new Date(utc + (7 * 60 * 60000));
+
+    // ---- 2. Parse input DD:MM:YY-HH:MM ----
+    const [datePart, timePart] = inputTime.split("-");
+    const [day, month, year] = datePart.split(":").map(Number);
+    const [hour, minute] = timePart.split(":").map(Number);
+
+    const fullYear = year < 100 ? 2000 + year : year;
+
+    // Tạo thời gian mục tiêu theo GMT+7
+    const target = new Date(
+        Date.UTC(fullYear, month - 1, day, hour - 7, minute)
+    );
+
+    // ---- 3. Tính chênh lệch phút ----
+    const diffMinutes = (target - nowGMT7) / 60000;
+
+    // ---- 4. Logic trả kết quả ----
+    if (diffMinutes > 20) return 0;
+    if (diffMinutes > 0 && diffMinutes <= 20) return 1;
+    return 2;
+}
+
+
+
+
+function parseMatchTime(match_time) {
+    // match_time: "DD:MM:YY-HH:MM"
+    const [datePart, timePart] = match_time.split("-")
+    const [day, month, year] = datePart.split(":").map(Number)
+    const [hour, minute] = timePart.split(":").map(Number)
+
+    // year dạng 2 số → convert thành 20xx
+    const fullYear = 2000 + year
+
+    return new Date(fullYear, month - 1, day, hour, minute)
+}
+
+function sortByNearestTime(arr) {
+    return arr.sort((a, b) => {
+        const timeA = parseMatchTime(a.match_time).getTime()
+        const timeB = parseMatchTime(b.match_time).getTime()
+        return timeA - timeB   // gần → xa
+    })
 }
