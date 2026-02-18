@@ -144,10 +144,11 @@ async function ALLData() {
                     if (Array.isArray(data?.data) && data.data.length > 0) {
                         // return data.data[0];
                         return data.data.map(i => {
+                            const status = getMatchStatus(convertToGMT7Format(i.match_time)) === 0 ? 0 : (i.stream_link === "" ? 3 : 2)
                             return {
                                 id: i.id,
                                 match_time: convertToGMT7Format(i.match_time),
-                                status: checkTimeGMT7(convertToGMT7Format(i.match_time))   === 2 &  i.stream_link === "" ? 3 : 2,
+                                status: status,
                                 stream_link: i.stream_link,
                                 commentary_links: i.commentary_links,
                                 league: i.league,
@@ -227,33 +228,48 @@ function generateM3U(arr) {
 
 
 
-function checkTimeGMT7(inputTime) {
-    // ---- 1. Lấy thời gian hiện tại theo GMT+7 ----
-    const now = new Date();
-    const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
-    const nowGMT7 = new Date(utc + (7 * 60 * 60000));
+function getMatchStatus(timeStr) {
+    // Input format: "DD:MM:YY-HH:MM" (Ví dụ: "19:02:26-07:30")
+    if (!timeStr) return 0;
 
-    // ---- 2. Parse input DD:MM:YY-HH:MM ----
-    const [datePart, timePart] = inputTime.split("-");
-    const [day, month, year] = datePart.split(":").map(Number);
-    const [hour, minute] = timePart.split(":").map(Number);
+    try {
+        // 1. Cắt chuỗi
+        const parts = timeStr.split('-');
+        const dPart = parts[0].split(':'); // [19, 02, 26]
+        const tPart = parts[1].split(':'); // [07, 30]
 
-    const fullYear = year < 100 ? 2000 + year : year;
+        const day = parseInt(dPart[0], 10);
+        const month = parseInt(dPart[1], 10) - 1; // Tháng trong JS bắt đầu từ 0
+        const year = 2000 + parseInt(dPart[2], 10); // "26" -> 2026
+        const hour = parseInt(tPart[0], 10);
+        const minute = parseInt(tPart[1], 10);
 
-    // Tạo thời gian mục tiêu theo GMT+7
-    const target = new Date(
-        Date.UTC(fullYear, month - 1, day, hour - 7, minute)
-    );
+        // 2. Tính Timestamp của trận đấu (Giả định input là GMT+7)
+        // Date.UTC trả về giờ Quốc tế, ta trừ 7 tiếng để ép nó hiểu số giờ input là giờ VN
+        const matchTimeMs = Date.UTC(year, month, day, hour, minute) - (7 * 60 * 60 * 1000);
 
-    // ---- 3. Tính chênh lệch phút ----
-    const diffMinutes = (target - nowGMT7) / 60000;
+        // 3. Lấy Timestamp hiện tại
+        const nowMs = Date.now();
 
-    // ---- 4. Logic trả kết quả ----
-    if (diffMinutes > 20) return 0;
-    if (diffMinutes > 0 && diffMinutes <= 20) return 1;
-    return 2;
+        // 4. Logic kiểm tra
+        // Ngưỡng bắt đầu hiện số 2 là: Trước trận đấu 20 phút
+        const twentyMinutesMs = 20 * 60 * 1000;
+        const triggerTime = matchTimeMs - twentyMinutesMs;
+
+        // Nếu hiện tại < thời gian kích hoạt (tức là còn sớm, chưa đến lúc)
+        if (nowMs < triggerTime) {
+            return 0; 
+        } 
+        
+        // Nếu hiện tại >= thời gian kích hoạt (bao gồm cả đang đá hoặc đá xong)
+        // Yêu cầu: "từ lúc tới ... đến sau thời gian hiện tại" -> Return 2
+        return 2;
+
+    } catch (e) {
+        console.error("Lỗi format ngày tháng:", e);
+        return 0;
+    }
 }
-
 
 
 
