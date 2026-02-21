@@ -244,7 +244,7 @@ function getBetweenSlash(url) {
 
   if (Array.isArray(dataAPI.data) && dataAPI.data.length > 0) {
     data = dataAPI.data
-      .filter(i => !backListChannel.includes(getBetweenSlash(i.url)) && getBetweenSlash(i.url) !== "")
+      .filter(i => !backListChannel.includes(getBetweenSlash(i.url)) && i.url !== "")
       .map(i => ({
         id: `onplus-${i.id}`,
         name: i.name,
@@ -263,7 +263,7 @@ function getBetweenSlash(url) {
   };
 
 }
-
+// https://webapi.mytv.vn/api/v1/home/cate-info/chuong-trinh-truyen-hinh
 
 async function tv360() {
   const backListChannel = [
@@ -775,15 +775,15 @@ async function tv360() {
       "name": "TV360Live"
     },
     "9887": {
-      "id": "TV360p9",
+      "id": "tv360p9",
       "name": "TV360p9"
     },
     "9957": {
-      "id": "TV360p10",
+      "id": "tv360p10",
       "name": "TV360p10"
     },
     "9958": {
-      "id": "TV360p11",
+      "id": "tv360p11",
       "name": "TV360p11"
     }
   };
@@ -816,10 +816,19 @@ async function tv360() {
   }
 }
 
-async function mytv(page = 1, num = 4000) {
+async function mytv(page = 1, num = 20) {
   const url = `https://webapi.mytv.vn/api/v1/home/cate-info/su-kien-truc-tiep?page=${page}&num=${num}`;
-
-  const response = await fetch(url, {
+  const url2 = `https://webapi.mytv.vn/api/v1/home/cate-info/chuong-trinh-truyen-hinh?page=${page}&num=${num}`;
+  const response1 = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Origin": "https://mytv.com.vn",
+      "Referer": "https://mytv.com.vn/",
+      "User-Agent": "Mozilla/5.0",
+      "Accept": "application/json, text/plain, */*"
+    }
+  });
+  const response2 = await fetch(url2, {
     method: "GET",
     headers: {
       "Origin": "https://mytv.com.vn",
@@ -829,11 +838,14 @@ async function mytv(page = 1, num = 4000) {
     }
   });
 
-  if (!response.ok) {
-    throw new Error(`HTTP error ${response.status}`);
+  if (!response1.ok && !response2.ok  ) {
+    throw new Error(`HTTP error ${response1.status}${response2.status}`);
   }
 
-  const dataAPI = await response.json();
+
+  const API1 = await response1.json();
+  const API2 = await response2.json();
+  const dataAPI = [...API1.data.data, ...API2.data.data]
 
 
   const whiteListChannel = {
@@ -913,15 +925,7 @@ async function mytv(page = 1, num = 4000) {
     "829": {
       id: "sctv22",
       name: "SCTV22 SSPORT1"
-    },
-    "632": {
-      id: "spotv",
-      name: "SPOTV"
-    },
-    "633": {
-      id: "spotv2",
-      name: "SPOTV2"
-    },
+    }
 
   }
 
@@ -937,9 +941,9 @@ async function mytv(page = 1, num = 4000) {
     return `${dd}:${mm}:${yy}-${hh}:${min}`;
   }
 let data = []
-  if (Array.isArray(dataAPI.data.data) && dataAPI.data.data.length > 0) {
+  if (Array.isArray(dataAPI) && dataAPI.length > 0) {
   
-     data = dataAPI.data.data
+     data = dataAPI
       .filter(i => Object.hasOwn(whiteListChannel, String(i.CHANNEL_ID)))
       .map(i => ({
         id: `mytv-${i.CONTENT_ID}`,
