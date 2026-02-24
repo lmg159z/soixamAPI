@@ -138,6 +138,7 @@ async function onplus() {
     "https://onsportlive.vtvcab.vn/hls/ONANTV_CL", // => antv
     "VTV1_HD_CL", // => vtv1
     "OS_VTV5", // => vtv5
+    "INFO_TV_CL", // => VTV7
     "eddd7b89-1a5e-44ca-98f3-d6aa993e0bf9", //  => sctv15
     "a595913f-5b14-42ef-9958-74aa993e0bf9", //  => sctv17
     "d210302f-b013-41e4-8b16-ecaa993e0bf9", //  => htvkey
@@ -202,7 +203,7 @@ async function onplus() {
       name: "ONSport 9"
     },
     "OS_ONSPORT10": {
-      id: "onplus10",
+      id: "onsport10",
       name: "ONSport 10"
     },
     "SKTTONSPORT11": {

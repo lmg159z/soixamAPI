@@ -184,7 +184,7 @@ function generateM3U(arr) {
     let m3uList = "#EXTM3U\n";
     
     // Logo cố định theo yêu cầu
-    const logoUrl = "http://127.0.0.1:5501/media/logo/SXTV.png";
+    const logoUrl = "https://sxtv.andanh.site/media/logo/SXTV.png";
 
     arr.forEach(match => {
         // Lấy thông tin cơ bản
@@ -195,13 +195,14 @@ function generateM3U(arr) {
 
         // Tạo tên hiển thị chuẩn
         // Định dạng: LIVE | Tên Đội 1 vs Đội 2 | Thời gian
-        const baseTitle = `LIVE | ${homeName} vs ${awayName} | ${time}`;
+        const baseTitle = `${homeName} vs ${awayName} | ${time} | ${leagueName}`;
+        
 
         // 1. Xử lý Main Stream Link (stream_link)
         if (match.stream_link && match.stream_link.trim() !== "") {
             // Kiểm tra ngoại lệ: bỏ qua nếu link chứa "ytb"
             if (!match.stream_link.includes("ytb")) {
-                m3uList += `#EXTINF:-1 tvg-logo="${logoUrl}" group-title="${leagueName}",${baseTitle} (Main)\n`;
+                m3uList += `#EXTINF:-1 tvg-logo="${logoUrl}" group-title="${leagueName}",Main | ${baseTitle} \n`;
                 m3uList += `${match.stream_link}\n`;
             }
         }
@@ -214,7 +215,7 @@ function generateM3U(arr) {
                 // Kiểm tra link tồn tại và không chứa "ytb"
                 if (link && link.trim() !== "" && !link.includes("ytb")) {
                     // Đặt tên cho các link phụ, thêm số thứ tự để không bị trùng tên
-                    m3uList += `#EXTINF:-1 tvg-logo="${logoUrl}" group-title="${leagueName}",${baseTitle} (VIP ${index + 1})\n`;
+                    m3uList += `#EXTINF:-1 tvg-logo="${logoUrl}" group-title="${leagueName}",(FEED ${index + 1}) | ${baseTitle} \n`;
                     m3uList += `${link}\n`;
                 }
             });
