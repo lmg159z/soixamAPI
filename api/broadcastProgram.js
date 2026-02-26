@@ -30,8 +30,6 @@ async function getAPI(url) {
     return null;
   }
 }
-
-
 async function getGoogleSheetData() {
   const sheetId = '1hSEcXxxEkbgq8203f_sTKAi3ZNEnFNoBnr7f3fsfzYE';
   const gid = '2134035673';
@@ -69,7 +67,6 @@ async function getGoogleSheetData() {
     console.error("Lỗi khi lấy dữ liệu:", error);
   }
 }
-
 
 
 // ======================================================================/
@@ -988,25 +985,52 @@ function sortByStartTime(arr) {
 
 
 async function data() {
-  const data_tv360 = await tv360()
-  const data_onplus = await onplus()
-  const data_mytv = await mytv()
-  const data_sheet = await getGoogleSheetData()
+  // 1. Chạy tất cả các hàm cùng một lúc (Song song)
+  // Promise.allSettled sẽ đợi tất cả chạy xong dù có lỗi hay thành công
+  const results = await Promise.allSettled([
+    tv360(),
+    onplus(),
+    mytv(),
+    getGoogleSheetData()
+  ]);
 
-  console.log(data_onplus.data)
-  const data = [...data_onplus.data, ...data_mytv.data, ...data_tv360.data]
-  const src =[
-  [data_tv360.src],
-  [data_onplus.src],
-  [data_mytv.src]]
+  // 2. Phân rã kết quả theo thứ tự mảng đã truyền vào
+  const [resTv360, resOnplus, resMytv, resSheet] = results;
+
+  // 3. Hàm phụ trợ để lấy dữ liệu an toàn
+  // Nếu status là 'fulfilled' (thành công) thì lấy data, nếu lỗi thì trả về mảng rỗng [] hoặc null
+  const getSafeData = (res) => (res.status === 'fulfilled' && res.value?.data) ? res.value.data : [];
+  const getSafeSrc = (res) => (res.status === 'fulfilled' && res.value?.src) ? res.value.src : null;
+
+  // Lấy danh sách data (nếu lỗi sẽ là mảng rỗng để không bị lỗi khi spread [...])
+  const listTv360 = getSafeData(resTv360);
+  const listOnplus = getSafeData(resOnplus);
+  const listMytv = getSafeData(resMytv);
+  const listSheet = getSafeData(resSheet); // Giả sử sheet cũng trả về object có .data
+
+  // Lấy src
+  const srcTv360 = getSafeSrc(resTv360);
+  const srcOnplus = getSafeSrc(resOnplus);
+  const srcMytv = getSafeSrc(resMytv);
+
+  // Debug lỗi (tùy chọn: để biết cái nào bị lỗi)
+  if (resTv360.status === 'rejected') console.error('TV360 Error:', resTv360.reason);
+  if (resOnplus.status === 'rejected') console.error('OnPlus Error:', resOnplus.reason);
+  // ...
+
+  // 4. Gộp dữ liệu
+  const combinedData = [...listOnplus, ...listMytv, ...listTv360];
+
+  const src = [
+    [srcTv360],
+    [srcOnplus],
+    [srcMytv]
+  ];
 
   return {
     src: src,
-    broadCast: sortByStartTime(data),
-    liveThumB: data_sheet.data
-
+    broadCast: sortByStartTime(combinedData) || [],
+    liveThumB: listSheet || []
   };
 }
-
-
 
