@@ -131,14 +131,14 @@ function checkTimeStatus(timeStart, timeEnd) {
 
 async function onplus() {
   const backListChannel = [
-    "https://onsportlive.vtvcab.vn/hls/ONQUOCPHONG_CL", // => qpvn
-    "https://onsportlive.vtvcab.vn/hls/ONANTV_CL", // => antv
+    "ONQUOCPHONG_CL", // => qpvn
+    "ONANTV_CL", // => antv
     "VTV1_HD_CL", // => vtv1
     "OS_VTV5", // => vtv5
     "INFO_TV_CL", // => VTV7
     "eddd7b89-1a5e-44ca-98f3-d6aa993e0bf9", //  => sctv15
     "a595913f-5b14-42ef-9958-74aa993e0bf9", //  => sctv17
-    "d210302f-b013-41e4-8b16-ecaa993e0bf9", //  => htvkey
+    "INFO_TV_CL", //  => htvkey
   ]
 
   const whiteListChannel = {
@@ -280,7 +280,7 @@ async function onlivetv() {
       id: "onlive9",
       name: "ONLiveTV 9"
     },
-    "c449b337-baf6-45da-90f3-8c8c915fa509": {
+    "c449b337-baf6-45da-90f3-8cbe0ec504d6": {
       id: "onlive4",
       name: "ONLiveTV 4"
     },
@@ -357,6 +357,7 @@ async function tv360() {
     9868,  //	=> TV360p6
     9869,  //	=> TV360p7
     9870,  //	=> TV360p8
+    10001
   ]
 
 
