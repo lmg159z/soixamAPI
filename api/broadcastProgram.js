@@ -33,18 +33,18 @@ async function getAPI(url) {
 async function getGoogleSheetData() {
   const sheetId = '1hSEcXxxEkbgq8203f_sTKAi3ZNEnFNoBnr7f3fsfzYE';
   const gid = '2134035673';
-  
+
   // URL để export ra CSV (dễ xử lý hơn)
   const url = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}`;
 
   try {
     const response = await fetch(url);
     const csvText = await response.text();
-    
+
     // Parse CSV thành JSON
     const rows = csvText.split('\n').map(row => row.split(',')); // Lưu ý: Cách split này đơn giản, sẽ lỗi nếu nội dung ô có dấu phẩy
     const headers = rows[0].map(h => h.trim().replace(/^"|"$/g, '')); // Xóa ngoặc kép thừa nếu có
-    
+
     const jsonData = rows.slice(1).map(row => {
       let obj = {};
       row.forEach((cell, index) => {
@@ -105,7 +105,7 @@ function checkTimeStatus(timeStart, timeEnd) {
   // Hàm con: Parse chuỗi DD:MM:YY-HH:MM sang số (Timestamp) giả định
   function parseToVnTimestamp(timeString) {
     if (!timeString) return 0;
-    const parts = timeString.split('-'); 
+    const parts = timeString.split('-');
     if (parts.length !== 2) return 0;
     const [d, m, y] = parts[0].split(':').map(Number);
     const [h, min] = parts[1].split(':').map(Number);
@@ -119,7 +119,7 @@ function checkTimeStatus(timeStart, timeEnd) {
   // MẤU CHỐT Ở ĐÂY:
   // Lấy giờ UTC hiện tại + 7 tiếng cứng. 
   // Không quan tâm server đang ở Mỹ hay Singapore.
-  const nowVnMs = Date.now() + (7 * 3600000); 
+  const nowVnMs = Date.now() + (7 * 3600000);
 
   if (nowVnMs < startMs) return 0;
   if (nowVnMs >= startMs && nowVnMs <= endMs) return 1;
@@ -227,18 +227,16 @@ async function onplus() {
       id: "onsport16",
       name: "ONSport 16"
     },
-    
+
 
   }
 
-
-
   const dataAPI = await getAPI("https://re.ghiminh1.workers.dev/?url=https://tv-web.api.vinasports.com.vn/api/v2/publish/see-more/events/2")
   let data = [];
-function getBetweenSlash(url) {
-  const parts = url.split('/');
-  return parts[4]; 
-}
+  function getBetweenSlash(url) {
+    const parts = url.split('/');
+    return parts[4];
+  }
 
   if (Array.isArray(dataAPI.data) && dataAPI.data.length > 0) {
     data = dataAPI.data
@@ -261,6 +259,87 @@ function getBetweenSlash(url) {
   };
 
 }
+
+
+
+async function onlivetv() {
+  const backListChannel = [
+    "https://onsportlive.vtvcab.vn/hls/ONQUOCPHONG_CL", // => qpvn
+    "https://onsportlive.vtvcab.vn/hls/ONANTV_CL", // => antv
+    "VTV1_HD_CL", // => vtv1
+    "OS_VTV5", // => vtv5
+    "INFO_TV_CL", // => VTV7
+    "eddd7b89-1a5e-44ca-98f3-d6aa993e0bf9", //  => sctv15
+    "a595913f-5b14-42ef-9958-74aa993e0bf9", //  => sctv17
+    "d210302f-b013-41e4-8b16-ecaa993e0bf9", //  => htvkey
+  ]
+
+  const whiteListChannel = {
+
+    "8edc20d4-04ba-41a4-9ad8-998c915fa509": {
+      id: "onlive9",
+      name: "ONLiveTV 9"
+    },
+    "c449b337-baf6-45da-90f3-8c8c915fa509": {
+      id: "onlive4",
+      name: "ONLiveTV 4"
+    },
+
+
+  }
+
+  const dataAPI = await getAPI("https://re.ghiminh1.workers.dev/?url=https://tv-web-api.onlivetv.vn/api/v2/publish/see-more/events/5")
+  let data = [];
+  function getBetweenSlash(url) {
+    const parts = url.split('/');
+    return parts[4];
+  }
+
+  if (Array.isArray(dataAPI.data) && dataAPI.data.length > 0) {
+    data = dataAPI.data
+      .filter(i => !backListChannel.includes(i.channel_id) && i.channel_id !== "")
+      .map(i => {
+        const channel = whiteListChannel[i.channel_id] || {};
+
+        return {
+          id: `onlivetv-${i.id}`,
+          name: i.name,
+          start_time: formatDateGMT7(i.start_time),
+          over_time: formatDateGMT7(i.over_time),
+          thumbnail: i.thumbnail,
+
+          channel_id: channel.id || "",
+          channel_name: channel.name || i.channel_id,
+
+          status: matchValue(i.status, ["live", "not_started"], [1, 0])
+        };
+      })
+  }
+
+  return {
+    src: "ONLiveTV",
+    data: data
+  };
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // https://webapi.mytv.vn/api/v1/home/cate-info/chuong-trinh-truyen-hinh
 
 async function tv360() {
@@ -799,7 +878,7 @@ async function tv360() {
         id: `tv360-${i.id}`,
         name: i.description,
         start_time: formatDateTime(i.beginTime),
-        over_time:  formatDateTime(i.endTime),
+        over_time: formatDateTime(i.endTime),
         thumbnail: i.coverImage,
         channel_id: whiteListChannel[i.itemId]?.id || i.itemId,
         channel_name: whiteListChannel[i.itemId]?.name || "",
@@ -836,7 +915,7 @@ async function mytv(page = 1, num = 20) {
     }
   });
 
-  if (!response1.ok && !response2.ok  ) {
+  if (!response1.ok && !response2.ok) {
     throw new Error(`HTTP error ${response1.status}${response2.status}`);
   }
 
@@ -938,10 +1017,10 @@ async function mytv(page = 1, num = 20) {
 
     return `${dd}:${mm}:${yy}-${hh}:${min}`;
   }
-let data = []
+  let data = []
   if (Array.isArray(dataAPI) && dataAPI.length > 0) {
-  
-     data = dataAPI
+
+    data = dataAPI
       .filter(i => Object.hasOwn(whiteListChannel, String(i.CHANNEL_ID)))
       .map(i => ({
         id: `mytv-${i.CONTENT_ID}`,
@@ -991,11 +1070,12 @@ async function data() {
     tv360(),
     onplus(),
     mytv(),
+    onlivetv(),
     getGoogleSheetData()
   ]);
 
   // 2. Phân rã kết quả theo thứ tự mảng đã truyền vào
-  const [resTv360, resOnplus, resMytv, resSheet] = results;
+  const [resTv360, resOnplus, resMytv, resOnlivetv, resSheet] = results;
 
   // 3. Hàm phụ trợ để lấy dữ liệu an toàn
   // Nếu status là 'fulfilled' (thành công) thì lấy data, nếu lỗi thì trả về mảng rỗng [] hoặc null
@@ -1006,12 +1086,14 @@ async function data() {
   const listTv360 = getSafeData(resTv360);
   const listOnplus = getSafeData(resOnplus);
   const listMytv = getSafeData(resMytv);
+  const listONLiveTV = getSafeData(resOnlivetv);
   const listSheet = getSafeData(resSheet); // Giả sử sheet cũng trả về object có .data
 
   // Lấy src
   const srcTv360 = getSafeSrc(resTv360);
   const srcOnplus = getSafeSrc(resOnplus);
   const srcMytv = getSafeSrc(resMytv);
+  const srcONLiveTV = getSafeSrc(resOnlivetv);
 
   // Debug lỗi (tùy chọn: để biết cái nào bị lỗi)
   if (resTv360.status === 'rejected') console.error('TV360 Error:', resTv360.reason);
@@ -1019,12 +1101,13 @@ async function data() {
   // ...
 
   // 4. Gộp dữ liệu
-  const combinedData = [...listOnplus, ...listMytv, ...listTv360];
+  const combinedData = [...listOnplus, ...listMytv, ...listTv360, ...listONLiveTV];
 
   const src = [
     [srcTv360],
     [srcOnplus],
-    [srcMytv]
+    [srcMytv],
+    [srcONLiveTV]
   ];
 
   return {
@@ -1033,4 +1116,7 @@ async function data() {
     liveThumB: listSheet || []
   };
 }
+
+
+
 
