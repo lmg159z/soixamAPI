@@ -240,7 +240,7 @@ async function onplus() {
 
   if (Array.isArray(dataAPI.data) && dataAPI.data.length > 0) {
     data = dataAPI.data
-      .filter(i => !backListChannel.includes(getBetweenSlash(i.url)) && i.url !== "")
+      .filter(i => !backListChannel.includes(getBetweenSlash(i.url)) && i.url !== "" )
       .map(i => ({
         id: `onplus-${i.id}`,
         name: i.name,
