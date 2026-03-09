@@ -118,90 +118,87 @@ async function getDataFromSheetAsKeySheetAsKeyFeed() {
     return data;
 }
 
-async function iptv(){
-    const rawChannels = await getDataFromSheetAsKeyValue("2102567147","1hSEcXxxEkbgq8203f_sTKAi3ZNEnFNoBnr7f3fsfzYE");
-    if (!rawChannels) {
-      return `
-      Lỗi rồi hãy báo cáo với quản trị viên
-      `
-    }
+// async function iptv(){
+//     const rawChannels = await getDataFromSheetAsKeyValue("2102567147","1hSEcXxxEkbgq8203f_sTKAi3ZNEnFNoBnr7f3fsfzYE");
+//     if (!rawChannels) {
+//       return `
+//       Lỗi rồi hãy báo cáo với quản trị viên
+//       `
+//     }
 
-    const textIPTV = rawChannels
-      .filter(i => i.status === "live" ||  i.status === "liveFEED" )
-    .map(k =>{
-      if (k.drm === "action"){
-        return `
-#EXTINF:-1 tvg-id="${k.id}" group-title="${k.nameGroup}" tvg-logo="${k.logo || k.thumb}", ${k.acronym} | ${k.name || ""}
+//     const textIPTV = rawChannels
+//       .filter(i => i.status === "live" ||  i.status === "liveFEED" )
+//     .map(k =>{
+//       if (k.drm === "action"){
+//         return `
+// #EXTINF:-1 tvg-id="${k.id}" group-title="${k.nameGroup}" tvg-logo="${k.logo || k.thumb}", ${k.acronym} | ${k.name || ""}
+// #EXTVLCOPT:http-user-agent=Dalvik/2.1.0
+// #KODIPROP:inputstream.adaptive.manifest_type=mpd
+// #KODIPROP:inputstream.adaptive.license_type=clearkey
+// #KODIPROP:inputstream.adaptive.license_key=${k.keyID}:${k.key}
+// ${k.urlStream}      
+// `
+//       }else{
+//         return `
+// #EXTINF:-1 tvg-id="${k.id}" group-title="${k.nameGroup}" tvg-logo="${k.logo || k.thumb}",${k.acronym} | ${k.name || ""}
+// #EXTVLCOPT:http-user-agent=Dalvik/2.1.0
+// ${k.urlStream}
+// `
+//       }
+//     }).join("") 
+
+
+//     const textEPG = `
+// #EXTM3U url-tvg="https://vnepg.site/epgu.xml"
+// #EXTM3U url-tvg="https://tvbvn.quanlehong539.workers.dev/xml"
+// #Bản quyền thuộc về hệ sinh thái SoiXamTV
+
+
+
+
+// #========================================================================================
+
+//     `
+//     return textEPG +textIPTV
+
+
+ 
+//     // return rawChannels
+// }
+
+async function iptv() {
+  const rawChannels = await getDataFromSheetAsKeyValue(
+    "2102567147",
+    "1hSEcXxxEkbgq8203f_sTKAi3ZNEnFNoBnr7f3fsfzYE"
+  );
+
+  if (!rawChannels) {
+    return `Lỗi rồi hãy báo cáo với quản trị viên`;
+  }
+
+  const textIPTV = rawChannels
+    .filter(i => i.status === "live" || i.status === "liveFEED")
+    .map(k => {
+      if (k.drm === "action") {
+        return `#EXTINF:-1 tvg-id="${k.id}" group-title="${k.nameGroup}" tvg-logo="${k.logo || k.thumb}",${k.acronym} | ${k.name || ""}
 #EXTVLCOPT:http-user-agent=Dalvik/2.1.0
 #KODIPROP:inputstream.adaptive.manifest_type=mpd
 #KODIPROP:inputstream.adaptive.license_type=clearkey
 #KODIPROP:inputstream.adaptive.license_key=${k.keyID}:${k.key}
-${k.urlStream}      
-`
-      }else{
-        return `
-#EXTINF:-1 tvg-id="${k.id}" group-title="${k.nameGroup}" tvg-logo="${k.logo || k.thumb}",${k.acronym} | ${k.name || ""}
+${k.urlStream}
+`;
+      } else {
+        return `#EXTINF:-1 tvg-id="${k.id}" group-title="${k.nameGroup}" tvg-logo="${k.logo || k.thumb}",${k.acronym} | ${k.name || ""}
 #EXTVLCOPT:http-user-agent=Dalvik/2.1.0
 ${k.urlStream}
-`
+`;
       }
-    }).join("") 
+    })
+    .join("\n");
 
+  const textEPG = `#EXTM3U url-tvg="https://vnepg.site/epgu.xml,https://tvbvn.quanlehong539.workers.dev/xml"
+# SoiXamTV IPTV Playlist
+#========================================================================================`;
 
-    const textEPG = `
-#EXTM3U url-tvg="https://vnepg.site/epgu.xml"
-#EXTM3U url-tvg="https://tvbvn.quanlehong539.workers.dev/xml"
-#Bản quyền thuộc về hệ sinh thái SoiXamTV
-
-
-
-
-#========================================================================================
-
-    `
-    return textEPG +textIPTV
-
-
- 
-    // return rawChannels
+  return textEPG + "\n" + textIPTV;
 }
-
-// async function iptv(){
-//   const rawChannels = await getDataFromSheetAsKeyValue();
-
-//   if (!rawChannels) {
-//     return "Lỗi rồi hãy báo cáo với quản trị viên";
-//   }
-
-//   const textIPTV = rawChannels
-//     .filter(i => i.status === "live")
-//     .map(i => {
-
-//       if (i.drm === "action"){
-//         return `#EXTINF:-1 tvg-id="${i.id}" group-title="${i.nameGroup}" tvg-logo="${i.logo}", ${i.logo}\r
-// #EXTVLCOPT:http-user-agent=Dalvik/2.1.0\r
-// #KODIPROP:inputstream.adaptive.manifest_type=mpd\r
-// #KODIPROP:inputstream.adaptive.license_type=clearkey\r
-// #KODIPROP:inputstream.adaptive.license_key=${i.keyID}:${i.key}\r
-// ${i.url}\r
-// \r
-// `
-//       }
-
-//       return `#EXTINF:-1 tvg-id="${i.id}" group-title="${i.nameGroup}" tvg-logo="${i.logo}", ${i.logo}\r
-// #EXTVLCOPT:http-user-agent=Dalvik/2.1.0\r
-// ${i.url}\r
-// \r
-// `
-//     }).join("")
-
-//   const textEPG =
-// `#EXTM3U url-tvg="https://vnepg.site/epgu.xml,https://hnlive.dramahay.xyz/epg.xml,https://tvbvn.quanlehong539.workers.dev/xml"\r
-// #Bản quyền thuộc về hệ sinh thái SoiXamTV\r
-// \r
-// #========================================================================================\r
-// \r
-// `
-
-//   return textEPG + textIPTV
-// }
