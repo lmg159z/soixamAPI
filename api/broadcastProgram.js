@@ -202,31 +202,7 @@ async function onplus() {
     "OS_ONSPORT10": {
       id: "onsport10",
       name: "ONSport 10"
-    },
-    "SKTTONSPORT11": {
-      id: "onsport11",
-      name: "ONSport 11"
-    },
-    "SKTTONSPORT12": {
-      id: "onsport12",
-      name: "ONSport 12"
-    },
-    "SKTTONSPORT13": {
-      id: "onsport13",
-      name: "ONSport 13"
-    },
-    "SKTTONSPORT14": {
-      id: "onsport14",
-      name: "ONSport 14"
-    },
-    "SKTTONSPORT15": {
-      id: "onsport15",
-      name: "ONSport 15"
-    },
-    "SKTTONSPORT16": {
-      id: "onsport16",
-      name: "ONSport 16"
-    },
+    }
 
 
   }
@@ -852,6 +828,34 @@ async function tv360() {
       "id": "tv360live",
       "name": "TV360Live"
     },
+    "1" : {
+      id: "tv360p1",
+      name: "TV360P1"
+    } ,   
+    "148" : {
+      id: "tv360p2",
+      name: "TV360P2"
+    } , 
+    "2458" : {
+      id: "tv360p3",
+      name: "TV360P3"
+    } , 
+    "9867" : {
+      id: "tv360p4",
+      name: "TV360P4"
+    } , 
+    "9868" : {
+      id: "tv360p5",
+      name: "TV360P5"
+    } , 
+    "9869" : {
+      id: "tv360p6",
+      name: "TV360P6"
+    } , 
+    "9870" : {
+      id: "tv360p7",
+      name: "TV360P7"
+    } ,
     "9887": {
       "id": "tv360p9",
       "name": "TV360p9"
@@ -863,7 +867,11 @@ async function tv360() {
     "9958": {
       "id": "tv360p11",
       "name": "TV360p11"
-    }
+    },
+    "10001" : {
+      id: "tv360p12",
+      name: "TV360P12"
+    },
   };
 
   const CTTH = await getAPI
