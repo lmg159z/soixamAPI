@@ -256,6 +256,10 @@ async function onlivetv() {
       id: "onlive9",
       name: "ONLiveTV 9"
     },
+    "54ba0359-40c4-49a9-b5aa-6e8f5d633ff5": {
+      id: "onlive8",
+      name: "ONLiveTV 8"
+    },
     "c449b337-baf6-45da-90f3-8cbe0ec504d6": {
       id: "onlive4",
       name: "ONLiveTV 4"
