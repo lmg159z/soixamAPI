@@ -131,80 +131,141 @@ function checkTimeStatus(timeStart, timeEnd) {
 
 async function onplus() {
   const backListChannel = [
-    "ONQUOCPHONG_CL", // => qpvn
-    "ONANTV_CL", // => antv
-    "VTV1_HD_CL", // => vtv1
-    "OS_VTV5", // => vtv5
-    "INFO_TV_CL", // => VTV7
-    "eddd7b89-1a5e-44ca-98f3-d6aa993e0bf9", //  => sctv15
-    "a595913f-5b14-42ef-9958-74aa993e0bf9", //  => sctv17
-    "INFO_TV_CL", //  => htvkey
+"93a6c5ec-92eb-4ecf-8c50-64072f9dfa7f", // => SCTV22HD
+"eddd7b89-1a5e-44ca-98f3-d6aa993e0bf9", // => SCTV15HD
+"16922d09-8b39-4b85-8703-ba757698acf5", // => HTV4
+"cdd222b8-c8fc-40c6-8baf-540d55469932", // => INFO_TV_CL | VTV7 
+"2987336b-ce50-42ae-80a3-d24e0c0f73b3", // => VTV5TNB
+
   ]
 
+  // const whiteListChannel = {
+
+  //   "OS_BONGDA_HD": {
+  //     id: "onfootball",
+  //     name: "ON Football"
+  //   },
+  //   "OS_THETHAO_TINTUC_HD": {
+  //     id: "onsportsnews",
+  //     name: "ON Sportsnews"
+  //   },
+  //   "OS_THETHAO_HD": {
+  //     id: "onsports",
+  //     name: "ON Sports"
+  //   },
+  //   "OS_HAY_TV": {
+  //     id: "onsportsplus",
+  //     name: "ON Sportsplus"
+  //   },
+  //   "OS_THETHAO_GOLF_HD": {
+  //     id: "ongolf",
+  //     name: "ON Golf"
+  //   },
+  //   "OS_ONSPORT1": {
+  //     id: "onsport1",
+  //     name: "ONSport 1"
+  //   },
+  //   "OS_ONSPORT2": {
+  //     id: "onsport2",
+  //     name: "ONSport 2"
+  //   },
+  //   "OS_ONSPORT3": {
+  //     id: "onsport3",
+  //     name: "ONSport 3"
+  //   },
+  //   "OS_ONSPORT4": {
+  //     id: "onsport4",
+  //     name: "ONSport 4"
+  //   },
+  //   "OS_ONSPORT5": {
+  //     id: "onsport5",
+  //     name: "ONSport 5"
+  //   },
+  //   "OS_ONSPORT6": {
+  //     id: "onsport6",
+  //     name: "ONSport 6"
+  //   },
+  //   "OS_ONSPORT7": {
+  //     id: "onsport7",
+  //     name: "ONSport 7"
+  //   },
+  //   "OS_ONSPORT8": {
+  //     id: "onsport8",
+  //     name: "ONSport 8"
+  //   },
+  //   "OS_ONSPORT9": {
+  //     id: "onsport9",
+  //     name: "ONSport 9"
+  //   },
+  //   "OS_ONSPORT10": {
+  //     id: "onsport10",
+  //     name: "ONSport 10"
+  //   }
+
+
+  // }
+
   const whiteListChannel = {
-
-    "OS_BONGDA_HD": {
-      id: "onfootball",
-      name: "ON Football"
-    },
-    "OS_THETHAO_TINTUC_HD": {
-      id: "onsportsnews",
-      name: "ON Sportsnews"
-    },
-    "OS_THETHAO_HD": {
-      id: "onsports",
-      name: "ON Sports"
-    },
-    "OS_HAY_TV": {
-      id: "onsportsplus",
-      name: "ON Sportsplus"
-    },
-    "OS_THETHAO_GOLF_HD": {
-      id: "ongolf",
+      "30dd2af9-ff12-4642-ac1f-c4464f86ffdc" : {
+         id: "onsportsplus",
+         name: "ON Sportsplus"
+      }, //=> OS_HAY_TV
+      "1f039dc2-320d-4365-8fef-9dfe75e58a1c" : {
+        id: "ongolf",
       name: "ON Golf"
-    },
-    "OS_ONSPORT1": {
-      id: "onsport1",
-      name: "ONSport 1"
-    },
-    "OS_ONSPORT2": {
-      id: "onsport2",
-      name: "ONSport 2"
-    },
-    "OS_ONSPORT3": {
-      id: "onsport3",
-      name: "ONSport 3"
-    },
-    "OS_ONSPORT4": {
-      id: "onsport4",
-      name: "ONSport 4"
-    },
-    "OS_ONSPORT5": {
-      id: "onsport5",
-      name: "ONSport 5"
-    },
-    "OS_ONSPORT6": {
-      id: "onsport6",
-      name: "ONSport 6"
-    },
-    "OS_ONSPORT7": {
-      id: "onsport7",
-      name: "ONSport 7"
-    },
-    "OS_ONSPORT8": {
-      id: "onsport8",
-      name: "ONSport 8"
-    },
-    "OS_ONSPORT9": {
-      id: "onsport9",
-      name: "ONSport 9"
-    },
-    "OS_ONSPORT10": {
-      id: "onsport10",
-      name: "ONSport 10"
-    }
-
-
+      }, //=> OS_THETHAO_GOLF_HD
+      "a59d8f32-b0d6-49c6-a1a2-8b7911314fa5" : {
+          id: "onfootball",
+      name: "ON Football"
+      }, //=> OS_BONGDA_HD
+      "410dbcf0-2cdb-48c4-bf85-de9449412830" : {
+        id: "onsports",
+      name: "ON Sports"
+      }, //=> OS_THETHAO_HD
+      "13c74904-dcf2-45d0-ad0f-7c5f27656ee6" : {
+        id: "onsportsnews",
+      name: "ON Sportsnews"
+      }, //=> OS_THETHAO_TINTUC_HD
+      "94bdc33b-cfd4-48e1-a996-4332932a504c" : {
+         id: "onsport10",
+         name: "ONSport 10"
+      }, //=> OS_ONSPORT10
+      "c14f01f6-eb20-4621-b0aa-7b15be8faa42" : {
+         id: "onsport9",
+         name: "ONSport 9"
+      }, //=> OS_ONSPORT9
+      "52f4e72c-27a0-4c96-8aa5-4cf81e006521" : {
+         id: "onsport8",
+         name: "ONSport 8"
+      }, //=> OS_ONSPORT8
+      "f92daeb0-6845-4da9-8b32-4b8c479bdfe8" : {
+         id: "onsport7",
+         name: "ONSport 7"
+      }, //=> OS_ONSPORT7 
+      "6e301a6c-7b9c-4129-b014-7f40bbf85c49" : {
+        id: "onsport7",
+         name: "ONSport 7"
+      }, //=> OS_ONSPORT7 
+      "41d73347-723c-4303-94dc-8d9f332d3f75" : {
+        id: "onsport6",
+         name: "ONSport 6"
+      }, //=> OS_ONSPORT6
+      "2a941d18-bffc-4c93-ba08-bae7ebfdb1da" : {
+        id: "onsport5",
+         name: "ONSport 5"
+      }, //=> OS_ONSPORT5
+      "e2129578-ad42-4a17-b391-253844f6dfc2" : {
+        id: "onlivetv9",
+         name: "ONLiveTV9"
+      }, //=> onlivetv9 
+      "1ced33d8-c821-4ab8-8b53-f17899988440" : {
+        id: "onlivetv8",
+         name: "ONLiveTV8"
+      }, //=> onlivetv8
+      "f92daeb0-6845-4da9-8b32-4b8c479bdfe8" : {
+        id: "onlivetv4",
+         name: "ONLiveTV4"
+      }, //=> onlivetv4
   }
 
   const dataAPI = await getAPI("https://re.ghiminh1.workers.dev/?url=https://tv-web.api.vinasports.com.vn/api/v2/publish/see-more/events/2")
@@ -216,15 +277,15 @@ async function onplus() {
 
   if (Array.isArray(dataAPI.data) && dataAPI.data.length > 0) {
     data = dataAPI.data
-      .filter(i => !backListChannel.includes(getBetweenSlash(i.url)) && i.url !== "" )
+      .filter(i => !backListChannel.includes(i.channel_id) && i.channel_id !== "" )
       .map(i => ({
         id: `onplus-${i.id}`,
         name: i.name,
         start_time: formatDateGMT7(i.start_time),
         over_time: formatDateGMT7(i.over_time),
         thumbnail: i.thumbnail,
-        channel_id: whiteListChannel[getBetweenSlash(i.url)]?.id || "",
-        channel_name: whiteListChannel[getBetweenSlash(i.url)]?.name || "",
+        channel_id: whiteListChannel[i.channel_id]?.id || i.channel_id,
+        channel_name: whiteListChannel[i.channel_id]?.name || i.channel_id,
         status: matchValue(i.status, ["live", "not_started"], [1, 0])
       }));
   }
@@ -1079,12 +1140,11 @@ async function data() {
     tv360(),
     onplus(),
     mytv(),
-    onlivetv(),
     getGoogleSheetData()
   ]);
 
   // 2. Phân rã kết quả theo thứ tự mảng đã truyền vào
-  const [resTv360, resOnplus, resMytv, resOnlivetv, resSheet] = results;
+  const [resTv360, resOnplus, resMytv, resSheet] = results;
 
   // 3. Hàm phụ trợ để lấy dữ liệu an toàn
   // Nếu status là 'fulfilled' (thành công) thì lấy data, nếu lỗi thì trả về mảng rỗng [] hoặc null
@@ -1095,14 +1155,14 @@ async function data() {
   const listTv360 = getSafeData(resTv360);
   const listOnplus = getSafeData(resOnplus);
   const listMytv = getSafeData(resMytv);
-  const listONLiveTV = getSafeData(resOnlivetv);
+  // const listONLiveTV = getSafeData(resOnlivetv);
   const listSheet = getSafeData(resSheet); // Giả sử sheet cũng trả về object có .data
 
   // Lấy src
   const srcTv360 = getSafeSrc(resTv360);
   const srcOnplus = getSafeSrc(resOnplus);
   const srcMytv = getSafeSrc(resMytv);
-  const srcONLiveTV = getSafeSrc(resOnlivetv);
+  // const srcONLiveTV = getSafeSrc(resOnlivetv);
 
   // Debug lỗi (tùy chọn: để biết cái nào bị lỗi)
   if (resTv360.status === 'rejected') console.error('TV360 Error:', resTv360.reason);
@@ -1110,13 +1170,12 @@ async function data() {
   // ...
 
   // 4. Gộp dữ liệu
-  const combinedData = [...listOnplus, ...listMytv, ...listTv360, ...listONLiveTV];
+  const combinedData = [...listOnplus, ...listMytv, ...listTv360];
 
   const src = [
     [srcTv360],
     [srcOnplus],
-    [srcMytv],
-    [srcONLiveTV]
+    [srcMytv]
   ];
 
   return {
