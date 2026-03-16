@@ -265,6 +265,10 @@ async function onplus() {
       "f92daeb0-6845-4da9-8b32-4b8c479bdfe8" : {
         id: "onlivetv4",
          name: "ONLiveTV4"
+      },
+      "7c2426a6-dfcf-4b15-bfce-e2ce5e1e3e67" : {
+        id: "onlivetv1",
+         name: "ONLiveTV1"
       }, //=> onlivetv4
   }
 
