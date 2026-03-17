@@ -261,6 +261,14 @@ async function onplus() {
       "1ced33d8-c821-4ab8-8b53-f17899988440" : {
         id: "onlivetv8",
          name: "ONLiveTV8"
+      }, //=> onlivetv8 
+      "709243e6-26ea-4a83-8611-2d6d06faafdb" : {
+        id: "onlivetv7",
+         name: "ONLiveTV7"
+      }, //=> onlivetv8 
+      "02f32877-7365-4ebe-88d1-ed46bad8315a" : {
+        id: "onlivetv6",
+         name: "ONLiveTV6"
       }, //=> onlivetv8
       "f92daeb0-6845-4da9-8b32-4b8c479bdfe8" : {
         id: "onlivetv4",
@@ -269,6 +277,10 @@ async function onplus() {
       "db06a173-09a0-407a-8b6d-1e9d83772781" : {
         id: "onlivetv5",
          name: "ONLiveTV5"
+      }, 
+      "afb95e22-13a1-4371-bb07-e14d97054c0b" : {
+        id: "onlivetv2",
+         name: "ONLiveTV2"
       }, 
       "7c2426a6-dfcf-4b15-bfce-e2ce5e1e3e67" : {
         id: "onlivetv1",
