@@ -131,12 +131,16 @@ function checkTimeStatus(timeStart, timeEnd) {
 
 async function onplus() {
   const backListChannel = [
-"93a6c5ec-92eb-4ecf-8c50-64072f9dfa7f", // => SCTV22HD
-"eddd7b89-1a5e-44ca-98f3-d6aa993e0bf9", // => SCTV15HD
-"16922d09-8b39-4b85-8703-ba757698acf5", // => HTV4
-"cdd222b8-c8fc-40c6-8baf-540d55469932", // => INFO_TV_CL | VTV7 
-"2987336b-ce50-42ae-80a3-d24e0c0f73b3", // => VTV5TNB
-
+    "93a6c5ec-92eb-4ecf-8c50-64072f9dfa7f", // => SCTV22HD
+    "eddd7b89-1a5e-44ca-98f3-d6aa993e0bf9", // => SCTV15HD
+    "16922d09-8b39-4b85-8703-ba757698acf5", // => HTV4
+    "cdd222b8-c8fc-40c6-8baf-540d55469932", // => INFO_TV_CL | VTV7 
+    "2987336b-ce50-42ae-80a3-d24e0c0f73b3", // => VTV5TNB
+    "30dd2af9-ff12-4642-ac1f-c4464f86ffdc",
+    "1f039dc2-320d-4365-8fef-9dfe75e58a1c",
+    "a59d8f32-b0d6-49c6-a1a2-8b7911314fa5",
+    "410dbcf0-2cdb-48c4-bf85-de9449412830",
+    "13c74904-dcf2-45d0-ad0f-7c5f27656ee6",
   ]
 
   // const whiteListChannel = {
@@ -205,89 +209,120 @@ async function onplus() {
 
   // }
 
-  const whiteListChannel = {
-      "30dd2af9-ff12-4642-ac1f-c4464f86ffdc" : {
-         id: "onsportsplus",
-         name: "ON Sportsplus"
-      }, //=> OS_HAY_TV
-      "1f039dc2-320d-4365-8fef-9dfe75e58a1c" : {
-        id: "ongolf",
-      name: "ON Golf"
-      }, //=> OS_THETHAO_GOLF_HD
-      "a59d8f32-b0d6-49c6-a1a2-8b7911314fa5" : {
-          id: "onfootball",
-      name: "ON Football"
-      }, //=> OS_BONGDA_HD
-      "410dbcf0-2cdb-48c4-bf85-de9449412830" : {
-        id: "onsports",
-      name: "ON Sports"
-      }, //=> OS_THETHAO_HD
-      "13c74904-dcf2-45d0-ad0f-7c5f27656ee6" : {
-        id: "onsportsnews",
-      name: "ON Sportsnews"
-      }, //=> OS_THETHAO_TINTUC_HD
-      "94bdc33b-cfd4-48e1-a996-4332932a504c" : {
-         id: "onsport10",
-         name: "ONSport 10"
-      }, //=> OS_ONSPORT10
-      "c14f01f6-eb20-4621-b0aa-7b15be8faa42" : {
-         id: "onsport9",
-         name: "ONSport 9"
-      }, //=> OS_ONSPORT9
-      "52f4e72c-27a0-4c96-8aa5-4cf81e006521" : {
-         id: "onsport8",
-         name: "ONSport 8"
-      }, //=> OS_ONSPORT8
-      "f92daeb0-6845-4da9-8b32-4b8c479bdfe8" : {
-         id: "onsport7",
-         name: "ONSport 7"
-      }, //=> OS_ONSPORT7 
-      "6e301a6c-7b9c-4129-b014-7f40bbf85c49" : {
-        id: "onsport7",
-         name: "ONSport 7"
-      }, //=> OS_ONSPORT7 
-      "41d73347-723c-4303-94dc-8d9f332d3f75" : {
-        id: "onsport6",
-         name: "ONSport 6"
-      }, //=> OS_ONSPORT6
-      "2a941d18-bffc-4c93-ba08-bae7ebfdb1da" : {
-        id: "onsport5",
-         name: "ONSport 5"
-      }, //=> OS_ONSPORT5
-      "e2129578-ad42-4a17-b391-253844f6dfc2" : {
-        id: "onlivetv9",
-         name: "ONLiveTV9"
-      }, //=> onlivetv9 
-      "1ced33d8-c821-4ab8-8b53-f17899988440" : {
-        id: "onlivetv8",
-         name: "ONLiveTV8"
-      }, //=> onlivetv8 
-      "709243e6-26ea-4a83-8611-2d6d06faafdb" : {
-        id: "onlivetv7",
-         name: "ONLiveTV7"
-      }, //=> onlivetv8 
-      "02f32877-7365-4ebe-88d1-ed46bad8315a" : {
-        id: "onlivetv6",
-         name: "ONLiveTV6"
-      }, //=> onlivetv8
-      "f92daeb0-6845-4da9-8b32-4b8c479bdfe8" : {
-        id: "onlivetv4",
-         name: "ONLiveTV4"
-      },
-      "db06a173-09a0-407a-8b6d-1e9d83772781" : {
-        id: "onlivetv5",
-         name: "ONLiveTV5"
-      }, 
-      "afb95e22-13a1-4371-bb07-e14d97054c0b" : {
-        id: "onlivetv2",
-         name: "ONLiveTV2"
-      }, 
-      "7c2426a6-dfcf-4b15-bfce-e2ce5e1e3e67" : {
-        id: "onlivetv1",
-         name: "ONLiveTV1"
-      }, //=> onlivetv4
-  }
+  // const whiteListChannel = {
+  //     "30dd2af9-ff12-4642-ac1f-c4464f86ffdc" : {
+  //        id: "onsportsplus",
+  //        name: "ON Sportsplus"
+  //     }, //=> OS_HAY_TV
+  //     "1f039dc2-320d-4365-8fef-9dfe75e58a1c" : {
+  //       id: "ongolf",
+  //     name: "ON Golf"
+  //     }, //=> OS_THETHAO_GOLF_HD
+  //     "a59d8f32-b0d6-49c6-a1a2-8b7911314fa5" : {
+  //         id: "onfootball",
+  //     name: "ON Football"
+  //     }, //=> OS_BONGDA_HD
+  //     "410dbcf0-2cdb-48c4-bf85-de9449412830" : {
+  //       id: "onsports",
+  //     name: "ON Sports"
+  //     }, //=> OS_THETHAO_HD
+  //     "13c74904-dcf2-45d0-ad0f-7c5f27656ee6" : {
+  //       id: "onsportsnews",
+  //     name: "ON Sportsnews"
+  //     }, //=> OS_THETHAO_TINTUC_HD
+  //     "94bdc33b-cfd4-48e1-a996-4332932a504c" : {
+  //        id: "onsport10",
+  //        name: "ONSport 10"
+  //     }, //=> OS_ONSPORT10
+  //     "c14f01f6-eb20-4621-b0aa-7b15be8faa42" : {
+  //        id: "onsport9",
+  //        name: "ONSport 9"
+  //     }, //=> OS_ONSPORT9
+  //     "52f4e72c-27a0-4c96-8aa5-4cf81e006521" : {
+  //        id: "onsport8",
+  //        name: "ONSport 8"
+  //     }, //=> OS_ONSPORT8
+  //     "f92daeb0-6845-4da9-8b32-4b8c479bdfe8" : {
+  //        id: "onsport7",
+  //        name: "ONSport 7"
+  //     }, //=> OS_ONSPORT7 
+  //     "6e301a6c-7b9c-4129-b014-7f40bbf85c49" : {
+  //       id: "onsport7",
+  //        name: "ONSport 7"
+  //     }, //=> OS_ONSPORT7 
+  //     "41d73347-723c-4303-94dc-8d9f332d3f75" : {
+  //       id: "onsport6",
+  //        name: "ONSport 6"
+  //     }, //=> OS_ONSPORT6
+  //     "2a941d18-bffc-4c93-ba08-bae7ebfdb1da" : {
+  //       id: "onsport5",
+  //        name: "ONSport 5"
+  //     }, //=> OS_ONSPORT5
+  //     "f5aa9e08-6cb8-4f64-8304-0199f18f10d8" : {
+  //       id: "onsport3",
+  //        name: "ONSport 3"
+  //     }, //=> OS_ONSPORT5
+  //     "e2129578-ad42-4a17-b391-253844f6dfc2" : {
+  //       id: "onlivetv9",
+  //        name: "ONLiveTV9"
+  //     }, //=> onlivetv9 
+  //     "1ced33d8-c821-4ab8-8b53-f17899988440" : {
+  //       id: "onlivetv8",
+  //        name: "ONLiveTV8"
+  //     }, //=> onlivetv8 
+  //     "709243e6-26ea-4a83-8611-2d6d06faafdb" : {
+  //       id: "onlivetv7",
+  //        name: "ONLiveTV7"
+  //     }, //=> onlivetv8 
+  //     "02f32877-7365-4ebe-88d1-ed46bad8315a" : {
+  //       id: "onlivetv6",
+  //        name: "ONLiveTV6"
+  //     }, //=> onlivetv8
+  //     "f92daeb0-6845-4da9-8b32-4b8c479bdfe8" : {
+  //       id: "onlivetv4",
+  //        name: "ONLiveTV4"
+  //     },
+  //     "db06a173-09a0-407a-8b6d-1e9d83772781" : {
+  //       id: "onlivetv5",
+  //        name: "ONLiveTV5"
+  //     },
+  //      "db2b35ab-69a7-45be-9f28-dff8940eb51f" : {
+  //       id: "onlivetv3",
+  //        name: "ONLiveTV3"
+  //     }, 
+  //     "afb95e22-13a1-4371-bb07-e14d97054c0b" : {
+  //       id: "onlivetv2",
+  //        name: "ONLiveTV2"
+  //     }, 
+  //     "7c2426a6-dfcf-4b15-bfce-e2ce5e1e3e67" : {
+  //       id: "onlivetv1",
+  //        name: "ONLiveTV1"
+  //     }, //=> onlivetv4
+  // }
 
+  const whiteListChannel = {
+    "30dd2af9-ff12-4642-ac1f-c4464f86ffdc": { id: "onsportsplus", name: "ON Sportsplus" },
+    "1f039dc2-320d-4365-8fef-9dfe75e58a1c": { id: "ongolf", name: "ON Golf" },
+    "a59d8f32-b0d6-49c6-a1a2-8b7911314fa5": { id: "onfootball", name: "ON Football" },
+    "410dbcf0-2cdb-48c4-bf85-de9449412830": { id: "onsports", name: "ON Sports" },
+    "13c74904-dcf2-45d0-ad0f-7c5f27656ee6": { id: "onsportsnews", name: "ON Sportsnews" },
+    "94bdc33b-cfd4-48e1-a996-4332932a504c": { id: "onsport10", name: "ONSport 10" },
+    "c14f01f6-eb20-4621-b0aa-7b15be8faa42": { id: "onsport9", name: "ONSport 9" },
+    "52f4e72c-27a0-4c96-8aa5-4cf81e006521": { id: "onsport8", name: "ONSport 8" },
+    "6e301a6c-7b9c-4129-b014-7f40bbf85c49": { id: "onsport7", name: "ONSport 7" },
+    "41d73347-723c-4303-94dc-8d9f332d3f75": { id: "onsport6", name: "ONSport 6" },
+    "2a941d18-bffc-4c93-ba08-bae7ebfdb1da": { id: "onsport5", name: "ONSport 5" },
+    "f5aa9e08-6cb8-4f64-8304-0199f18f10d8": { id: "onsport3", name: "ONSport 3" },
+    "e2129578-ad42-4a17-b391-253844f6dfc2": { id: "onlivetv9", name: "ONLiveTV9" },
+    "1ced33d8-c821-4ab8-8b53-f17899988440": { id: "onlivetv8", name: "ONLiveTV8" },
+    "709243e6-26ea-4a83-8611-2d6d06faafdb": { id: "onlivetv7", name: "ONLiveTV7" },
+    "02f32877-7365-4ebe-88d1-ed46bad8315a": { id: "onlivetv6", name: "ONLiveTV6" },
+    "db06a173-09a0-407a-8b6d-1e9d83772781": { id: "onlivetv5", name: "ONLiveTV5" },
+    "f92daeb0-6845-4da9-8b32-4b8c479bdfe8": { id: "onlivetv4", name: "ONLiveTV4" },
+    "db2b35ab-69a7-45be-9f28-dff8940eb51f": { id: "onlivetv3", name: "ONLiveTV3" },
+    "afb95e22-13a1-4371-bb07-e14d97054c0b": { id: "onlivetv2", name: "ONLiveTV2" },
+    "7c2426a6-dfcf-4b15-bfce-e2ce5e1e3e67": { id: "onlivetv1", name: "ONLiveTV1" }
+  };
   const dataAPI = await getAPI("https://re.ghiminh1.workers.dev/?url=https://tv-web.api.vinasports.com.vn/api/v2/publish/see-more/events/2")
   let data = [];
   function getBetweenSlash(url) {
@@ -297,7 +332,7 @@ async function onplus() {
 
   if (Array.isArray(dataAPI.data) && dataAPI.data.length > 0) {
     data = dataAPI.data
-      .filter(i => !backListChannel.includes(i.channel_id) && i.channel_id !== "" )
+      .filter(i => !backListChannel.includes(i.channel_id) && i.channel_id !== "")
       .map(i => ({
         id: `onplus-${i.id}`,
         name: i.name,
@@ -405,12 +440,12 @@ async function onlivetv() {
 
 async function tv360() {
   const backListChannel = [
-    173,//     => onsports
-    183,//     => onsportsplus
-    170,//     => onsportsnews
-    174,//     => onfootball
-    169,//     => ongolf
-    
+    // 173,//     => onsports
+    // 183,//     => onsportsplus
+    // 170,//     => onsportsnews
+    // 174,//     => onfootball
+    // 169,//     => ongolf
+
   ]
 
 
@@ -480,6 +515,33 @@ async function tv360() {
     "9951": {
       "id": "vietnamtoday",
       "name": "Vietnam Today"
+    },
+
+    // 173,//     => onsports
+    // 183,//     => onsportsplus
+    // 170,//     => onsportsnews
+    // 174,//     => onfootball
+    // 169,//     => ongolf
+
+    "173": {
+      "id": "onsports",
+      "name": "ON Sports"
+    },
+    "183": {
+      "id": "onsportsplus",
+      "name": "ON Sports+"
+    },
+    "170": {
+      "id": "onsportsnews",
+      "name": "ON Sports News"
+    },
+    "174": {
+      "id": "onfootball",
+      "name": "ON Football"
+    },
+    "169": {
+      "id": "ongolf",
+      "name": "ON Golf"
     },
     "180": {
       "id": "onviegiaitri",
@@ -905,38 +967,38 @@ async function tv360() {
       "id": "tv360live",
       "name": "TV360Live"
     },
-    "2554" : {
+    "2554": {
       id: "tv360p1",
       name: "TV360P1"
-    } ,   
-    "1" : {
+    },
+    "1": {
       id: "tv360p2",
       name: "TV360P2"
-    } , 
-    "148" : {
+    },
+    "148": {
       id: "tv360p3",
       name: "TV360P3"
-    } , 
-    "2458" : {
+    },
+    "2458": {
       id: "tv360p4",
       name: "TV360P4"
-    } , 
-    "9867" : {
+    },
+    "9867": {
       id: "tv360p5",
       name: "TV360P5"
-    } , 
-    "9868" : {
+    },
+    "9868": {
       id: "tv360p6",
       name: "TV360P6"
-    } , 
-    "9869" : {
+    },
+    "9869": {
       id: "tv360p7",
       name: "TV360P7"
-    } ,
-    "9870" : {
+    },
+    "9870": {
       id: "tv360p8",
       name: "TV360P8"
-    } ,
+    },
     "9887": {
       "id": "tv360p9",
       "name": "TV360p9"
@@ -949,7 +1011,7 @@ async function tv360() {
       "id": "tv360p11",
       "name": "TV360p11"
     },
-    "10001" : {
+    "10001": {
       id: "tv360p12",
       name: "TV360P12"
     },
