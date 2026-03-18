@@ -356,9 +356,9 @@ async function onplus() {
 
 async function onlivetv() {
   const backListChannel = [
-    "https://onsportlive.vtvcab.vn/hls/ONQUOCPHONG_CL", // => qpvn
+    "https://onsportlive.vtvcab.vn/hls/ONQUOCPHONG_CL", // => qpvnhd
     "https://onsportlive.vtvcab.vn/hls/ONANTV_CL", // => antv
-    "VTV1_HD_CL", // => vtv1
+    "VTV1_HD_CL", // => vtv1hd
     "OS_VTV5", // => vtv5
     "INFO_TV_CL", // => VTV7
     "eddd7b89-1a5e-44ca-98f3-d6aa993e0bf9", //  => sctv15
@@ -461,55 +461,55 @@ async function tv360() {
   }
   const whiteListChannel = {
     "20": {
-      "id": "antv",
+      "id": "antvhd",
       "name": "ANTV"
     },
     "19": {
-      "id": "qpvn",
+      "id": "qpvnhd",
       "name": "QPVN"
     },
     "2": {
-      "id": "vtv1",
+      "id": "vtv1hd",
       "name": "VTV1"
     },
     "3": {
-      "id": "vtv2",
+      "id": "vtv2hd",
       "name": "VTV2"
     },
     "4": {
-      "id": "vtv3",
+      "id": "vtv3hd",
       "name": "VTV3"
     },
     "108": {
-      "id": "vtv4",
+      "id": "vtv4hd",
       "name": "VTV4"
     },
     "110": {
-      "id": "vtv5",
+      "id": "vtv5hd",
       "name": "VTV5"
     },
     "157": {
-      "id": "vtv5tnb",
+      "id": "vtv5hdtnb",
       "name": "VTV5 Tây Nam Bộ"
     },
     "207": {
-      "id": "vtv5tn",
+      "id": "vtv5hdtn",
       "name": "VTV5 Tây Nguyên"
     },
     "6": {
-      "id": "vtv7",
+      "id": "vtv7hd",
       "name": "VTV7"
     },
     "115": {
-      "id": "vtv8",
+      "id": "vtv8hd",
       "name": "VTV8"
     },
     "8": {
-      "id": "vtv9",
+      "id": "vtv9hd",
       "name": "VTV9"
     },
     "98": {
-      "id": "vtvct",
+      "id": "vtvcantho",
       "name": "VTV Cần Thơ"
     },
     "9951": {
@@ -560,7 +560,7 @@ async function tv360() {
       "name": "ON Cine"
     },
     "181": {
-      "id": "onmoviesyoutv",
+      "id": "onmovies",
       "name": "ON Movies - YouTV"
     },
     "182": {
@@ -584,7 +584,7 @@ async function tv360() {
       "name": "ON Info TV"
     },
     "184": {
-      "id": "onstyletv",
+      "id": "onstyle",
       "name": "ON Style TV"
     },
     "185": {
@@ -592,7 +592,7 @@ async function tv360() {
       "name": "ON Music"
     },
     "186": {
-      "id": "ontrendingtv",
+      "id": "ontrending",
       "name": "ON Trending TV"
     },
     "187": {
@@ -608,11 +608,11 @@ async function tv360() {
       "name": "BTV9 - Bchannel"
     },
     "201": {
-      "id": "sctv2",
+      "id": "sctv2hd",
       "name": "SCTV2 TodayTV"
     },
     "232": {
-      "id": "sctv6",
+      "id": "sctv6hd",
       "name": "SCTV6 FIM360"
     },
     "190": {
@@ -620,7 +620,7 @@ async function tv360() {
       "name": "HTV1"
     },
     "191": {
-      "id": "htv2viechannel",
+      "id": "htv2hd",
       "name": "HTV2 - Vie Channel"
     },
     "192": {
@@ -628,43 +628,43 @@ async function tv360() {
       "name": "HTV3"
     },
     "9": {
-      "id": "htvkey",
-      "name": "HTV Key"
+      "id": "htv4",
+      "name": "HTV 4"
     },
     "193": {
-      "id": "htv7",
+      "id": "htv7hd",
       "name": "HTV7"
     },
     "194": {
-      "id": "htv9",
+      "id": "htv9hd",
       "name": "HTV9"
     },
     "14": {
-      "id": "htvccanhac",
+      "id": "htvccanhachd",
       "name": "HTVC CA NHẠC"
     },
     "133": {
-      "id": "htvcdlcs",
+      "id": "htvcdulichhd",
       "name": "HTVC DL&CS"
     },
     "11": {
-      "id": "htvcgiadinh",
+      "id": "htvcgiadinhhd",
       "name": "HTVC GIA ĐÌNH"
     },
     "15": {
-      "id": "htvcphim",
+      "id": "htvcphimhd",
       "name": "HTVC PHIM"
     },
     "12": {
-      "id": "htvcphunu",
+      "id": "htvcphunuhd",
       "name": "HTVC PHỤ NỮ"
     },
     "132": {
-      "id": "htvcplus",
+      "id": "htvcplushd",
       "name": "HTVC PLUS"
     },
     "195": {
-      "id": "htvcthethao",
+      "id": "htvthethaohd",
       "name": "HTVC THỂ THAO"
     },
     "13": {
@@ -672,24 +672,24 @@ async function tv360() {
       "name": "HTVC THUẦN VIỆT"
     },
     "66": {
-      "id": "atv1",
+      "id": "angiang1",
       "name": "ATV1"
     },
     "35": {
-      "id": "atv2",
+      "id": "angiang2",
       "name": "ATV2"
     },
     "39": {
-      "id": "btv",
-      "name": "BTV"
+      "id": "bacninh",
+      "name": "Bắc Ninh"
     },
     "46": {
-      "id": "ctv",
-      "name": "CTV"
+      "id": "camau",
+      "name": "Cà Mau"
     },
     "48": {
-      "id": "crtv",
-      "name": "CRTV"
+      "id": "caobang",
+      "name": "Cao Bằng"
     },
     "47": {
       "id": "cantho1",
@@ -704,48 +704,48 @@ async function tv360() {
       "name": "Cần Thơ 3"
     },
     "49": {
-      "id": "dnrt1",
-      "name": "DNRT1"
+      "id": "danang1",
+      "name": "Đà Nẵng 1"
     },
     "80": {
-      "id": "dnrt2",
-      "name": "DNRT2"
+      "id": "danang2",
+      "name": "Đà Nẵng 2"
     },
     "51": {
-      "id": "drt",
-      "name": "DRT"
+      "id": "daklak",
+      "name": "Đắk Lắk"
     },
     "52": {
-      "id": "dtv",
-      "name": "ĐTV"
+      "id": "dienbien",
+      "name": "Điện Biên"
     },
     "53": {
-      "id": "dn1nrtv",
-      "name": "ĐN1-NRTV"
+      "id": "dongnai1",
+      "name": "Đồng Nai 1"
     },
     "255": {
-      "id": "dn2nrtv",
-      "name": "ĐN2-NRTV"
+      "id": "dongnai2",
+      "name": "Đồng Nai 2"
     },
     "54": {
-      "id": "thdt1",
-      "name": "THĐT1"
+      "id": "dongthap1",
+      "name": "Đồng Tháp 1"
     },
     "90": {
-      "id": "thdt2mientay",
-      "name": "THĐT2 - Miền Tây"
+      "id": "dongthap2",
+      "name": "Đồng Tháp 2 - Miền Tây"
     },
     "55": {
-      "id": "gtv",
-      "name": "GTV"
+      "id": "gialai",
+      "name": "Gia Lai"
     },
     "33": {
-      "id": "h1",
-      "name": "H1"
+      "id": "hanoi1",
+      "name": "Hà Nội 1"
     },
     "34": {
-      "id": "h2",
-      "name": "H2"
+      "id": "hanoi2",
+      "name": "Hà Nội 2"
     },
     "32": {
       "id": "hitv",
@@ -756,123 +756,127 @@ async function tv360() {
       "name": "You TV"
     },
     "58": {
-      "id": "bhttv",
-      "name": "BHTTV"
+      "id": "hatinh",
+      "name": "Hà tĩnh"
+    },
+      "59": {
+      "id": "haiphong3",
+      "name": "Hải Phòng 3"
     },
     "60": {
-      "id": "thp",
-      "name": "THP"
+      "id": "haiphong",
+      "name": "Hải Phòng"
     },
     "159": {
-      "id": "cinemaworld",
+      "id": "cinemaworldhd",
       "name": "CinemaWorld"
     },
     "63": {
-      "id": "huetv",
+      "id": "hue",
       "name": "HUETV"
     },
     "64": {
-      "id": "hytv",
-      "name": "HYTV"
+      "id": "hungyen",
+      "name": "Hưng Yên"
     },
     "65": {
-      "id": "ktv1",
+      "id": "khanhhoa",
+      "name": "KTV"
+    }, 
+    "76": {
+      "id": "khanhhoa1",
       "name": "KTV1"
     },
     "68": {
-      "id": "ltv",
+      "id": "laichau",
       "name": "LTV"
     },
     "70": {
-      "id": "lstv",
+      "id": "langson",
       "name": "LSTV"
     },
     "71": {
-      "id": "thlc",
+      "id": "laocai",
       "name": "THLC"
     },
     "69": {
-      "id": "ltv1",
+      "id": "lamdong1",
       "name": "LTV1"
     },
     "45": {
-      "id": "ltv2",
+      "id": "lamdong2",
       "name": "LTV2"
     },
-    "50": {
-      "id": "ltv3",
-      "name": "LTV3"
-    },
     "74": {
-      "id": "ntv",
+      "id": "nghean",
       "name": "NTV"
     },
     "75": {
-      "id": "nbtv",
+      "id": "ninhbinh",
       "name": "NBTV"
     },
     "77": {
-      "id": "ptv",
+      "id": "phutho",
       "name": "PTV"
     },
     "81": {
-      "id": "qngtv1",
+      "id": "quangngai",
       "name": "QNgTV 1"
     },
     "82": {
-      "id": "qtv1",
+      "id": "quangninh1",
       "name": "QTV1"
     },
     "134": {
-      "id": "qtv3",
+      "id": "quangninh3",
       "name": "QTV3"
     },
     "83": {
-      "id": "qttv",
+      "id": "quangtri",
       "name": "QTTV"
     },
     "85": {
-      "id": "stv",
+      "id": "sonla",
       "name": "STV"
     },
     "72": {
-      "id": "tayninhtv",
+      "id": "tayninh1",
       "name": "TTV"
     },
     "89": {
-      "id": "ttv",
+      "id": "thanhhoa",
       "name": "TTV"
     },
     "88": {
-      "id": "tn",
+      "id": "thainguyen",
       "name": "TN"
     },
     "92": {
-      "id": "ttv",
+      "id": "tuyenquang",
       "name": "TTV"
     },
     "25": {
-      "id": "thvl1",
+      "id": "vinhlong1hd",
       "name": "THVL1"
     },
     "26": {
-      "id": "thvl2",
+      "id": "vinhlong2hd",
       "name": "THVL2"
     },
     "219": {
-      "id": "thvl3",
+      "id": "vinhlong3hd",
       "name": "THVL3"
     },
     "220": {
-      "id": "thvl4",
+      "id": "vinhlong4hd",
       "name": "THVL4"
     },
     "91": {
-      "id": "thvl5",
+      "id": "vinhlong5hd",
       "name": "THVL5"
     },
     "271": {
-      "id": "hbo",
+      "id": "hbohd",
       "name": "HBO"
     },
     "111": {
@@ -880,15 +884,15 @@ async function tv360() {
       "name": "Arirang"
     },
     "277": {
-      "id": "cartoonnetwork",
+      "id": "cartoonhd",
       "name": "Cartoon Network"
     },
     "112": {
-      "id": "channelnewsasiacna",
+      "id": "cna",
       "name": "Channel News Asia (CNA)"
     },
     "239": {
-      "id": "cinemax",
+      "id": "cinemaxhd",
       "name": "Cinemax"
     },
     "9855": {
@@ -900,7 +904,7 @@ async function tv360() {
       "name": "Da Vinci"
     },
     "279": {
-      "id": "discovery",
+      "id": "discoveryhd",
       "name": "Discovery"
     },
     "235": {
@@ -908,7 +912,7 @@ async function tv360() {
       "name": "DreamWorks"
     },
     "96": {
-      "id": "france24",
+      "id": "france24eng",
       "name": "France 24"
     },
     "99": {
@@ -916,7 +920,7 @@ async function tv360() {
       "name": "HGTV"
     },
     "9856": {
-      "id": "history",
+      "id": "historyhd",
       "name": "History"
     },
     "213": {
@@ -932,15 +936,15 @@ async function tv360() {
       "name": "NHK World"
     },
     "216": {
-      "id": "outdoorchannel",
+      "id": "outdoorhd",
       "name": "Outdoor Channel"
     },
     "273": {
-      "id": "warnertv",
+      "id": "warnertvhd",
       "name": "Warner TV"
     },
     "281": {
-      "id": "anx",
+      "id": "anxhd",
       "name": "ANX"
     },
     "283": {
@@ -956,7 +960,7 @@ async function tv360() {
       "name": "CNN"
     },
     "163": {
-      "id": "fashiontv",
+      "id": "fashionhd",
       "name": "Fashion TV"
     },
     "9904": {
@@ -968,51 +972,51 @@ async function tv360() {
       "name": "TV360Live"
     },
     "2554": {
-      id: "tv360p1",
+      id: "tv360plus1",
       name: "TV360P1"
     },
     "1": {
-      id: "tv360p2",
+      id: "tv360plus2",
       name: "TV360P2"
     },
     "148": {
-      id: "tv360p3",
+      id: "tv360plus3",
       name: "TV360P3"
     },
     "2458": {
-      id: "tv360p4",
+      id: "tv360plus4",
       name: "TV360P4"
     },
     "9867": {
-      id: "tv360p5",
+      id: "tv360plus5",
       name: "TV360P5"
     },
     "9868": {
-      id: "tv360p6",
+      id: "tv360plus6",
       name: "TV360P6"
     },
     "9869": {
-      id: "tv360p7",
+      id: "tv360plus7",
       name: "TV360P7"
     },
     "9870": {
-      id: "tv360p8",
+      id: "tv360plus8",
       name: "TV360P8"
     },
     "9887": {
-      "id": "tv360p9",
+      "id": "tv360plus9",
       "name": "TV360p9"
     },
     "9957": {
-      "id": "tv360p10",
+      "id": "tv360plus10",
       "name": "TV360p10"
     },
     "9958": {
-      "id": "tv360p11",
+      "id": "tv360plus11",
       "name": "TV360p11"
     },
     "10001": {
-      id: "tv360p12",
+      id: "tv360plus12",
       name: "TV360P12"
     },
   };
@@ -1080,79 +1084,79 @@ async function mytv(page = 1, num = 20) {
   const whiteListChannel = {
 
     "766": {
-      id: "sctv0",
+      id: "sctvhdpth",
       name: "SCTV Phim Tổng hợp"
     },
     "769": {
-      id: "sctv1",
+      id: "sctv1hd",
       name: "SCTV1 Hài"
     },
     "772": {
-      id: "sctv2",
+      id: "sctv2hd",
       name: "SCTV2 TodayTV"
     },
     "775": {
-      id: "sctv3",
+      id: "sctv3hd",
       name: "SCTV3 SeeTV"
     },
     "778": {
-      id: "sctv4",
+      id: "sctv4hd",
       name: "SCTV 4"
     },
     "781": {
-      id: "sctv6",
+      id: "sctv6hd",
       name: "SCTV6 FIM360"
     },
     "784": {
-      id: "sctv7",
+      id: "sctv7hd",
       name: "SCTV7 SHOW TV"
     },
     "787": {
-      id: "sctv8",
+      id: "sctv8hd",
       name: "SCTV8 VITV"
     },
     "790": {
-      id: "sctv9",
+      id: "sctv9hd",
       name: "SCTV9 Kinh Tế Thị Trường"
     },
     "793": {
-      id: "sctv11",
+      id: "sctv11hd",
       name: "SCTV11 TV STAR"
     },
     "796": {
-      id: "sctv12",
+      id: "sctv12hd",
       name: "SCTV12 Du Lịch Khám Phá"
     },
     "799": {
-      id: "sctv13",
+      id: "sctv13hd",
       name: "SCTV13 Phụ Nữ & Gia Đình"
     },
     "823": {
-      id: "sctv15",
+      id: "sctv15hd",
       name: "SCTV15 SPORT2"
     },
     "826": {
-      id: "sctv17",
+      id: "sctv17hd",
       name: "SCTV17 SPORT"
     },
     "808": {
-      id: "sctv18",
+      id: "sctv18hd",
       name: "SCTV18"
     },
     "811": {
-      id: "sctv19",
+      id: "sctv19hd",
       name: "SCTV19 Channel T"
     },
     "814": {
-      id: "sctv20",
+      id: "sctv20hd",
       name: "SCTV20 Kênh Ca nhạc"
     },
     "817": {
-      id: "sctv21",
+      id: "sctv21hd",
       name: "SCTV21 Việt Nam Ký Ức"
     },
     "829": {
-      id: "sctv22",
+      id: "sctv22hd",
       name: "SCTV22 SSPORT1"
     }
 

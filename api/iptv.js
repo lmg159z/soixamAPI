@@ -331,7 +331,7 @@ const textBroadCast = (await Promise.all(
     .filter(i => i.status === 1)
     .map(async k => {
       const channel = await getAPI(
-        `https://soixamapi.vercel.app/api/channel?id=${k.channel_id != "" ? k.channel_id : "vtv1"}`
+        `https://soixamapi.vercel.app/api/channel?id=${k.channel_id != "" ? k.channel_id : "vtv1hd"}`
       );
 
       if (channel[0].drm) {
