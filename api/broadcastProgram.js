@@ -312,6 +312,7 @@ async function onplus() {
     "6e301a6c-7b9c-4129-b014-7f40bbf85c49": { id: "onsport7", name: "ONSport 7" },
     "41d73347-723c-4303-94dc-8d9f332d3f75": { id: "onsport6", name: "ONSport 6" },
     "2a941d18-bffc-4c93-ba08-bae7ebfdb1da": { id: "onsport5", name: "ONSport 5" },
+    "763771cc-06bf-42d4-ad7b-12bbe1da1e99": { id: "onsport4", name: "ONSport 4" },
     "f5aa9e08-6cb8-4f64-8304-0199f18f10d8": { id: "onsport3", name: "ONSport 3" },
     "e2129578-ad42-4a17-b391-253844f6dfc2": { id: "onlivetv9", name: "ONLiveTV9" },
     "1ced33d8-c821-4ab8-8b53-f17899988440": { id: "onlivetv8", name: "ONLiveTV8" },
