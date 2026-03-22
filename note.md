@@ -47,3 +47,113 @@ cdd222b8-c8fc-40c6-8baf-540d55469932 => INFO_TV_CL | VTV7
 "16922d09-8b39-4b85-8703-ba757698acf5", // => HTV4
 "cdd222b8-c8fc-40c6-8baf-540d55469932", // => INFO_TV_CL | VTV7 
 "2987336b-ce50-42ae-80a3-d24e0c0f73b3", // => VTV5TNB
+
+
+```php
+<?php
+
+$FALLBACK_URL = "https://freem3u.xyz/static/no-signal/low.m3u8";
+
+$ALLOWED_IDS = [
+20,19,2,3,4,108,110,157,207,6,115,8,98,9951,180,177,175,176,181,182,
+136,178,179,189,184,185,186,187,188,173,183,170,174,169,201,232,190,
+191,192,9,151,193,195,194,14,133,11,15,12,132,13,66,35,39,46,48,47,
+61,84,49,80,51,52,53,255,54,90,55,33,34,32,31,58,60,59,63,64,65,76,
+68,70,71,69,45,74,75,77,81,82,134,83,85,72,89,88,92,25,26,219,220,
+91,271,277,159,239,9855,279,235,213,273,281,283,237,275,163,215,214,
+99,9856,216,9901,111,112,96,106,9888,9904,9902,9903,9934,2554,1,148,
+2458,9867,9868,9869,9870,9887,9957,9958,10001
+];
+
+// CORS
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit;
+}
+
+$id = $_GET['id'] ?? null;
+$r  = $_GET['r'] ?? null;
+
+// ✅ check id
+function isValidId($id, $ALLOWED_IDS) {
+    if (!is_numeric($id)) return false;
+    $num = intval($id);
+    return $num > 0 && in_array($num, $ALLOWED_IDS);
+}
+
+// ❌ invalid → fallback
+if (!isValidId($id, $ALLOWED_IDS)) {
+    if ($r === "true") {
+        header("Location: $FALLBACK_URL", true, 302);
+        exit;
+    }
+
+    echo json_encode([
+        "id" => $id,
+        "url" => $FALLBACK_URL,
+        "error" => "Invalid id"
+    ]);
+    exit;
+}
+
+
+// 🔥 get stream
+function getStreamUrl($id) {
+    $arr = [
+        "https://vietanhtv.id.vn/tv360/$id/index.m3u8",
+        "https://kubolive.ddns.net/vanh_tv.php?provider=tv360&id=$id",
+        "https://backup2.vietanhtv.id.vn/tv360/$id/index.m3u8"
+    ];
+
+    foreach ($arr as $url) {
+        $ch = curl_init($url);
+
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_NOBODY => false,
+            CURLOPT_TIMEOUT => 10
+        ]);
+
+        curl_exec($ch);
+
+        $finalUrl = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
+        $status   = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        curl_close($ch);
+
+        if ($finalUrl && $finalUrl !== $url) {
+            return $finalUrl;
+        }
+
+        if ($status == 200) {
+            return $url;
+        }
+    }
+
+    return null;
+}
+
+
+$url = getStreamUrl($id);
+$finalUrl = $url ?: $FALLBACK_URL;
+
+
+// 🔥 redirect nếu r=true
+if ($r === "true") {
+    header("Location: $finalUrl", true, 302);
+    exit;
+}
+
+// trả JSON
+header("Content-Type: application/json");
+echo json_encode([
+    "id" => $id,
+    "url" => $finalUrl
+]);
+
+```
