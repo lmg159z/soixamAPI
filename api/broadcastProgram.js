@@ -133,174 +133,23 @@ async function onplus() {
   const backListChannel = [
     "93a6c5ec-92eb-4ecf-8c50-64072f9dfa7f", // => SCTV22HD
     "eddd7b89-1a5e-44ca-98f3-d6aa993e0bf9", // => SCTV15HD
-    "16922d09-8b39-4b85-8703-ba757698acf5", // => HTV4
-    "cdd222b8-c8fc-40c6-8baf-540d55469932", // => INFO_TV_CL | VTV7 
-    "2987336b-ce50-42ae-80a3-d24e0c0f73b3", // => VTV5TNB
-    "30dd2af9-ff12-4642-ac1f-c4464f86ffdc",
-    "1f039dc2-320d-4365-8fef-9dfe75e58a1c",
-    "a59d8f32-b0d6-49c6-a1a2-8b7911314fa5",
-    "410dbcf0-2cdb-48c4-bf85-de9449412830",
-    "13c74904-dcf2-45d0-ad0f-7c5f27656ee6",
+    // "16922d09-8b39-4b85-8703-ba757698acf5", // => HTV4
+    // "cdd222b8-c8fc-40c6-8baf-540d55469932", // => INFO_TV_CL | VTV7 
+    // "2987336b-ce50-42ae-80a3-d24e0c0f73b3", // => VTV5TNB
+    // "30dd2af9-ff12-4642-ac1f-c4464f86ffdc",
+    // "1f039dc2-320d-4365-8fef-9dfe75e58a1c",
+    // "a59d8f32-b0d6-49c6-a1a2-8b7911314fa5",
+    // "410dbcf0-2cdb-48c4-bf85-de9449412830",
+    // "13c74904-dcf2-45d0-ad0f-7c5f27656ee6",
+    // "f8d1f05f-a12b-463d-ba44-9afdb43629f2", // VTV cần thơ
   ]
 
-  // const whiteListChannel = {
-
-  //   "OS_BONGDA_HD": {
-  //     id: "onfootball",
-  //     name: "ON Football"
-  //   },
-  //   "OS_THETHAO_TINTUC_HD": {
-  //     id: "onsportsnews",
-  //     name: "ON Sportsnews"
-  //   },
-  //   "OS_THETHAO_HD": {
-  //     id: "onsports",
-  //     name: "ON Sports"
-  //   },
-  //   "OS_HAY_TV": {
-  //     id: "onsportsplus",
-  //     name: "ON Sportsplus"
-  //   },
-  //   "OS_THETHAO_GOLF_HD": {
-  //     id: "ongolf",
-  //     name: "ON Golf"
-  //   },
-  //   "OS_ONSPORT1": {
-  //     id: "onsport1",
-  //     name: "ONSport 1"
-  //   },
-  //   "OS_ONSPORT2": {
-  //     id: "onsport2",
-  //     name: "ONSport 2"
-  //   },
-  //   "OS_ONSPORT3": {
-  //     id: "onsport3",
-  //     name: "ONSport 3"
-  //   },
-  //   "OS_ONSPORT4": {
-  //     id: "onsport4",
-  //     name: "ONSport 4"
-  //   },
-  //   "OS_ONSPORT5": {
-  //     id: "onsport5",
-  //     name: "ONSport 5"
-  //   },
-  //   "OS_ONSPORT6": {
-  //     id: "onsport6",
-  //     name: "ONSport 6"
-  //   },
-  //   "OS_ONSPORT7": {
-  //     id: "onsport7",
-  //     name: "ONSport 7"
-  //   },
-  //   "OS_ONSPORT8": {
-  //     id: "onsport8",
-  //     name: "ONSport 8"
-  //   },
-  //   "OS_ONSPORT9": {
-  //     id: "onsport9",
-  //     name: "ONSport 9"
-  //   },
-  //   "OS_ONSPORT10": {
-  //     id: "onsport10",
-  //     name: "ONSport 10"
-  //   }
-
-
-  // }
-
-  // const whiteListChannel = {
-  //     "30dd2af9-ff12-4642-ac1f-c4464f86ffdc" : {
-  //        id: "onsportsplus",
-  //        name: "ON Sportsplus"
-  //     }, //=> OS_HAY_TV
-  //     "1f039dc2-320d-4365-8fef-9dfe75e58a1c" : {
-  //       id: "ongolf",
-  //     name: "ON Golf"
-  //     }, //=> OS_THETHAO_GOLF_HD
-  //     "a59d8f32-b0d6-49c6-a1a2-8b7911314fa5" : {
-  //         id: "onfootball",
-  //     name: "ON Football"
-  //     }, //=> OS_BONGDA_HD
-  //     "410dbcf0-2cdb-48c4-bf85-de9449412830" : {
-  //       id: "onsports",
-  //     name: "ON Sports"
-  //     }, //=> OS_THETHAO_HD
-  //     "13c74904-dcf2-45d0-ad0f-7c5f27656ee6" : {
-  //       id: "onsportsnews",
-  //     name: "ON Sportsnews"
-  //     }, //=> OS_THETHAO_TINTUC_HD
-  //     "94bdc33b-cfd4-48e1-a996-4332932a504c" : {
-  //        id: "onsport10",
-  //        name: "ONSport 10"
-  //     }, //=> OS_ONSPORT10
-  //     "c14f01f6-eb20-4621-b0aa-7b15be8faa42" : {
-  //        id: "onsport9",
-  //        name: "ONSport 9"
-  //     }, //=> OS_ONSPORT9
-  //     "52f4e72c-27a0-4c96-8aa5-4cf81e006521" : {
-  //        id: "onsport8",
-  //        name: "ONSport 8"
-  //     }, //=> OS_ONSPORT8
-  //     "f92daeb0-6845-4da9-8b32-4b8c479bdfe8" : {
-  //        id: "onsport7",
-  //        name: "ONSport 7"
-  //     }, //=> OS_ONSPORT7 
-  //     "6e301a6c-7b9c-4129-b014-7f40bbf85c49" : {
-  //       id: "onsport7",
-  //        name: "ONSport 7"
-  //     }, //=> OS_ONSPORT7 
-  //     "41d73347-723c-4303-94dc-8d9f332d3f75" : {
-  //       id: "onsport6",
-  //        name: "ONSport 6"
-  //     }, //=> OS_ONSPORT6
-  //     "2a941d18-bffc-4c93-ba08-bae7ebfdb1da" : {
-  //       id: "onsport5",
-  //        name: "ONSport 5"
-  //     }, //=> OS_ONSPORT5
-  //     "f5aa9e08-6cb8-4f64-8304-0199f18f10d8" : {
-  //       id: "onsport3",
-  //        name: "ONSport 3"
-  //     }, //=> OS_ONSPORT5
-  //     "e2129578-ad42-4a17-b391-253844f6dfc2" : {
-  //       id: "onlivetv9",
-  //        name: "ONLiveTV9"
-  //     }, //=> onlivetv9 
-  //     "1ced33d8-c821-4ab8-8b53-f17899988440" : {
-  //       id: "onlivetv8",
-  //        name: "ONLiveTV8"
-  //     }, //=> onlivetv8 
-  //     "709243e6-26ea-4a83-8611-2d6d06faafdb" : {
-  //       id: "onlivetv7",
-  //        name: "ONLiveTV7"
-  //     }, //=> onlivetv8 
-  //     "02f32877-7365-4ebe-88d1-ed46bad8315a" : {
-  //       id: "onlivetv6",
-  //        name: "ONLiveTV6"
-  //     }, //=> onlivetv8
-  //     "f92daeb0-6845-4da9-8b32-4b8c479bdfe8" : {
-  //       id: "onlivetv4",
-  //        name: "ONLiveTV4"
-  //     },
-  //     "db06a173-09a0-407a-8b6d-1e9d83772781" : {
-  //       id: "onlivetv5",
-  //        name: "ONLiveTV5"
-  //     },
-  //      "db2b35ab-69a7-45be-9f28-dff8940eb51f" : {
-  //       id: "onlivetv3",
-  //        name: "ONLiveTV3"
-  //     }, 
-  //     "afb95e22-13a1-4371-bb07-e14d97054c0b" : {
-  //       id: "onlivetv2",
-  //        name: "ONLiveTV2"
-  //     }, 
-  //     "7c2426a6-dfcf-4b15-bfce-e2ce5e1e3e67" : {
-  //       id: "onlivetv1",
-  //        name: "ONLiveTV1"
-  //     }, //=> onlivetv4
-  // }
 
   const whiteListChannel = {
+    "f8d1f05f-a12b-463d-ba44-9afdb43629f2": { id: "vtvcantho", name: "VTV Cần Thơ"},
+    "2987336b-ce50-42ae-80a3-d24e0c0f73b3": { id: "vtv5hdtnb", name: "VTV 5 Tây Nam Bộ"},
+    "cdd222b8-c8fc-40c6-8baf-540d55469932": { id: "vtv7hd", name: "VTV 7"},
+    "16922d09-8b39-4b85-8703-ba757698acf5": { id: "htv4", name: "HTV4"},
     "30dd2af9-ff12-4642-ac1f-c4464f86ffdc": { id: "onsportsplus", name: "ON Sportsplus" },
     "1f039dc2-320d-4365-8fef-9dfe75e58a1c": { id: "ongolf", name: "ON Golf" },
     "a59d8f32-b0d6-49c6-a1a2-8b7911314fa5": { id: "onfootball", name: "ON Football" },
@@ -355,104 +204,8 @@ async function onplus() {
 
 
 
-async function onlivetv() {
-  const backListChannel = [
-    "https://onsportlive.vtvcab.vn/hls/ONQUOCPHONG_CL", // => qpvnhd
-    "https://onsportlive.vtvcab.vn/hls/ONANTV_CL", // => antv
-    "VTV1_HD_CL", // => vtv1hd
-    "OS_VTV5", // => vtv5
-    "INFO_TV_CL", // => VTV7
-    "eddd7b89-1a5e-44ca-98f3-d6aa993e0bf9", //  => sctv15
-    "a595913f-5b14-42ef-9958-74aa993e0bf9", //  => sctv17
-    "d210302f-b013-41e4-8b16-ecaa993e0bf9", //  => htvkey
-  ]
-
-  const whiteListChannel = {
-
-    "8edc20d4-04ba-41a4-9ad8-998c915fa509": {
-      id: "onlive9",
-      name: "ONLiveTV 9"
-    },
-    "54ba0359-40c4-49a9-b5aa-6e8f5d633ff5": {
-      id: "onlive8",
-      name: "ONLiveTV 8"
-    },
-    "c449b337-baf6-45da-90f3-8cbe0ec504d6": {
-      id: "onlive4",
-      name: "ONLiveTV 4"
-    },
-
-
-  }
-
-  const dataAPI = await getAPI("https://re.ghiminh1.workers.dev/?url=https://tv-web-api.onlivetv.vn/api/v2/publish/see-more/events/5")
-  let data = [];
-  function getBetweenSlash(url) {
-    const parts = url.split('/');
-    return parts[4];
-  }
-
-  if (Array.isArray(dataAPI.data) && dataAPI.data.length > 0) {
-    data = dataAPI.data
-      .filter(i => !backListChannel.includes(i.channel_id) && i.channel_id !== "")
-      .map(i => {
-        const channel = whiteListChannel[i.channel_id] || {};
-
-        return {
-          id: `onlivetv-${i.id}`,
-          name: i.name,
-          start_time: formatDateGMT7(i.start_time),
-          over_time: formatDateGMT7(i.over_time),
-          thumbnail: i.thumbnail,
-
-          channel_id: channel.id || "",
-          channel_name: channel.name || i.channel_id,
-
-          status: matchValue(i.status, ["live", "not_started"], [1, 0])
-        };
-      })
-  }
-
-  return {
-    src: "ONLiveTV",
-    data: data
-  };
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// https://webapi.mytv.vn/api/v1/home/cate-info/chuong-trinh-truyen-hinh
-
 async function tv360() {
-  const backListChannel = [
-    // 173,//     => onsports
-    // 183,//     => onsportsplus
-    // 170,//     => onsportsnews
-    // 174,//     => onfootball
-    // 169,//     => ongolf
-
-  ]
-
-
-
-
-
+  const backListChannel = []
   function formatDateTime(str) {
     const [date, time] = str.split(" ");
     const [year, month, day] = date.split("-");
@@ -461,566 +214,145 @@ async function tv360() {
     return `${day}:${month}:${year.slice(2)}-${hour}:${minute}`;
   }
   const whiteListChannel = {
-    "20": {
-      "id": "antvhd",
-      "name": "ANTV"
-    },
-    "19": {
-      "id": "qpvnhd",
-      "name": "QPVN"
-    },
-    "2": {
-      "id": "vtv1hd",
-      "name": "VTV1"
-    },
-    "3": {
-      "id": "vtv2hd",
-      "name": "VTV2"
-    },
-    "4": {
-      "id": "vtv3hd",
-      "name": "VTV3"
-    },
-    "108": {
-      "id": "vtv4hd",
-      "name": "VTV4"
-    },
-    "110": {
-      "id": "vtv5hd",
-      "name": "VTV5"
-    },
-    "157": {
-      "id": "vtv5hdtnb",
-      "name": "VTV5 Tây Nam Bộ"
-    },
-    "207": {
-      "id": "vtv5hdtn",
-      "name": "VTV5 Tây Nguyên"
-    },
-    "6": {
-      "id": "vtv7hd",
-      "name": "VTV7"
-    },
-    "115": {
-      "id": "vtv8hd",
-      "name": "VTV8"
-    },
-    "8": {
-      "id": "vtv9hd",
-      "name": "VTV9"
-    },
-    "98": {
-      "id": "vtvcantho",
-      "name": "VTV Cần Thơ"
-    },
-    "9951": {
-      "id": "vietnamtoday",
-      "name": "Vietnam Today"
-    },
-
-    // 173,//     => onsports
-    // 183,//     => onsportsplus
-    // 170,//     => onsportsnews
-    // 174,//     => onfootball
-    // 169,//     => ongolf
-
-    "173": {
-      "id": "onsports",
-      "name": "ON Sports"
-    },
-    "183": {
-      "id": "onsportsplus",
-      "name": "ON Sports+"
-    },
-    "170": {
-      "id": "onsportsnews",
-      "name": "ON Sports News"
-    },
-    "174": {
-      "id": "onfootball",
-      "name": "ON Football"
-    },
-    "169": {
-      "id": "ongolf",
-      "name": "ON Golf"
-    },
-    "180": {
-      "id": "onviegiaitri",
-      "name": "ON Vie Giải Trí"
-    },
-    "177": {
-      "id": "onviedramas",
-      "name": "ON Vie Dramas"
-    },
-    "175": {
-      "id": "onphimviet",
-      "name": "ON Phim Việt"
-    },
-    "176": {
-      "id": "oncine",
-      "name": "ON Cine"
-    },
-    "181": {
-      "id": "onmovies",
-      "name": "ON Movies - YouTV"
-    },
-    "182": {
-      "id": "onechannel",
-      "name": "ON Echannel"
-    },
-    "136": {
-      "id": "ono2tv",
-      "name": "ON O2TV"
-    },
-    "178": {
-      "id": "onbibi",
-      "name": "ON Bibi"
-    },
-    "179": {
-      "id": "onkids",
-      "name": "ON Kids"
-    },
-    "189": {
-      "id": "oninfotv",
-      "name": "ON Info TV"
-    },
-    "184": {
-      "id": "onstyle",
-      "name": "ON Style TV"
-    },
-    "185": {
-      "id": "onmusic",
-      "name": "ON Music"
-    },
-    "186": {
-      "id": "ontrending",
-      "name": "ON Trending TV"
-    },
-    "187": {
-      "id": "onvfamily",
-      "name": "ON VFamily"
-    },
-    "188": {
-      "id": "onlife",
-      "name": "ON Life"
-    },
-    "151": {
-      "id": "btv9bchannel",
-      "name": "BTV9 - Bchannel"
-    },
-    "201": {
-      "id": "sctv2hd",
-      "name": "SCTV2 TodayTV"
-    },
-    "232": {
-      "id": "sctv6hd",
-      "name": "SCTV6 FIM360"
-    },
-    "190": {
-      "id": "htv1",
-      "name": "HTV1"
-    },
-    "191": {
-      "id": "htv2hd",
-      "name": "HTV2 - Vie Channel"
-    },
-    "192": {
-      "id": "htv3",
-      "name": "HTV3"
-    },
-    "9": {
-      "id": "htv4",
-      "name": "HTV 4"
-    },
-    "193": {
-      "id": "htv7hd",
-      "name": "HTV7"
-    },
-    "194": {
-      "id": "htv9hd",
-      "name": "HTV9"
-    },
-    "14": {
-      "id": "htvccanhachd",
-      "name": "HTVC CA NHẠC"
-    },
-    "133": {
-      "id": "htvcdulichhd",
-      "name": "HTVC DL&CS"
-    },
-    "11": {
-      "id": "htvcgiadinhhd",
-      "name": "HTVC GIA ĐÌNH"
-    },
-    "15": {
-      "id": "htvcphimhd",
-      "name": "HTVC PHIM"
-    },
-    "12": {
-      "id": "htvcphunuhd",
-      "name": "HTVC PHỤ NỮ"
-    },
-    "132": {
-      "id": "htvcplushd",
-      "name": "HTVC PLUS"
-    },
-    "195": {
-      "id": "htvthethaohd",
-      "name": "HTVC THỂ THAO"
-    },
-    "13": {
-      "id": "htvcthuanviet",
-      "name": "HTVC THUẦN VIỆT"
-    },
-    "66": {
-      "id": "angiang1",
-      "name": "ATV1"
-    },
-    "35": {
-      "id": "angiang2",
-      "name": "ATV2"
-    },
-    "39": {
-      "id": "bacninh",
-      "name": "Bắc Ninh"
-    },
-    "46": {
-      "id": "camau",
-      "name": "Cà Mau"
-    },
-    "48": {
-      "id": "caobang",
-      "name": "Cao Bằng"
-    },
-    "47": {
-      "id": "cantho1",
-      "name": "Cần Thơ 1"
-    },
-    "61": {
-      "id": "cantho2",
-      "name": "Cần Thơ 2"
-    },
-    "84": {
-      "id": "cantho3",
-      "name": "Cần Thơ 3"
-    },
-    "49": {
-      "id": "danang1",
-      "name": "Đà Nẵng 1"
-    },
-    "80": {
-      "id": "danang2",
-      "name": "Đà Nẵng 2"
-    },
-    "51": {
-      "id": "daklak",
-      "name": "Đắk Lắk"
-    },
-    "52": {
-      "id": "dienbien",
-      "name": "Điện Biên"
-    },
-    "53": {
-      "id": "dongnai1",
-      "name": "Đồng Nai 1"
-    },
-    "255": {
-      "id": "dongnai2",
-      "name": "Đồng Nai 2"
-    },
-    "54": {
-      "id": "dongthap1",
-      "name": "Đồng Tháp 1"
-    },
-    "90": {
-      "id": "dongthap2",
-      "name": "Đồng Tháp 2 - Miền Tây"
-    },
-    "55": {
-      "id": "gialai",
-      "name": "Gia Lai"
-    },
-    "33": {
-      "id": "hanoi1",
-      "name": "Hà Nội 1"
-    },
-    "34": {
-      "id": "hanoi2",
-      "name": "Hà Nội 2"
-    },
-    "32": {
-      "id": "hitv",
-      "name": "HiTV"
-    },
-    "31": {
-      "id": "youtv",
-      "name": "You TV"
-    },
-    "58": {
-      "id": "hatinh",
-      "name": "Hà tĩnh"
-    },
-      "59": {
-      "id": "haiphong3",
-      "name": "Hải Phòng 3"
-    },
-    "60": {
-      "id": "haiphong",
-      "name": "Hải Phòng"
-    },
-    "159": {
-      "id": "cinemaworldhd",
-      "name": "CinemaWorld"
-    },
-    "63": {
-      "id": "hue",
-      "name": "HUETV"
-    },
-    "64": {
-      "id": "hungyen",
-      "name": "Hưng Yên"
-    },
-    "65": {
-      "id": "khanhhoa",
-      "name": "KTV"
-    }, 
-    "76": {
-      "id": "khanhhoa1",
-      "name": "KTV1"
-    },
-    "68": {
-      "id": "laichau",
-      "name": "LTV"
-    },
-    "70": {
-      "id": "langson",
-      "name": "LSTV"
-    },
-    "71": {
-      "id": "laocai",
-      "name": "THLC"
-    },
-    "69": {
-      "id": "lamdong1",
-      "name": "LTV1"
-    },
-    "45": {
-      "id": "lamdong2",
-      "name": "LTV2"
-    },
-    "74": {
-      "id": "nghean",
-      "name": "NTV"
-    },
-    "75": {
-      "id": "ninhbinh",
-      "name": "NBTV"
-    },
-    "77": {
-      "id": "phutho",
-      "name": "PTV"
-    },
-    "81": {
-      "id": "quangngai",
-      "name": "QNgTV 1"
-    },
-    "82": {
-      "id": "quangninh1",
-      "name": "QTV1"
-    },
-    "134": {
-      "id": "quangninh3",
-      "name": "QTV3"
-    },
-    "83": {
-      "id": "quangtri",
-      "name": "QTTV"
-    },
-    "85": {
-      "id": "sonla",
-      "name": "STV"
-    },
-    "72": {
-      "id": "tayninh1",
-      "name": "TTV"
-    },
-    "89": {
-      "id": "thanhhoa",
-      "name": "TTV"
-    },
-    "88": {
-      "id": "thainguyen",
-      "name": "TN"
-    },
-    "92": {
-      "id": "tuyenquang",
-      "name": "TTV"
-    },
-    "25": {
-      "id": "vinhlong1hd",
-      "name": "THVL1"
-    },
-    "26": {
-      "id": "vinhlong2hd",
-      "name": "THVL2"
-    },
-    "219": {
-      "id": "vinhlong3hd",
-      "name": "THVL3"
-    },
-    "220": {
-      "id": "vinhlong4hd",
-      "name": "THVL4"
-    },
-    "91": {
-      "id": "vinhlong5hd",
-      "name": "THVL5"
-    },
-    "271": {
-      "id": "hbohd",
-      "name": "HBO"
-    },
-    "111": {
-      "id": "arirang",
-      "name": "Arirang"
-    },
-    "277": {
-      "id": "cartoonhd",
-      "name": "Cartoon Network"
-    },
-    "112": {
-      "id": "cna",
-      "name": "Channel News Asia (CNA)"
-    },
-    "239": {
-      "id": "cinemaxhd",
-      "name": "Cinemax"
-    },
-    "9855": {
-      "id": "cnbc",
-      "name": "CNBC"
-    },
-    "214": {
-      "id": "davinci",
-      "name": "Da Vinci"
-    },
-    "279": {
-      "id": "discoveryhd",
-      "name": "Discovery"
-    },
-    "235": {
-      "id": "dreamworks",
-      "name": "DreamWorks"
-    },
-    "96": {
-      "id": "france24eng",
-      "name": "France 24"
-    },
-    "99": {
-      "id": "hgtv",
-      "name": "HGTV"
-    },
-    "9856": {
-      "id": "historyhd",
-      "name": "History"
-    },
-    "213": {
-      "id": "kbsworld",
-      "name": "KBS World"
-    },
-    "9901": {
-      "id": "kix",
-      "name": "KIX"
-    },
-    "106": {
-      "id": "nhkworld",
-      "name": "NHK World"
-    },
-    "216": {
-      "id": "outdoorhd",
-      "name": "Outdoor Channel"
-    },
-    "273": {
-      "id": "warnertvhd",
-      "name": "Warner TV"
-    },
-    "281": {
-      "id": "anxhd",
-      "name": "ANX"
-    },
-    "283": {
-      "id": "abcaustralia",
-      "name": "ABC Australia"
-    },
-    "237": {
-      "id": "bloomberg",
-      "name": "Bloomberg"
-    },
-    "275": {
-      "id": "cnn",
-      "name": "CNN"
-    },
-    "163": {
-      "id": "fashionhd",
-      "name": "Fashion TV"
-    },
-    "9904": {
-      "id": "tv360promo",
-      "name": "TV360Promo"
-    },
-    "9888": {
-      "id": "tv360live",
-      "name": "TV360Live"
-    },
-    "2554": {
-      id: "tv360plus1",
-      name: "TV360P1"
-    },
-    "1": {
-      id: "tv360plus2",
-      name: "TV360P2"
-    },
-    "148": {
-      id: "tv360plus3",
-      name: "TV360P3"
-    },
-    "2458": {
-      id: "tv360plus4",
-      name: "TV360P4"
-    },
-    "9867": {
-      id: "tv360plus5",
-      name: "TV360P5"
-    },
-    "9868": {
-      id: "tv360plus6",
-      name: "TV360P6"
-    },
-    "9869": {
-      id: "tv360plus7",
-      name: "TV360P7"
-    },
-    "9870": {
-      id: "tv360plus8",
-      name: "TV360P8"
-    },
-    "9887": {
-      "id": "tv360plus9",
-      "name": "TV360p9"
-    },
-    "9957": {
-      "id": "tv360plus10",
-      "name": "TV360p10"
-    },
-    "9958": {
-      "id": "tv360plus11",
-      "name": "TV360p11"
-    },
-    "10001": {
-      id: "tv360plus12",
-      name: "TV360P12"
-    },
-  };
+    "20": { "id": "antvhd", "name": "ANTV" },
+    "19": { "id": "qpvnhd", "name": "QPVN" },
+    "2": { "id": "vtv1hd", "name": "VTV1" },
+    "3": { "id": "vtv2hd", "name": "VTV2" },
+    "4": { "id": "vtv3hd", "name": "VTV3" },
+    "108": { "id": "vtv4hd", "name": "VTV4" },
+    "110": { "id": "vtv5hd", "name": "VTV5" },
+    "157": { "id": "vtv5hdtnb", "name": "VTV5 Tây Nam Bộ" },
+    "207": { "id": "vtv5hdtn", "name": "VTV5 Tây Nguyên" },
+    "6": { "id": "vtv7hd", "name": "VTV7" },
+    "115": { "id": "vtv8hd", "name": "VTV8" },
+    "8": { "id": "vtv9hd", "name": "VTV9" },
+    "98": { "id": "vtvcantho", "name": "VTV Cần Thơ" },
+    "9951": { "id": "vietnamtoday", "name": "Vietnam Today" },
+    "173": { "id": "onsports", "name": "ON Sports" },
+    "183": { "id": "onsportsplus", "name": "ON Sports+" },
+    "170": { "id": "onsportsnews", "name": "ON Sports News" },
+    "174": { "id": "onfootball", "name": "ON Football" },
+    "169": { "id": "ongolf", "name": "ON Golf" },
+    "180": { "id": "onviegiaitri", "name": "ON Vie Giải Trí" },
+    "177": { "id": "onviedramas", "name": "ON Vie Dramas" },
+    "175": { "id": "onphimviet", "name": "ON Phim Việt" },
+    "176": { "id": "oncine", "name": "ON Cine" },
+    "181": { "id": "onmovies", "name": "ON Movies - YouTV" },
+    "182": { "id": "onechannel", "name": "ON Echannel" },
+    "136": { "id": "ono2tv", "name": "ON O2TV" },
+    "178": { "id": "onbibi", "name": "ON Bibi" },
+    "179": { "id": "onkids", "name": "ON Kids" },
+    "189": { "id": "oninfotv", "name": "ON Info TV" },
+    "184": { "id": "onstyle", "name": "ON Style TV" },
+    "185": { "id": "onmusic", "name": "ON Music" },
+    "186": { "id": "ontrending", "name": "ON Trending TV" },
+    "187": { "id": "onvfamily", "name": "ON VFamily" },
+    "188": { "id": "onlife", "name": "ON Life" },
+    "151": { "id": "btv9bchannel", "name": "BTV9 - Bchannel" },
+    "201": { "id": "sctv2hd", "name": "SCTV2 TodayTV" },
+    "232": { "id": "sctv6hd", "name": "SCTV6 FIM360" },
+    "190": { "id": "htv1", "name": "HTV1" },
+    "191": { "id": "htv2hd", "name": "HTV2 - Vie Channel" },
+    "192": { "id": "htv3", "name": "HTV3" },
+    "9": { "id": "htv4", "name": "HTV 4" },
+    "193": { "id": "htv7hd", "name": "HTV7" },
+    "194": { "id": "htv9hd", "name": "HTV9" },
+    "14": { "id": "htvccanhachd", "name": "HTVC CA NHẠC" },
+    "133": { "id": "htvcdulichhd", "name": "HTVC DL&CS" },
+    "11": { "id": "htvcgiadinhhd", "name": "HTVC GIA ĐÌNH" },
+    "15": { "id": "htvcphimhd", "name": "HTVC PHIM" },
+    "12": { "id": "htvcphunuhd", "name": "HTVC PHỤ NỮ" },
+    "132": { "id": "htvcplushd", "name": "HTVC PLUS" },
+    "195": { "id": "htvthethaohd", "name": "HTVC THỂ THAO" },
+    "13": { "id": "htvcthuanviet", "name": "HTVC THUẦN VIỆT" },
+    "66": { "id": "angiang1", "name": "ATV1" },
+    "35": { "id": "angiang2", "name": "ATV2" },
+    "39": { "id": "bacninh", "name": "Bắc Ninh" },
+    "46": { "id": "camau", "name": "Cà Mau" },
+    "48": { "id": "caobang", "name": "Cao Bằng" },
+    "47": { "id": "cantho1", "name": "Cần Thơ 1" },
+    "61": { "id": "cantho2", "name": "Cần Thơ 2" },
+    "84": { "id": "cantho3", "name": "Cần Thơ 3" },
+    "49": { "id": "danang1", "name": "Đà Nẵng 1" },
+    "80": { "id": "danang2", "name": "Đà Nẵng 2" },
+    "51": { "id": "daklak", "name": "Đắk Lắk" },
+    "52": { "id": "dienbien", "name": "Điện Biên" },
+    "53": { "id": "dongnai1", "name": "Đồng Nai 1" },
+    "255": { "id": "dongnai2", "name": "Đồng Nai 2" },
+    "54": { "id": "dongthap1", "name": "Đồng Tháp 1" },
+    "90": { "id": "dongthap2", "name": "Đồng Tháp 2 - Miền Tây" },
+    "55": { "id": "gialai", "name": "Gia Lai" },
+    "33": { "id": "hanoi1", "name": "Hà Nội 1" },
+    "34": { "id": "hanoi2", "name": "Hà Nội 2" },
+    "32": { "id": "hitv", "name": "HiTV" },
+    "31": { "id": "youtv", "name": "You TV" },
+    "58": { "id": "hatinh", "name": "Hà tĩnh" },
+    "59": { "id": "haiphong3", "name": "Hải Phòng 3" },
+    "60": { "id": "haiphong", "name": "Hải Phòng" },
+    "159": { "id": "cinemaworldhd", "name": "CinemaWorld" },
+    "63": { "id": "hue", "name": "HUETV" },
+    "64": { "id": "hungyen", "name": "Hưng Yên" },
+    "65": { "id": "khanhhoa", "name": "KTV" },
+    "76": { "id": "khanhhoa1", "name": "KTV1" },
+    "68": { "id": "laichau", "name": "LTV" },
+    "70": { "id": "langson", "name": "LSTV" },
+    "71": { "id": "laocai", "name": "THLC" },
+    "69": { "id": "lamdong1", "name": "LTV1" },
+    "45": { "id": "lamdong2", "name": "LTV2" },
+    "74": { "id": "nghean", "name": "NTV" },
+    "75": { "id": "ninhbinh", "name": "NBTV" },
+    "77": { "id": "phutho", "name": "PTV" },
+    "81": { "id": "quangngai", "name": "QNgTV 1" },
+    "82": { "id": "quangninh1", "name": "QTV1" },
+    "134": { "id": "quangninh3", "name": "QTV3" },
+    "83": { "id": "quangtri", "name": "QTTV" },
+    "85": { "id": "sonla", "name": "STV" },
+    "72": { "id": "tayninh1", "name": "TTV" },
+    "89": { "id": "thanhhoa", "name": "TTV" },
+    "88": { "id": "thainguyen", "name": "TN" },
+    "92": { "id": "tuyenquang", "name": "TTV" },
+    "25": { "id": "vinhlong1hd", "name": "THVL1" },
+    "26": { "id": "vinhlong2hd", "name": "THVL2" },
+    "219": { "id": "vinhlong3hd", "name": "THVL3" },
+    "220": { "id": "vinhlong4hd", "name": "THVL4" },
+    "91": { "id": "vinhlong5hd", "name": "THVL5" },
+    "271": { "id": "hbohd", "name": "HBO" },
+    "111": { "id": "arirang", "name": "Arirang" },
+    "277": { "id": "cartoonhd", "name": "Cartoon Network" },
+    "112": { "id": "cna", "name": "Channel News Asia (CNA)" },
+    "239": { "id": "cinemaxhd", "name": "Cinemax" },
+    "9855": { "id": "cnbc", "name": "CNBC" },
+    "214": { "id": "davinci", "name": "Da Vinci" },
+    "279": { "id": "discoveryhd", "name": "Discovery" },
+    "235": { "id": "dreamworks", "name": "DreamWorks" },
+    "96": { "id": "france24eng", "name": "France 24" },
+    "99": { "id": "hgtv", "name": "HGTV" },
+    "9856": { "id": "historyhd", "name": "History" },
+    "213": { "id": "kbsworld", "name": "KBS World" },
+    "9901": { "id": "kix", "name": "KIX" },
+    "106": { "id": "nhkworld", "name": "NHK World" },
+    "216": { "id": "outdoorhd", "name": "Outdoor Channel" },
+    "273": { "id": "warnertvhd", "name": "Warner TV" },
+    "281": { "id": "anxhd", "name": "ANX" },
+    "283": { "id": "abcaustralia", "name": "ABC Australia" },
+    "237": { "id": "bloomberg", "name": "Bloomberg" },
+    "275": { "id": "cnn", "name": "CNN" },
+    "163": { "id": "fashionhd", "name": "Fashion TV" },
+    "9904": { "id": "tv360promo", "name": "TV360Promo" },
+    "9888": { "id": "tv360live", "name": "TV360Live" },
+    "2554": { "id": "tv360plus1", "name": "TV360P1" },
+    "1": { "id": "tv360plus2", "name": "TV360P2" },
+    "148": { "id": "tv360plus3", "name": "TV360P3" },
+    "2458": { "id": "tv360plus4", "name": "TV360P4" },
+    "9867": { "id": "tv360plus5", "name": "TV360P5" },
+    "9868": { "id": "tv360plus6", "name": "TV360P6" },
+    "9869": { "id": "tv360plus7", "name": "TV360P7" },
+    "9870": { "id": "tv360plus8", "name": "TV360P8" },
+    "9887": { "id": "tv360plus9", "name": "TV360p9" },
+    "9957": { "id": "tv360plus10", "name": "TV360p10" },
+    "9958": { "id": "tv360plus11", "name": "TV360p11" },
+    "10001": { "id": "tv360plus12", "name": "TV360P12" }
+};
 
   const CTTH = await getAPI
     ("https://re.ghiminh1.workers.dev/?url=https%3A%2F%2Ftv360.vn%2Fpublic%2Fv1%2Fwatch-log%2Fget-recommend%3Fid%3Drcm_program_playing%26page%3Dhome%26itemType%3DLIVE_NOW%26boxType%3DRECOMMEND%26offset%3D0%26limit%3D2000")
@@ -1194,10 +526,6 @@ async function mytv(page = 1, num = 20) {
 
 
 
-
-
-
-
   return {
     src: "MYTV",
     data: data
@@ -1217,6 +545,29 @@ function sortByStartTime(arr) {
     return toTimestamp(a.start_time) - toTimestamp(b.start_time);
   });
 }
+
+function filterDuplicatePrograms(data) {
+  const uniqueMap = new Map();
+
+  data.forEach(item => {
+    // Tạo một key kết hợp từ 3 thuộc tính để định danh duy nhất
+    const key = `${item.channel_id}|${item.start_time}|${item.over_time}`;
+
+    // Nếu key này chưa tồn tại trong Map thì mới thêm vào
+    // (Giữ lại phần tử đầu tiên tìm thấy)
+    if (!uniqueMap.has(key)) {
+      uniqueMap.set(key, item);
+    }
+  });
+
+  // Chuyển Map values trở lại thành Array
+  return Array.from(uniqueMap.values());
+}
+
+// Sử dụng:
+const rawData = [ /* mảng dữ liệu của bạn */ ];
+const filteredData = filterDuplicatePrograms(rawData);
+console.log(filteredData);
 
 
 
@@ -1267,7 +618,7 @@ async function data() {
 
   return {
     src: src,
-    broadCast: sortByStartTime(combinedData) || [],
+    broadCast: filterDuplicatePrograms(sortByStartTime(combinedData)) || [],
     liveThumB: listSheet || []
   };
 }
