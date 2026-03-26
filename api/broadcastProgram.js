@@ -491,6 +491,14 @@ async function mytv(page = 1, num = 20) {
     "829": {
       id: "sctv22hd",
       name: "SCTV22 SSPORT1"
+    },
+    "632": {
+      id: "spotv1",
+      name: "SPOTV"
+    },
+    "633": {
+      id: "spotv2",
+      name: "SPOTV2"
     }
 
   }
