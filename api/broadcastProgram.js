@@ -146,7 +146,7 @@ async function onplus() {
 
 
   const whiteListChannel = {
-    "f8d1f05f-a12b-463d-ba44-9afdb43629f2": { id: "vtvcantho", name: "VTV Cần Thơ"},
+    "f8d1f05f-a12b-463d-ba44-9afdb43629f2": { id: "vtv2hd", name: "VTV2"},
     "2987336b-ce50-42ae-80a3-d24e0c0f73b3": { id: "vtv5hdtnb", name: "VTV 5 Tây Nam Bộ"},
     "cdd222b8-c8fc-40c6-8baf-540d55469932": { id: "vtv7hd", name: "VTV 7"},
     "16922d09-8b39-4b85-8703-ba757698acf5": { id: "htv4", name: "HTV4"},
