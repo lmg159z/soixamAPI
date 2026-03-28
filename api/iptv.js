@@ -149,7 +149,7 @@ async function JSON_IPTV(GID){
     return {
             id : item.id,
             url: encodeCustom(item.urlStream),
-            name: item.name,
+            name: item.acronym,
             drm: item.drm === "action" ? true : false,
             keyID:item.keyID != null ? encodeCustom(item.keyID) : "" ,
             key:  item.key != null ? encodeCustom(item.key) : "" ,
