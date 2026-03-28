@@ -5,24 +5,23 @@ export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
-  const { id } = req.query;
+  const { id, json = "false" } = req.query;
   if (req.method === "OPTIONS") return res.status(200).end();
 
   try {
-    const jsonIPTV = await iptv(id);
+  
 
-    // // DEBUG: Nếu vẫn không có dữ liệu
-    // if (!rawChannels || rawChannels.length === 0) {
-    //   return res.status(200).json({ 
-    //     message: "Sheet trả về dữ liệu rỗng.", 
-    //     data: [] 
-    //   });
-    // }
 
-    // // Lọc kênh
-    // const activeChannels = classifyChannels(rawChannels);
-    res.setHeader("Content-Type", "text/plain; charset=utf-8");
-res.status(200).send(jsonIPTV);
+    if (json === "true"){
+          const jsonIPTV = await JSON_IPTV(id);
+           res.status(200).json(jsonIPTV);
+    }else {
+          const textIPTV = await iptv(id);
+          res.setHeader("Content-Type", "text/plain; charset=utf-8");
+           res.status(200).send(textIPTV);
+
+    }
+
 
   } catch (error) {
     console.error("Server Error:", error);
@@ -135,4 +134,41 @@ ${k.urlStream}
 #========================================================================================`;
 
   return  textEPG + "\n"  + textIPTV 
+}
+
+
+
+
+async function JSON_IPTV(GID){
+    const rawChannels = await getDataFromSheetAsKeyValue(
+    GID,
+    "1s55kJ_HEob8U3AJvZfCw_fqOm1UU8iGpPzXyRIryoDc"
+  );
+
+  const data = rawChannels.map(item => {
+    return {
+            id : item.id,
+            url: encodeCustom(item.urlStream),
+            name: item.name,
+            drm: item.drm === "action" ? true : false,
+            keyID:item.keyID != null ? encodeCustom(item.keyID) : "" ,
+            key:  item.key != null ? encodeCustom(item.key) : "" ,
+        }
+  })
+  return data
+}
+
+
+
+function encodeCustom(input) {
+  // Base64 lần 1
+  const base64_1 = btoa(unescape(encodeURIComponent(input)));
+
+  // Đảo ngược chuỗi
+  const reversed = base64_1.split('').reverse().join('');
+
+  // Base64 lần 2
+  const base64_2 = btoa(reversed);
+
+  return base64_2;
 }
