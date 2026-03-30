@@ -556,49 +556,21 @@ function sortByStartTime(arr) {
 }
 
 function filterDuplicatePrograms(data) {
-  if (!data || data.length === 0) return [];
+  const uniqueMap = new Map();
 
-  // 1. Sắp xếp dữ liệu theo channel_id trước, sau đó đến start_time tăng dần
-  const sortedData = [...data].sort((a, b) => {
-    if (a.channel_id !== b.channel_id) {
-      return String(a.channel_id).localeCompare(String(b.channel_id));
-    }
-    return new Date(a.start_time) - new Date(b.start_time);
-  });
+  data.forEach(item => {
+    // Tạo một key kết hợp từ 3 thuộc tính để định danh duy nhất
+    const key = `${item.channel_id}|${item.start_time}|${item.over_time}`;
 
-  const result = [];
-  const TEN_MINUTES_MS = 10 * 60 * 1000; // 10 phút tính bằng miligiây
-
-  sortedData.forEach((item) => {
-    if (result.length === 0) {
-      result.push(item);
-      return;
-    }
-
-    const lastAdded = result[result.length - 1];
-    
-    // Chuyển đổi thời gian sang timestamp để tính toán
-    const currentStartTime = new Date(item.start_time).getTime();
-    const lastStartTime = new Date(lastAdded.start_time).getTime();
-
-    // Kiểm tra điều kiện:
-    // 1. Cùng channel_id
-    // 2. Sai số thời gian bắt đầu nằm trong khoảng 10 phút
-    const isSameChannel = item.channel_id === lastAdded.channel_id;
-    const isTimeClose = Math.abs(currentStartTime - lastStartTime) <= TEN_MINUTES_MS;
-
-    if (isSameChannel && isTimeClose) {
-      // Vì mảng đã sắp xếp theo thời gian tăng dần, 
-      // nên 'lastAdded' luôn là thằng sớm hơn hoặc bằng 'item'.
-      // Do đó ta không cần làm gì cả (bỏ qua 'item' hiện tại).
-      return;
-    } else {
-      // Nếu khác channel hoặc thời gian cách xa nhau > 10p, coi như chương trình mới
-      result.push(item);
+    // Nếu key này chưa tồn tại trong Map thì mới thêm vào
+    // (Giữ lại phần tử đầu tiên tìm thấy)
+    if (!uniqueMap.has(key)) {
+      uniqueMap.set(key, item);
     }
   });
 
-  return result;
+  // Chuyển Map values trở lại thành Array
+  return Array.from(uniqueMap.values());
 }
 
 // Sử dụng:
