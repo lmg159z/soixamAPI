@@ -564,7 +564,7 @@ async function mytv(page = 1, num = 20) {
 
 // https://andanh.site/proxyipvn.php?url=https://api.fptplay.net/api/v7.1_ios/playos/block/highlight/632f01322089bd00e5c5ed3d?block_type=horizontal_slider&page_index=1&page_size=1000
 async function FPTPlay() {
-  const API = await getAPI("https://andanh.site/proxyipvn.php?url=https://api.fptplay.net/api/v7.1_ios/playos/block/highlight/632f01322089bd00e5c5ed3d?block_type=horizontal_slider&page_index=1&page_size=1000")
+  const API = await getAPI("https://re.ghiminh1.workers.dev/?url=https://andanh.site/proxyipvn.php?url=https://api.fptplay.net/api/v7.1_ios/playos/block/highlight/632f01322089bd00e5c5ed3d?block_type=horizontal_slider&page_index=1&page_size=1000")
   const data = API.data.map(i => {
     console.log(formatTimeVN(i.begin_time))
     return {
