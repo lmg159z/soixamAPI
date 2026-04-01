@@ -98,36 +98,67 @@ function mapIdToLogo(data) {
   return channelMap;
 }
 
+
+
+function mapIdToChannelInfo(data) {
+  const channelMap = {};
+  
+  data.forEach(item => {
+    item.channel.forEach(chan => {
+      channelMap[chan.id] = {
+        logo: chan.logo,
+        idGroup: chan.idGroup,
+        nameGroup: chan.nameGroup
+      };
+    });
+  });
+  
+  return channelMap;
+}
+
+
+
 async function iptv(GID) {
   const rawChannels = await getDataFromSheetAsKeyValue(
     GID,
     "1s55kJ_HEob8U3AJvZfCw_fqOm1UU8iGpPzXyRIryoDc"
   );
-console.log(rawChannels)
+// console.log(rawChannels)
   if (!rawChannels) {
     return `Lỗi rồi hãy báo cáo với quản trị viên`;
   }
 
-  const APIlogo = await getAPI("https://soixamapi.vercel.app/api/logo")
-  const logo = mapIdToLogo(APIlogo)
-  const textIPTV = rawChannels
-    .map(k => {
-      if (k.drm === "action") {
-        return `#EXTINF:-1 tvg-id="${k.id}" group-title="${k.APP}" tvg-logo="${logo[k.id]}" ,${k.acronym} | ${k.name || ""}
+const APIlogo = await getAPI("https://soixamapi.vercel.app/api/logo");
+const channelMap = mapIdToChannelInfo(APIlogo); // Lưu vào biến để dùng, tránh gọi hàm lặp đi lặp lại
+
+const textIPTV = rawChannels
+  .map(k => {
+    // Lấy thông tin logo an toàn, nếu không có thì để trống hoặc dùng ID làm fallback
+    const channelInfo = channelMap[k.id];
+    const logoUrl = channelInfo?.logo || ""; 
+    const groupID = channelInfo?.idGroup || ""; 
+    const groupNAME = channelInfo?.nameGroup || ""; 
+    
+
+    // Debug an toàn
+    // console.log(`ID: ${k.id} -> Logo: ${logoUrl}`);
+
+    if (k.drm === "action") {
+      return `#EXTINF:-1 tvg-id="${k.id}" group-title="${k.APP} ${groupNAME}" tvg-logo="${logoUrl}" ,${k.acronym} | ${k.name || ""}
 #EXTVLCOPT:http-user-agent=Dalvik/2.1.0
 #KODIPROP:inputstream.adaptive.manifest_type=mpd
 #KODIPROP:inputstream.adaptive.license_type=clearkey
 #KODIPROP:inputstream.adaptive.license_key=${k.keyID}:${k.key}
 ${k.urlStream}
 `;
-      } else {
-        return `#EXTINF:-1 tvg-id="${k.id}" group-title="${k.APP}" tvg-logo="${logo[k.id]}",${k.acronym} | ${k.name || ""}
+    } else {
+      return `#EXTINF:-1 tvg-id="${k.id}" group-title="${k.APP}" tvg-logo="${logoUrl}",${k.acronym} | ${k.name || ""}
 #EXTVLCOPT:http-user-agent=Dalvik/2.1.0
 ${k.urlStream}
 `;
-      }
-    })
-    .join("\n");
+    }
+  })
+  .join("\n");
 
   const textEPG = `#EXTM3U url-tvg="https://vnepg.site/epgu.xml,https://tvbvn.quanlehong539.workers.dev/xml"
 # SoiXamTV IPTV Playlist
