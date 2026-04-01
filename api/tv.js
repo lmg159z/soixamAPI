@@ -325,30 +325,39 @@ ${k.urlStream}
       }
     })
     .join("\n");
-
 const textBroadCast = (await Promise.all(
   broadCast.broadCast
     .filter(i => i.status === 1)
     .map(async k => {
-      const channel = await getAPI(
-        `https://soixamapi.vercel.app/api/channel?id=${k.channel_id != "" ? k.channel_id : "vtv1hd"}`
-      );
+      try {
+        const channel = await getAPI(
+          `https://soixamapi.vercel.app/api/channel?id=${k.channel_id || "vtv1hd"}`
+        );
 
-      if (channel[0].drm) {
-        return `#EXTINF:-1 tvg-id="broadCast_${k.channel_id}" group-title="Chương trình tiêu biểu" tvg-logo="${k.thumbnail}",${k.name} | ${k.channel_name || ""}
+        // 👉 check tồn tại
+        if (!channel || !channel[0]) return "";
+
+        const ch = channel[0];
+
+        if (ch.drm) {
+          return `#EXTINF:-1 tvg-id="broadCast_${k.channel_id}" group-title="Chương trình tiêu biểu" tvg-logo="${k.thumbnail}",${k.name} | ${k.channel_name || ""}
 #EXTVLCOPT:http-user-agent=Dalvik/2.1.0
 #KODIPROP:inputstream.adaptive.manifest_type=mpd
 #KODIPROP:inputstream.adaptive.license_type=clearkey
-#KODIPROP:inputstream.adaptive.license_key=${decodeCustom(channel[0].keyID)}:${decodeCustom(channel[0].key)}
-${decodeCustom(channel[0].urlStream)}
+#KODIPROP:inputstream.adaptive.license_key=${decodeCustom(ch.keyID)}:${decodeCustom(ch.key)}
+${decodeCustom(ch.urlStream)}
 
 `;
-      } else {
-        return `#EXTINF:-1 tvg-id="broadCast_${k.channel_id}" group-title="Chương trình tiêu biểu" tvg-logo="${k.thumbnail}",${k.name} | ${k.channel_name || ""}
+        } else {
+          return `#EXTINF:-1 tvg-id="broadCast_${k.channel_id}" group-title="Chương trình tiêu biểu" tvg-logo="${k.thumbnail}",${k.name} | ${k.channel_name || ""}
 #EXTVLCOPT:http-user-agent=Dalvik/2.1.0
-${decodeCustom(channel[0].urlStream)}
+${decodeCustom(ch.urlStream)}
 
 `;
+        }
+      } catch (err) {
+        console.error("Channel error:", k.channel_id, err);
+        return ""; // bỏ qua item lỗi
       }
     })
 )).join("");
