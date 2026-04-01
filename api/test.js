@@ -477,9 +477,8 @@ async function fetchMyTV(page = 1, num = 20) {
 // ============================================================
 
 async function fetchFPTPlay() {
-  const url = proxyVN(
-    "https://api.fptplay.net/api/v7.1_ios/playos/block/highlight/632f01322089bd00e5c5ed3d?block_type=horizontal_slider&page_index=1&page_size=1000"
-  );
+  const url = "https://andanh.site/proxyipvn.php?url=https://api.fptplay.net/api/v7.1_ios/playos/block/highlight/632f01322089bd00e5c5ed3d?block_type=horizontal_slider&page_index=1&page_size=1000"
+  
   const res = await fetchJSON(url);
   if (!Array.isArray(res?.data)) return { src: "FPTPLAY", data: [] };
 
