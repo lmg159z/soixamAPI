@@ -170,6 +170,7 @@ async function onplus() {
     "cdffe455-039a-45ac-9fca-c4d27a24a4b0": { id: "vtv5hd", name: "VTV 5" },
     "cdd222b8-c8fc-40c6-8baf-540d55469932": { id: "vtv7hd", name: "VTV 7" },
     "16922d09-8b39-4b85-8703-ba757698acf5": { id: "htv4", name: "HTV4" },
+    "e5f6db4e-882a-45c8-8d66-139943dd6605": { id: "htvthethaohd", name: "HTV Thể thao" },
     "30dd2af9-ff12-4642-ac1f-c4464f86ffdc": { id: "onsportsplus", name: "ON Sportsplus" },
     "1f039dc2-320d-4365-8fef-9dfe75e58a1c": { id: "ongolf", name: "ON Golf" },
     "a59d8f32-b0d6-49c6-a1a2-8b7911314fa5": { id: "onfootball", name: "ON Football" },
