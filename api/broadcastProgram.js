@@ -566,6 +566,88 @@ async function mytv(page = 1, num = 20) {
 
 // https://andanh.site/proxyipvn.php?url=https://api.fptplay.net/api/v7.1_ios/playos/block/highlight/632f01322089bd00e5c5ed3d?block_type=horizontal_slider&page_index=1&page_size=1000
 async function FPTPlay() {
+  const idStreams = [
+  { mainId: "fptsukien01", subIds: ["fptsukien28"] },
+  { mainId: "fptsukien02", subIds: ["fptsukien29"] },
+  { mainId: "fptsukien03", subIds: ["fptsukien30"] },
+  { mainId: "fptsukien04", subIds: ["fptsukien31"] },
+  { mainId: "fptsukien05", subIds: ["fptsukien32"] },
+  { mainId: "fptsukien06", subIds: ["fptsukien33"] },
+  { mainId: "fptsukien07", subIds: ["fptsukien34"] },
+  { mainId: "fptsukien08", subIds: ["fptsukien35"] },
+  { mainId: "fptsukien09", subIds: ["fptsukien36"] },
+  { mainId: "fptsukien10", subIds: ["fptsukien37"] },
+  { mainId: "fptsukien11", subIds: ["fptsukien38"] },
+  { mainId: "fptsukien12", subIds: ["fptsukien39"] },
+  { mainId: "fptsukien13", subIds: ["fptsukien40"] },
+  { mainId: "fptsukien14", subIds: ["fptsukien41"] },
+  { mainId: "fptsukien15", subIds: ["fptsukien42"] },
+  { mainId: "fptsukien16", subIds: ["fptsukien43"] },
+  { mainId: "fptsukien17", subIds: ["fptsukien44"] },
+
+  { mainId: "fptsukien82", subIds: ["fptsukien55"] },
+  { mainId: "fptsukien83", subIds: ["fptsukien56"] },
+  { mainId: "fptsukien84", subIds: ["fptsukien57"] },
+  { mainId: "fptsukien85", subIds: ["fptsukien58"] },
+  { mainId: "fptsukien86", subIds: ["fptsukien59"] },
+  { mainId: "fptsukien87", subIds: ["fptsukien60"] },
+  { mainId: "fptsukien88", subIds: ["fptsukien61"] },
+  { mainId: "fptsukien89", subIds: ["fptsukien62"] },
+  { mainId: "fptsukien90", subIds: ["fptsukien63"] },
+  { mainId: "fptsukien91", subIds: ["fptsukien64"] },
+  { mainId: "fptsukien92", subIds: ["fptsukien65"] },
+  { mainId: "fptsukien93", subIds: ["fptsukien66"] },
+  { mainId: "fptsukien94", subIds: ["fptsukien67"] },
+  { mainId: "fptsukien95", subIds: ["fptsukien68"] },
+  { mainId: "fptsukien96", subIds: ["fptsukien69"] },
+  { mainId: "fptsukien97", subIds: ["fptsukien70"] },
+  { mainId: "fptsukien98", subIds: ["fptsukien71"] },
+
+  { mainId: "fptevent01", subIds: ["fptevent18"] },
+  { mainId: "fptevent02", subIds: ["fptevent19"] },
+  { mainId: "fptevent03", subIds: ["fptevent20"] },
+  { mainId: "fptevent04", subIds: ["fptevent21"] },
+  { mainId: "fptevent05", subIds: ["fptevent22"] },
+  { mainId: "fptevent06", subIds: ["fptevent23"] },
+  { mainId: "fptevent07", subIds: ["fptevent24"] },
+  { mainId: "fptevent08", subIds: ["fptevent25"] },
+  { mainId: "fptevent09", subIds: ["fptevent26"] },
+  { mainId: "fptevent10", subIds: ["fptevent27"] },
+  { mainId: "fptevent11", subIds: ["fptevent28"] },
+  { mainId: "fptevent12", subIds: ["fptevent29"] },
+
+  { mainId: "fptevent13", subIds: [] },
+
+  { mainId: "fptevent35", subIds: ["fptevent52"] },
+  { mainId: "fptevent36", subIds: ["fptevent53"] },
+  { mainId: "fptevent37", subIds: ["fptevent54"] },
+  { mainId: "fptevent38", subIds: ["fptevent55"] },
+  { mainId: "fptevent39", subIds: ["fptevent56"] },
+  { mainId: "fptevent40", subIds: ["fptevent57"] },
+  { mainId: "fptevent41", subIds: ["fptevent58"] },
+  { mainId: "fptevent42", subIds: ["fptevent59"] },
+  { mainId: "fptevent43", subIds: ["fptevent60"] },
+  { mainId: "fptevent44", subIds: ["fptevent61"] },
+  { mainId: "fptevent45", subIds: ["fptevent62"] },
+  { mainId: "fptevent46", subIds: ["fptevent63"] }
+];
+
+  function getMainId(inputId, data) {
+  for (const item of data) {
+    // nếu là id chính
+    if (item.mainId === inputId) {
+      return item.mainId;
+    }
+
+    // nếu là id phụ
+    if (item.subIds.includes(inputId)) {
+      return item.mainId;
+    }
+  }
+
+  // nếu không tìm thấy thì trả về nguyên input
+  return inputId;
+}
   const API = await getAPI("https://re.ghiminh1.workers.dev/?url=https://andanh.site/proxyipvn.php?url=https://api.fptplay.net/api/v7.1_ios/playos/block/highlight/632f01322089bd00e5c5ed3d?block_type=horizontal_slider&page_index=1&page_size=1000")
   const data = API.data.map(i => {
     console.log(formatTimeVN(i.begin_time))
@@ -575,7 +657,7 @@ async function FPTPlay() {
       start_time: formatTimeVN(i.begin_time),
       over_time:  formatTimeVN(i.end_time),
       thumbnail: i.image.landscape_title,
-      channel_id: "fpt" + i.id.replace(/-/g, ""),
+      channel_id: getMainId("fpt" + i.id.replace(/-/g, ""),idStreams),
       channel_name: "fpt-" + i.id,
       status: checkTimeStatus(formatTimeVN(i.begin_time), formatTimeVN(i.end_time))
     }
