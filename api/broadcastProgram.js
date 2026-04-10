@@ -778,7 +778,7 @@ async function FPTPlay(idChannel) {
       start_time: start,
       over_time: over,
       thumbnail: i?.image?.landscape_title,
-      channel_id: idChannel?.[key]?.id ?? "",
+      channel_id: idChannel?.[key]?.id ?? `FPT-${i.id}`,
       channel_name: idChannel?.[key]?.name ?? `FPT-${i.id}`,
       status: checkTimeStatus(start, over),
     };
