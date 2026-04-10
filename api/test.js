@@ -189,34 +189,35 @@ async function onplus(idChannel) {
   return { src: "ONPlus", data };
 }
 
-async function tv360(idChannel) {
-  const [CTTH, TT] = await Promise.all([
-    getAPI("https://re.ghiminh1.workers.dev/?url=https%3A%2F%2Ftv360.vn%2Fpublic%2Fv1%2Fwatch-log%2Fget-recommend%3Fid%3Drcm_program_playing%26page%3Dhome%26itemType%3DLIVE_NOW%26boxType%3DRECOMMEND%26offset%3D0%26limit%3D2000"),
-    getAPI("https://re.ghiminh1.workers.dev/?url=https%3A%2F%2Ftv360.vn%2Fpublic%2Fv1%2Fwatch-log%2Fget-recommend%3Fid%3Drcm_live_now%26page%3Dhome%26itemType%3DLIVE_NOW%26boxType%3DRECOMMEND%26offset%3D0%26limit%3D2000"),
-  ]);
+async function tv360(idChannel, type = "sk") {
+  const url = type === "sk"
+    ? "https://re.ghiminh1.workers.dev/?url=https%3A%2F%2Ftv360.vn%2Fpublic%2Fv1%2Fwatch-log%2Fget-recommend%3Fid%3Drcm_program_playing%26page%3Dhome%26itemType%3DLIVE_NOW%26boxType%3DRECOMMEND%26offset%3D0%26limit%3D2000"
+    : "https://re.ghiminh1.workers.dev/?url=https%3A%2F%2Ftv360.vn%2Fpublic%2Fv1%2Fwatch-log%2Fget-recommend%3Fid%3Drcm_live_now%26page%3Dhome%26itemType%3DLIVE_NOW%26boxType%3DRECOMMEND%26offset%3D0%26limit%3D2000";
 
-  const dataAPI = [...(CTTH?.data?.content ?? []), ...(TT?.data?.content ?? [])];
+  const dataAPI = (await getAPI(url))?.data?.content ?? [];
 
   const data = dataAPI
     .filter(Boolean)
     .map(i => {
       const key = `tv360-${i.itemId}`;
+      const start = formatDateTime(i.beginTime);
+      const over = formatDateTime(i.endTime);
       return {
         id: `tv360-${i.id}`,
         name: i.description ?? "",
-        start_time: formatDateTime(i.beginTime),
-        over_time: formatDateTime(i.endTime),
+        start_time: start,
+        over_time: over,
         thumbnail: i.coverImage ?? "",
         channel_id: idChannel[key]?.id ?? i.itemId,
         channel_name: idChannel[key]?.name ?? idChannel[i.itemId]?.name ?? "",
-        status: checkTimeStatus(formatDateTime(i.beginTime), formatDateTime(i.endTime)),
+        status: checkTimeStatus(start, over),
       };
     });
 
   return { src: "TV360", data };
 }
 
-async function mytv(idChannel, page = 1, num = 20) {
+async function mytv(idChannel, type = "sk", page = 1, num = 20) {
   const mytvHeaders = {
     Origin: "https://mytv.com.vn",
     Referer: "https://mytv.com.vn/",
@@ -224,13 +225,13 @@ async function mytv(idChannel, page = 1, num = 20) {
     Accept: "application/json, text/plain, */*",
   };
 
-  const [res1, res2] = await Promise.all([
-    fetch(`https://webapi.mytv.vn/api/v1/home/cate-info/su-kien-truc-tiep?page=${page}&num=${num}`, { headers: mytvHeaders }),
-    fetch(`https://webapi.mytv.vn/api/v1/home/cate-info/chuong-trinh-truyen-hinh?page=${page}&num=${num}`, { headers: mytvHeaders }),
-  ]);
+  const url = type === "sk"
+    ? `https://webapi.mytv.vn/api/v1/home/cate-info/su-kien-truc-tiep?page=${page}&num=${num}`
+    : `https://webapi.mytv.vn/api/v1/home/cate-info/chuong-trinh-truyen-hinh?page=${page}&num=${num}`;
 
-  const [API1, API2] = await Promise.all([res1.json(), res2.json()]);
-  const dataAPI = [...(API1?.data?.data ?? []), ...(API2?.data?.data ?? [])];
+  const res = await fetch(url, { headers: mytvHeaders });
+  const API = await res.json();
+  const dataAPI = API?.data?.data ?? [];
 
   const data = dataAPI
     .map(i => {
@@ -270,7 +271,7 @@ async function FPTPlay(idChannel) {
       start_time: start,
       over_time: over,
       thumbnail: i?.image?.landscape_title,
-      channel_id: idChannel?.[key]?.id ?? "",
+      channel_id: idChannel?.[key]?.id ?? `FPT-${i.id}`,
       channel_name: idChannel?.[key]?.name ?? `FPT-${i.id}`,
       status: checkTimeStatus(start, over),
     };
@@ -283,34 +284,118 @@ async function FPTPlay(idChannel) {
 // Main orchestrator
 // ─────────────────────────────────────────────
 
+// async function data() {
+//   // ✅ Fetch channel map và Google Sheet song song với nhau
+//   const [idChannel, sheetResult] = await Promise.all([
+//     get_id_channel(),
+//     getGoogleSheetData(),
+//   ]);
+
+//   // ✅ Sau khi có idChannel, gọi tất cả 4 nguồn song song
+//   const [resTv360, resOnplus, resMytv, resFPTPlay] = await Promise.allSettled([
+//     tv360(idChannel.tv360, "trucTiep"),
+//     onplus(idChannel.onplus),
+//     mytv(idChannel.mytv, "trucTiep"),
+//     FPTPlay(idChannel.fptplay),
+//   ]);
+
+//   const safe = (res) => (res.status === "fulfilled" && res.value?.data) ? res.value.data : [];
+//   const safeSrc = (res) => res.status === "fulfilled" ? res.value?.src : null;
+
+//   const combined = [
+//     ...safe(resOnplus),
+//     ...safe(resFPTPlay),
+//     ...safe(resMytv),
+//     ...safe(resTv360),
+//   ];
+
+//   return {
+//     src: [safeSrc(resTv360), safeSrc(resOnplus), safeSrc(resMytv), safeSrc(resFPTPlay)],
+//     broadCast: filterDuplicatePrograms(sortByStartTime(combined)),
+//     liveThumB: sheetResult?.data ?? [],
+//   };
+// }
+
+
+// async function suKienTrucTiep() {
+//   // ✅ Fetch channel map và Google Sheet song song với nhau
+//   const [idChannel, sheetResult] = await Promise.all([
+//     get_id_channel(),
+//     getGoogleSheetData(),
+//   ]);
+
+//   // ✅ Sau khi có idChannel, gọi tất cả 4 nguồn song song
+//   const [resTv360, resOnplus, resMytv, resFPTPlay] = await Promise.allSettled([
+//     tv360(idChannel.tv360, "sk"),
+//     onplus(idChannel.onplus),
+//     mytv(idChannel.mytv, "sk"),
+//     FPTPlay(idChannel.fptplay),
+//   ]);
+
+//   const safe = (res) => (res.status === "fulfilled" && res.value?.data) ? res.value.data : [];
+//   const safeSrc = (res) => res.status === "fulfilled" ? res.value?.src : null;
+
+//   const combined = [
+//     ...safe(resOnplus),
+//     ...safe(resFPTPlay),
+//     ...safe(resMytv),
+//     ...safe(resTv360),
+//   ];
+
+//   return {
+//     src: [safeSrc(resTv360), safeSrc(resOnplus), safeSrc(resMytv), safeSrc(resFPTPlay)],
+//     broadCast: filterDuplicatePrograms(sortByStartTime(combined)),
+//     liveThumB: sheetResult?.data ?? [],
+//   };
+// }
+
+
 async function data() {
-  // ✅ Fetch channel map và Google Sheet song song với nhau
   const [idChannel, sheetResult] = await Promise.all([
     get_id_channel(),
     getGoogleSheetData(),
   ]);
 
-  // ✅ Sau khi có idChannel, gọi tất cả 4 nguồn song song
-  const [resTv360, resOnplus, resMytv, resFPTPlay] = await Promise.allSettled([
-    tv360(idChannel.tv360),
+  const [
+    resTv360TrucTiep, resOnplus, resMytv_TrucTiep, resFPTPlay,
+    resTv360SK, resMytv_SK,
+  ] = await Promise.allSettled([
+    tv360(idChannel.tv360, "trucTiep"),
     onplus(idChannel.onplus),
-    mytv(idChannel.mytv),
+    mytv(idChannel.mytv, "trucTiep"),
     FPTPlay(idChannel.fptplay),
+    tv360(idChannel.tv360, "sk"),
+    mytv(idChannel.mytv, "sk"),
   ]);
 
-  const safe = (res) => (res.status === "fulfilled" && res.value?.data) ? res.value.data : [];
-  const safeSrc = (res) => res.status === "fulfilled" ? res.value?.src : null;
+  const safe = (res) =>
+    res.status === "fulfilled" && res.value?.data ? res.value.data : [];
+  const safeSrc = (res) =>
+    res.status === "fulfilled" ? res.value?.src : null;
 
-  const combined = [
-    ...safe(resOnplus),
-    ...safe(resFPTPlay),
-    ...safe(resMytv),
-    ...safe(resTv360),
-  ];
+const combinedTrucTiep = [
+  ...safe(resOnplus),
+  ...safe(resFPTPlay),
+  ...safe(resMytv_TrucTiep),
+  ...safe(resTv360TrucTiep),
+];
 
+const combinedSK = [
+  // bỏ onplus và FPTPlay
+  ...safe(resMytv_SK),
+  ...safe(resTv360SK),
+];
   return {
-    src: [safeSrc(resTv360), safeSrc(resOnplus), safeSrc(resMytv), safeSrc(resFPTPlay)],
-    broadCast: filterDuplicatePrograms(sortByStartTime(combined)),
+    src: [
+      safeSrc(resTv360TrucTiep),
+      safeSrc(resOnplus),
+      safeSrc(resMytv_TrucTiep),
+      safeSrc(resFPTPlay),
+    ],
+    broadCast: {
+      trucTiep: filterDuplicatePrograms(sortByStartTime(combinedTrucTiep)),
+      suKienTruyenHinh: filterDuplicatePrograms(sortByStartTime(combinedSK)),
+    },
     liveThumB: sheetResult?.data ?? [],
   };
 }
