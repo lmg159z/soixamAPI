@@ -157,3 +157,247 @@ echo json_encode([
 ]);
 
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```html 
+
+                <div class="box-main-live">
+                    <div class="list-box-live">
+                        <div class="link-match-full item_streaming stream_m_live stream_m_blv stream_m_hot stream_m_today ">
+                            <a href="/truc-tiep/pham-hoai-nam-vs-ning-xu-fei-1120-20-04-2026/601408393" class="link-match-main"></a>
+                            <div class="box-live-main live">
+                                <div class="box-absolute-football">
+                                    <div class="img-absolute-head">
+                                        <img src="https://cdn-live.taoxanh.biz/live-dev/categories/2025/03/21/60316a7d789150096e2356c3ba13f0b4.jpg" alt="Billiards">
+                                    </div>
+                                </div>
+                                <div class="head-box-live">
+                                    <div class="time-box-live">
+                                        <div class="live-red">
+                                            <div class="box-live-red flicker">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none">
+                                                    <circle cx="4" cy="4" r="4" fill="#FF0000"/>
+                                                </svg>
+                                            </div>
+                                            <span>Live</span>
+                                        </div>
+                                        <div class="line-column-gray"></div>
+                                        <div class="span-time">
+                                            <span>11:20 - 20/04</span>
+                                        </div>
+                                    </div>
+                                    <div class="name-tour">
+                                        <span>Duya Legends Golden Nine International Classic</span>
+                                    </div>
+                                </div>
+                                <div class="info-match-live">
+                                    <div class="club-left">
+                                        <div class="name-club">
+                                            <span>Phạm Hoài Nam</span>
+                                        </div>
+                                        <div class="logo-club">
+                                            <img src="https://cdn-live.taoxanh.biz/live-dev/cms/d2d85b8a3ba71b2595c47d68b6699483.png" alt="Phạm Hoài Nam">
+                                        </div>
+                                    </div>
+                                    <div class="match-live-center">
+                                        <div class="score-live">
+                                            <span>: </span>
+                                        </div>
+                                    </div>
+                                    <div class="club-right">
+                                        <div class="logo-club">
+                                            <img src="https://cdn-live.taoxanh.biz/live-dev/cms/7a688259073e810cd665a26385049933.png" alt="NING XU FEI">
+                                        </div>
+                                        <div class="name-club">
+                                            <span>NING XU FEI</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--    -->
+                            </div>
+                            <div class="button-bet-now">
+                                <div class="box-blv-bet">
+                                    <div class="list-commentator fix-width scroll-inner">
+                                        <div class="box-commentator">
+                                            <div class="img-commentator">
+                                                <img src="https://cdn-live.taoxanh.biz/live-dev/user_avatar/2026/03/04/d4ed940aa4a18426ccd5ce5ad8a96d51.png" alt="BLV Bún Than">
+                                            </div>
+                                            <span class="span-commentator">BLV Bún Than</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a target="blank" data-colors="" class="bet-now" rel="nofollow sponsored" style="background-color: rgb(240, 88, 47)" href="https://man88.im/khuyen-mai/the-loai/thuong-nap/?a=722b10c004e607be3ffbc147372cc9b2&utm_source=bunchatv&utm_medium=nutcuoctoantran&utm_campaign=cpd&utm_term=live&referrer_domain=bunchatv3.com">
+                                    <span>CƯỢC NGAY</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="link-match-full item_streaming stream_m_live stream_m_today ">
+                            <a href="/truc-tiep/persipegaf-vs-ransiki-1310-20-04-2026/601408441" class="link-match-main"></a>
+                            <div class="box-live-main ">
+                                <div class="box-absolute-football">
+                                    <div class="img-absolute-head">
+                                        <img src="https://cdn-live.taoxanh.biz/live-dev/categories/2025/03/21/29209907ed8331043581e143b9897df4.jpg" alt="Bóng đá">
+                                    </div>
+                                </div>
+                                <div class="head-box-live">
+                                    <div class="time-box-live">
+                                        <div class="live-red">
+                                            <div class="box-live-red flicker">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none">
+                                                    <circle cx="4" cy="4" r="4" fill="#FF0000"/>
+                                                </svg>
+                                            </div>
+                                            <span>Live</span>
+                                        </div>
+                                        <div class="line-column-gray"></div>
+                                        <div class="span-time">
+                                            <span>13:10 - 20/04</span>
+                                        </div>
+                                    </div>
+                                    <div class="name-tour">
+                                        <span>Indo D4</span>
+                                    </div>
+                                </div>
+                                <div class="info-match-live">
+                                    <div class="club-left">
+                                        <div class="name-club">
+                                            <span>Persipegaf</span>
+                                        </div>
+                                        <div class="logo-club">
+                                            <img src="https://cdn-live.taoxanh.biz/live-dev/football/team/logo/b66ac3b18571ea59bac670ef4a7cc717.png" alt="Persipegaf">
+                                        </div>
+                                    </div>
+                                    <div class="match-live-center">
+                                        <div class="time-live">
+                                            <span>67</span>
+                                            <span class="flicker">'</span>
+                                        </div>
+                                        <div class="score-live">
+                                            <span>2 : 0</span>
+                                        </div>
+                                    </div>
+                                    <div class="club-right">
+                                        <div class="logo-club">
+                                            <img src="https://cdn-live.taoxanh.biz/live-dev/football/team/logo/9edfd5e195b72dac187feb26507df3b6.png" alt="Ransiki">
+                                        </div>
+                                        <div class="name-club">
+                                            <span>Ransiki</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--    -->
+                            </div>
+                            <div class="button-bet-now">
+                                <div class="box-blv-bet">
+                                    <div class="list-commentator fix-width scroll-inner">
+                                        <div class="box-commentator">
+                                            <div class="img-commentator">
+                                                <img alt="Quốc tế" decoding="async" src="/img/earth.png" data-nimg="1" loading="lazy" style="color: transparent;">
+                                            </div>
+                                            <span class="span-commentator">BLV Quốc tế</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a target="blank" data-colors="" class="bet-now" rel="nofollow sponsored" style="background-color: rgb(240, 88, 47)" href="https://man88.im/khuyen-mai/the-loai/thuong-nap/?a=722b10c004e607be3ffbc147372cc9b2&utm_source=bunchatv&utm_medium=nutcuoctoantran&utm_campaign=cpd&utm_term=live&referrer_domain=bunchatv3.com">
+                                    <span>CƯỢC NGAY</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="link-match-full item_streaming stream_m_live stream_m_today ">
+                            <a href="/truc-tiep/xiamen-chengyi-vs-shenzhen-2028-1400-20-04-2026/601387936" class="link-match-main"></a>
+                            <div class="box-live-main ">
+                                <div class="box-absolute-football">
+                                    <div class="img-absolute-head">
+                                        <img src="https://cdn-live.taoxanh.biz/live-dev/categories/2025/03/21/29209907ed8331043581e143b9897df4.jpg" alt="Bóng đá">
+                                    </div>
+                                </div>
+                                <div class="head-box-live">
+                                    <div class="time-box-live">
+                                        <div class="live-red">
+                                            <div class="box-live-red flicker">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none">
+                                                    <circle cx="4" cy="4" r="4" fill="#FF0000"/>
+                                                </svg>
+                                            </div>
+                                            <span>Live</span>
+                                        </div>
+                                        <div class="line-column-gray"></div>
+                                        <div class="span-time">
+                                            <span>14:00 - 20/04</span>
+                                        </div>
+                                    </div>
+                                    <div class="name-tour">
+                                        <span>Chinese FA Cup</span>
+                                    </div>
+                                </div>
+                                <div class="info-match-live">
+                                    <div class="club-left">
+                                        <div class="name-club">
+                                            <span>Xiamen Chengyi</span>
+                                        </div>
+                                        <div class="logo-club">
+                                            <img src="https://cdn.rapid-api.icu/football/team/cbdc592f8869a8b84ef211918d2360d3.png" alt="Xiamen Chengyi">
+                                        </div>
+                                    </div>
+                                    <div class="match-live-center">
+                                        <div class="time-live">
+                                            <span>43</span>
+                                            <span class="flicker">'</span>
+                                        </div>
+                                        <div class="score-live">
+                                            <span>0 : 0</span>
+                                        </div>
+                                    </div>
+                                    <div class="club-right">
+                                        <div class="logo-club">
+                                            <img src="https://cdn-live.taoxanh.biz/live-dev/football/team/logo/13b0f4609a8b8e57d6516649e7954132.png" alt="Shenzhen 2028">
+                                        </div>
+                                        <div class="name-club">
+                                            <span>Shenzhen 2028</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--    -->
+                            </div>
+                            <div class="button-bet-now">
+                                <div class="box-blv-bet">
+                                    <div class="list-commentator fix-width scroll-inner">
+                                        <div class="box-commentator">
+                                            <div class="img-commentator">
+                                                <img alt="Quốc tế" decoding="async" src="/img/earth.png" data-nimg="1" loading="lazy" style="color: transparent;">
+                                            </div>
+                                            <span class="span-commentator">BLV Quốc tế</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a target="blank" data-colors="" class="bet-now" rel="nofollow sponsored" style="background-color: rgb(240, 88, 47)" href="https://man88.im/khuyen-mai/the-loai/thuong-nap/?a=722b10c004e607be3ffbc147372cc9b2&utm_source=bunchatv&utm_medium=nutcuoctoantran&utm_campaign=cpd&utm_term=live&referrer_domain=bunchatv3.com">
+                                    <span>CƯỢC NGAY</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                 
+                </div>
+            </div>
+          
+```

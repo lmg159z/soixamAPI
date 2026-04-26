@@ -59,7 +59,7 @@ function channels(id, data) {
 //   console.log(data)
     for (const item of data) {
         if (item.id === id) {
-            console.log(item.key)
+            // console.log(item.key)
             return [
                 {
                     "id": item.id,
@@ -76,7 +76,8 @@ function channels(id, data) {
                     "origin": item.origin || "",
                     "keyID": encodeCustom(item.keyID || ""),
                     "key": encodeCustom(item.key || ""),
-                    "license": encodeCustom(item.license || "")
+                    "license": encodeCustom(item.license || ""),
+                    "catchUP": item.review || ""
                 }
             ];            // trả ra object tìm được
         }
