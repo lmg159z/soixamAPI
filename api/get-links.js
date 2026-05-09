@@ -131,7 +131,7 @@ export default async function handler(req, res) {
     if (password !== currentPassword) {
       return res.status(401).json({
         error: "Sai password",
-        currentFormat: currentPassword,
+        currentFormat: "fuck del pass thì cut",
       });
     }
 
@@ -227,11 +227,12 @@ function mergeStreamData(input) {
   const appMap = new Map();
   const channelMap = new Map();
 
-  for (const { name, logo, timeUpdate, data } of input) {
+  for (const { name, logo, timeUpdate, id, data } of input) {
     if (!appMap.has(name)) {
       appMap.set(name, {
         name,
         logo,
+        id,
         timeUpdate,
       });
     }
