@@ -56,23 +56,43 @@ export default async function handler(req, res) {
   const numericId = parseInt(id, 10);
 
   // 4. Gọi external API
-  let externalData;
-  try {
-    const url = `https://andanh.site/myTV/mytv.php?id=${numericId}&debug=1`;
-    const response = await fetch(url);
+ // 4. Gọi external API
+let externalData;
 
-    if (!response.ok) {
-      throw new Error(`External API trả về HTTP ${response.status}`);
-    }
+try {
+  const url = `https://andanh.site/myTV/mytv.php?id=${numericId}&debug=1`;
 
-    externalData = await response.json();
-  } catch (err) {
-    return res.status(502).json({
-      error: "Không thể lấy dữ liệu từ external API",
-      detail: err.message,
-    });
+  const response = await fetch(url, {
+    method: "GET",
+    headers: {
+      "User-Agent":
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36",
+
+      "Accept": "application/json, text/plain, */*",
+      "Accept-Language": "vi-VN,vi;q=0.9,en;q=0.8",
+      "Referer": "https://andanh.site/",
+      "Origin": "https://andanh.site",
+      "Cache-Control": "no-cache",
+      "Pragma": "no-cache",
+    },
+  });
+
+  if (!response.ok) {
+    const text = await response.text();
+
+    throw new Error(
+      `External API trả về HTTP ${response.status} | ${text}`
+    );
   }
 
+  externalData = await response.json();
+
+} catch (err) {
+  return res.status(502).json({
+    error: "Không thể lấy dữ liệu từ external API",
+    detail: err.message,
+  });
+}
   // 5. Trả về json của external API
   return res.status(200).json(externalData);
 }
