@@ -278,6 +278,98 @@ async function FPTPlay(idChannel) {
   return { src: "FPTPLAY", data };
 }
 
+// {
+//     "status": 0,
+//     "message": "Thành công",
+//     "data": {
+//         "items": [
+//             {
+//                 "id": "209e2037-126e-40bc-8680-c8d493c621c6",
+//                 "title": "LIVESTREAM Tin tức 20h 27/5/2026",
+//                 "horizontalImage": "https://vtvgo-assets.vtvdigital.vn/assets/images/v2/metadata/20260527/2026052719/RxJqPIipXU-5HG-9hO3wD3.webp",
+//                 "thumbnailImage": "https://vtvgo-assets.vtvdigital.vn/assets/images/v2/metadata/20260527/2026052719/RxJqPIipXU-5HG-9hO3wD3.webp",
+//                 "backgroundImage": "https://vtvgo-assets.vtvdigital.vn/assets/images/v2/metadata/20260527/2026052719/sj2kDhnW8F-viber_image_2026-05-27_19-19-22-719.webp",
+//                 "backgroundImageMobile": "https://vtvgo-assets.vtvdigital.vn/assets/images/v2/metadata/20260527/2026052719/sj2kDhnW8F-viber_image_2026-05-27_19-19-22-719.webp",
+//                 "backgroundImageBlur": "https://vtvgo-assets.vtvdigital.vn/assets/images/v2/metadata/20260527/2026052719/r48vsdvigH-LiNFd_wG_Ri.webp",
+//                 "showRemainTitle": 1,
+//                 "target": {
+//                     "target": 2,
+//                     "vodId": "wa21E5Zbr4",
+//                     "vodType": "single-video"
+//                 },
+//                 "programStartTime": 1779886800000
+//             },
+//             {
+//                 "id": "79f2ae05-fc32-4d68-9ea3-4b3511aa2e6f",
+//                 "title": "Bản tin Thời sự Y tế 27/5/2026",
+//                 "horizontalImage": "https://vtvgo-assets.vtvdigital.vn/assets/images/v2/metadata/20260527/2026052718/7bOaRu4ABL-3vr8tkGJPrO.webp",
+//                 "thumbnailImage": "https://vtvgo-assets.vtvdigital.vn/assets/images/v2/metadata/20260527/2026052718/7bOaRu4ABL-3vr8tkGJPrO.webp",
+//                 "backgroundImage": "https://vtvgo-assets.vtvdigital.vn/assets/images/v2/metadata/20260527/2026052718/4kRjnhfCFc-tsyt0527.webp",
+//                 "backgroundImageMobile": "https://vtvgo-assets.vtvdigital.vn/assets/images/v2/metadata/20260527/2026052718/4kRjnhfCFc-tsyt0527.webp",
+//                 "backgroundImageBlur": "https://vtvgo-assets.vtvdigital.vn/assets/images/v2/metadata/20260527/2026052718/mY0Qbvd9FZ-BjS8y6Hgckb.webp",
+//                 "showRemainTitle": 1,
+//                 "target": {
+//                     "target": 2,
+//                     "vodType": "single-video",
+//                     "vodId": "q0srh3S66t"
+//                 },
+//                 "programStartTime": 1779888600000
+//             },
+//             {
+//                 "id": "f34bc961-a18a-46ed-906e-a604f237d0cd",
+//                 "title": "Livestream - Gì thế nhỉ? | 27/5/2026",
+//                 "horizontalImage": "https://vtvgo-assets.vtvdigital.vn/assets/images/v2/metadata/20260527/2026052718/LvHVkrO7PE-iGLTvj9J239.webp",
+//                 "thumbnailImage": "https://vtvgo-assets.vtvdigital.vn/assets/images/v2/metadata/20260527/2026052718/LvHVkrO7PE-iGLTvj9J239.webp",
+//                 "backgroundImage": "https://vtvgo-assets.vtvdigital.vn/assets/images/v2/metadata/20260527/2026052718/LMlk00SdZK-05272026.webp",
+//                 "backgroundImageMobile": "https://vtvgo-assets.vtvdigital.vn/assets/images/v2/metadata/20260527/2026052718/LMlk00SdZK-05272026.webp",
+//                 "backgroundImageBlur": "https://vtvgo-assets.vtvdigital.vn/assets/images/v2/metadata/20260527/2026052718/8fEzTwl1fX-S1IPpwauz5H.webp",
+//                 "showRemainTitle": 1,
+//                 "target": {
+//                     "target": 2,
+//                     "vodId": "rdT92CeiUA",
+//                     "vodType": "single-video"
+//                 },
+//                 "programStartTime": 1779886800000
+//             },
+//             {
+//                 "id": "8c5810ff-e21a-40ab-b3ad-0ee73cbe57c8",
+//                 "title": "️🔴Trực tiếp | Roland Garros",
+//                 "horizontalImage": "https://vtvgo-assets.vtvdigital.vn/assets/images/v2/metadata/20260527/2026052718/G0Q2ym7ZsG-cgFRhrenERS.webp",
+//                 "thumbnailImage": "https://vtvgo-assets.vtvdigital.vn/assets/images/v2/metadata/20260527/2026052718/G0Q2ym7ZsG-cgFRhrenERS.webp",
+//                 "backgroundImage": "https://vtvgo-assets.vtvdigital.vn/assets/images/v2/spotlight/20260527/2026052718/w81YbQB5xD-z7870252692013_029062b3581c7f9dcea4c3ee0343340d.webp",
+//                 "backgroundImageMobile": "https://vtvgo-assets.vtvdigital.vn/assets/images/v2/spotlight/20260527/2026052718/w81YbQB5xD-z7870252692013_029062b3581c7f9dcea4c3ee0343340d.webp",
+//                 "backgroundImageBlur": "https://vtvgo-assets.vtvdigital.vn/assets/images/v2/metadata/20260527/2026052718/LEegFfeTgd-6YWZw7xg8Bc.webp",
+//                 "showRemainTitle": 1,
+//                 "target": {
+//                     "target": 19,
+//                     "displayBlockId": "2f9a42bb-9bf8-4d26-adf7-04de632393df"
+//                 },
+//                 "programStartTime": 1779872400000
+//             }
+//         ],
+//         "hasMore": 0
+//     },
+//     "serverTime": 1779885961710
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // ─────────────────────────────────────────────
 // Main orchestrator
 // ─────────────────────────────────────────────
