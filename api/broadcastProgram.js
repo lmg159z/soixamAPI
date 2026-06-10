@@ -356,15 +356,11 @@ async function FPTPlay(idChannel) {
 
 
 
-
-
-
-
-
-
-
-
-
+async function vtvGo() {
+  const API = await getAPI("https://andanh.site/VTVGo/v2/event.php")
+  console.log("VTVGo API:", API);
+  return { src: "VTVGo", data: API };
+}
 
 
 
@@ -382,11 +378,12 @@ async function data() {
   ]);
 
   // ✅ Sau khi có idChannel, gọi tất cả 4 nguồn song song
-  const [resTv360, resOnplus, resMytv, resFPTPlay] = await Promise.allSettled([
+  const [resTv360, resOnplus, resMytv, resFPTPlay, resVTVGo ] = await Promise.allSettled([
     tv360(idChannel.tv360),
     onplus(idChannel.onplus),
     mytv(idChannel.mytv),
     FPTPlay(idChannel.fptplay),
+    vtvGo()
   ]);
 
   const safe = (res) => (res.status === "fulfilled" && res.value?.data) ? res.value.data : [];
@@ -397,10 +394,11 @@ async function data() {
     ...safe(resFPTPlay),
     ...safe(resMytv),
     ...safe(resTv360),
+    ...safe(resVTVGo),
   ];
 
   return {
-    src: [safeSrc(resTv360), safeSrc(resOnplus), safeSrc(resMytv), safeSrc(resFPTPlay)],
+    src: [safeSrc(resTv360), safeSrc(resOnplus), safeSrc(resMytv), safeSrc(resFPTPlay), safeSrc(resVTVGo)],
     broadCast: filterDuplicatePrograms(sortByStartTime(combined)),
     liveThumB: sheetResult?.data ?? [],
   };
