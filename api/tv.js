@@ -44,13 +44,13 @@
 
 //   const text = await response.text();
 //   const jsonText = text.match(/google\.visualization\.Query\.setResponse\((.*)\);/s)?.[1];
-  
+
 //   if (!jsonText) return [];
 
 //   const raw = JSON.parse(jsonText);
-  
+
 //   // --- LOGIC FIX HEADER BẮT ĐẦU TỪ ĐÂY ---
-  
+
 //   // 1. Lấy danh sách cột từ metadata
 //   let cols = raw.table.cols.map(col => col.label ? col.label.trim() : "");
 //   let rows = raw.table.rows;
@@ -63,7 +63,7 @@
 //     // Lấy dòng đầu tiên làm header
 //     const firstRowCells = rows[0].c;
 //     cols = firstRowCells.map(cell => cell?.v ? String(cell.v).trim() : "unknown");
-    
+
 //     // Bỏ dòng đầu tiên đi vì nó là header, không phải data
 //     rows = rows.slice(1);
 //   }
@@ -209,7 +209,7 @@
 // //     return textEPG +textIPTV
 
 
- 
+
 // //     // return rawChannels
 // // }
 
@@ -474,70 +474,166 @@ function buildChannelEntry({ tvgId, group, logo, title, drm, keyID, key, url }) 
 
 // ─── Main ────────────────────────────────────────────────────────────────────
 
+
 async function iptv() {
-  // ✅ Fetch sheet + broadCast API song song
+
+  function buildChannelEntry({
+    tvgId,
+    group,
+    logo,
+    title,
+    url,
+    keyID,
+    key,
+    license
+  }) {
+
+    const header = `#EXTINF:-1 tvg-id="${tvgId}" group-title="${group}" tvg-logo="${logo || ""}",${title}
+#EXTVLCOPT:http-user-agent=Dalvik/2.1.0`;
+
+    // Widevine
+    if (license) {
+      return `${header}
+#KODIPROP:inputstream.adaptive.manifest_type=mpd
+#KODIPROP:inputstream.adaptive.license_type=com.widevine.alpha
+#KODIPROP:inputstream.adaptive.license_key=${license}
+${url}
+`;
+    }
+
+    // ClearKey
+    if (keyID && key) {
+      return `${header}
+#KODIPROP:inputstream.adaptive.manifest_type=mpd
+#KODIPROP:inputstream.adaptive.license_type=clearkey
+#KODIPROP:inputstream.adaptive.license_key=${keyID}:${key}
+${url}
+`;
+    }
+
+    // Stream thường
+    return `${header}
+${url}
+`;
+  }
+
+  // Load dữ liệu song song
   const [rawChannels, broadCastData] = await Promise.all([
-    getDataFromSheetAsKeyValue("2102567147", "1hSEcXxxEkbgq8203f_sTKAi3ZNEnFNoBnr7f3fsfzYE"),
-    getAPI("https://soixamapi.vercel.app/api/broadcastProgram"),
+    getDataFromSheetAsKeyValue(
+      "2102567147",
+      "1hSEcXxxEkbgq8203f_sTKAi3ZNEnFNoBnr7f3fsfzYE"
+    ),
+    getAPI("https://soixamapi.vercel.app/api/broadcastProgram")
   ]);
 
-  if (!rawChannels) return "Lỗi rồi hãy báo cáo với quản trị viên";
+  if (!rawChannels) {
+    return "Lỗi rồi hãy báo cáo với quản trị viên";
+  }
 
-  // ── 1. Channels từ Sheet ─────────────────────────────────────────────────
+  // ==========================
+  // CHANNELS TỪ SHEET
+  // ==========================
   const textIPTV = rawChannels
-    .filter(k => k.status === "live" || k.status === "liveFEED")
+    .filter(
+      k =>
+        k.status === "live" ||
+        k.status === "liveFEED"
+    )
     .map(k =>
       buildChannelEntry({
         tvgId: k.id,
         group: k.nameGroup,
         logo: k.logo || k.thumb,
         title: `${k.acronym} | ${k.name || ""}`,
-        drm: k.drm === "action",
+        url: k.urlStream,
         keyID: k.keyID,
         key: k.key,
-        url: k.urlStream,
+        license: k.license
       })
     )
     .join("\n");
 
-  // ── 2. BroadCast channels ────────────────────────────────────────────────
-  const activeItems = broadCastData?.broadCast?.filter(i => i.status === 1) ?? [];
+  // ==========================
+  // BROADCAST
+  // ==========================
+  const activeItems =
+    broadCastData?.broadCast?.filter(
+      item => item.status === 1
+    ) || [];
 
-  // ✅ Gom tất cả channel_id unique → gọi song song 1 lần
-  const uniqueIds = [...new Set(activeItems.map(i => i.channel_id || "vtv1hd"))];
+  const uniqueIds = [
+    ...new Set(
+      activeItems.map(
+        item => item.channel_id || "vtv1hd"
+      )
+    )
+  ];
 
   const channelMap = Object.fromEntries(
     await Promise.all(
       uniqueIds.map(async id => {
-        const data = await getAPI(`https://soixamapi.vercel.app/api/channel?id=${id}`);
-        return [id, data?.[0] ?? null];
+        try {
+          const data = await getAPI(
+            `https://soixamapi.vercel.app/api/channel?id=${id}`
+          );
+
+          return [
+            id,
+            data?.[0] || null
+          ];
+        } catch {
+          return [id, null];
+        }
       })
     )
   );
 
   const textBroadCast = activeItems
-    .map(k => {
-      const ch = channelMap[k.channel_id || "vtv1hd"];
+    .map(item => {
+
+      const ch =
+        channelMap[
+        item.channel_id || "vtv1hd"
+        ];
+
       if (!ch) return "";
+
       return buildChannelEntry({
-        tvgId: `broadCast_${k.channel_id}`,
+        tvgId: `broadcast_${item.channel_id}`,
         group: "Chương trình tiêu biểu",
-        logo: k.thumbnail,
-        title: `${k.name} | ${k.channel_name || ""}`,
-        drm: !!ch.drm,
-        keyID: decodeCustom(ch.keyID),
-        key: decodeCustom(ch.key),
+        logo: item.thumbnail,
+        title: `${item.name} | ${item.channel_name || ""}`,
         url: decodeCustom(ch.urlStream),
+        keyID: ch.keyID
+          ? decodeCustom(ch.keyID)
+          : null,
+        key: ch.key
+          ? decodeCustom(ch.key)
+          : null,
+        license: ch.license
+          ? decodeCustom(ch.license)
+          : null
       });
+
     })
     .join("\n");
 
-  // ── 3. Ghép kết quả ─────────────────────────────────────────────────────
+  // ==========================
+  // HEADER
+  // ==========================
   const textEPG = `#EXTM3U url-tvg="https://vnepg.site/epgu.xml,https://tvbvn.quanlehong539.workers.dev/xml"
 # SoiXamTV IPTV Playlist
 #========================================================================================`;
 
-  return [textEPG, textBroadCast, textIPTV].join("\n");
+  return [
+    textEPG,
+    textBroadCast,
+    textIPTV
+  ].join("\n");
 }
 
+
 // ─── ON Live (static) ────────────────────────────────────────────────────────
+
+
+

@@ -98,34 +98,53 @@ function mapIdToLogo(data) {
   return channelMap;
 }
 
+
 async function iptv(GID) {
   const rawChannels = await getDataFromSheetAsKeyValue(
     GID,
     "1s55kJ_HEob8U3AJvZfCw_fqOm1UU8iGpPzXyRIryoDc"
   );
-console.log(rawChannels)
+
   if (!rawChannels) {
-    return `Lỗi rồi hãy báo cáo với quản trị viên`;
+    return "Lỗi rồi hãy báo cáo với quản trị viên";
   }
 
-  const APIlogo = await getAPI("https://soixamapi.vercel.app/api/logo")
-  const logo = mapIdToLogo(APIlogo)
+  const APIlogo = await getAPI(
+    "https://soixamapi.vercel.app/api/logo"
+  );
+
+  const logo = mapIdToLogo(APIlogo);
+
   const textIPTV = rawChannels
-    .map(k => {
-      if (k.drm === "action") {
-        return `#EXTINF:-1 tvg-id="${k.id}" group-title="${k.APP}" tvg-logo="${logo[k.id]}" ,${k.acronym} | ${k.name || ""}
-#EXTVLCOPT:http-user-agent=Dalvik/2.1.0
+    .map((k) => {
+
+      const commonHeader = `#EXTINF:-1 tvg-id="${k.id}" group-title="${k.APP}" tvg-logo="${logo[k.id] || ""}",${k.acronym} | ${k.name || ""}
+#EXTVLCOPT:http-user-agent=Dalvik/2.1.0`;
+
+      // Widevine
+      if (k.license) {
+        return `${commonHeader}
+#KODIPROP:inputstream.adaptive.manifest_type=mpd
+#KODIPROP:inputstream.adaptive.license_type=com.widevine.alpha
+#KODIPROP:inputstream.adaptive.license_key=${k.license}
+${k.urlStream}
+`;
+      }
+
+      // ClearKey
+      if (k.keyID && k.key) {
+        return `${commonHeader}
 #KODIPROP:inputstream.adaptive.manifest_type=mpd
 #KODIPROP:inputstream.adaptive.license_type=clearkey
 #KODIPROP:inputstream.adaptive.license_key=${k.keyID}:${k.key}
 ${k.urlStream}
 `;
-      } else {
-        return `#EXTINF:-1 tvg-id="${k.id}" group-title="${k.APP}" tvg-logo="${logo[k.id]}",${k.acronym} | ${k.name || ""}
-#EXTVLCOPT:http-user-agent=Dalvik/2.1.0
+      }
+
+      // Không DRM
+      return `${commonHeader}
 ${k.urlStream}
 `;
-      }
     })
     .join("\n");
 
@@ -133,9 +152,10 @@ ${k.urlStream}
 # SoiXamTV IPTV Playlist
 #========================================================================================`;
 
-  return  textEPG + "\n"  + textIPTV 
-}
+  return `${textEPG}
 
+${textIPTV}`;
+}
 
 
 
