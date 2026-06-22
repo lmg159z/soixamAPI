@@ -169,7 +169,7 @@ async function onplus(idChannel) {
   const dataAPI = await getAPI(
     "https://re.ghiminh1.workers.dev/?url=https://tv-web.api.vinasports.com.vn/api/v2/publish/see-more/events/2"
   );
-
+  
   const data = Array.isArray(dataAPI?.data)
     ? dataAPI.data
         .filter(i => !!idChannel[i.channel_id]?.id)
@@ -187,7 +187,28 @@ async function onplus(idChannel) {
 
   return { src: "ONPlus", data };
 }
+async function WC_onplus(idChannel) {
+  const dataAPI = await getAPI(
+    "https://re.ghiminh1.workers.dev/?url=https://tv-web.api.vinasports.com.vn/api/v2/publish/see-more/events/343"
+  );
+  
+  const data = Array.isArray(dataAPI?.data)
+    ? dataAPI.data
+        .filter(i => !!idChannel[i.channel_id]?.id)
+        .map(i => ({
+          id: `onplus-${i.id}`,
+          name: i.name,
+          start_time: formatDateGMT7(i.start_time),
+          over_time: formatDateGMT7(i.over_time),
+          thumbnail: i.thumbnail,
+          channel_id: idChannel[i.channel_id]?.id ?? i.channel_id,
+          channel_name: idChannel[i.channel_id]?.name ?? i.channel_id,
+          status: i.status === "live" ? 1 : i.status === "not_started" ? 0 : null,
+        }))
+    : [];
 
+  return { src: "ONPlus", data };
+}
 async function tv360(idChannel) {
   const [CTTH, TT] = await Promise.all([
     getAPI("https://re.ghiminh1.workers.dev/?url=https%3A%2F%2Ftv360.vn%2Fpublic%2Fv1%2Fwatch-log%2Fget-recommend%3Fid%3Drcm_program_playing%26page%3Dhome%26itemType%3DLIVE_NOW%26boxType%3DRECOMMEND%26offset%3D0%26limit%3D2000"),
@@ -378,9 +399,10 @@ async function data() {
   ]);
 
   // ✅ Sau khi có idChannel, gọi tất cả 4 nguồn song song
-  const [resTv360, resOnplus, resMytv, resFPTPlay, resVTVGo ] = await Promise.allSettled([
+  const [resTv360, resOnplus, resWC_Onplus, resMytv, resFPTPlay, resVTVGo ] = await Promise.allSettled([
     tv360(idChannel.tv360),
     onplus(idChannel.onplus),
+    WC_onplus(idChannel.onplus),
     mytv(idChannel.mytv),
     FPTPlay(idChannel.fptplay),
     vtvGo()
@@ -391,6 +413,7 @@ async function data() {
 
   const combined = [
     ...safe(resOnplus),
+    ...safe(resWC_Onplus),
     ...safe(resFPTPlay),
     ...safe(resMytv),
     ...safe(resTv360),
@@ -398,7 +421,7 @@ async function data() {
   ];
 
   return {
-    src: [safeSrc(resTv360), safeSrc(resOnplus), safeSrc(resMytv), safeSrc(resFPTPlay), safeSrc(resVTVGo)],
+    src: [safeSrc(resTv360), safeSrc(resOnplus), safeSrc(resWC_Onplus), safeSrc(resMytv), safeSrc(resFPTPlay), safeSrc(resVTVGo)],
     broadCast: filterDuplicatePrograms(sortByStartTime(combined)),
     liveThumB: sheetResult?.data ?? [],
   };
