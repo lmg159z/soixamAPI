@@ -312,6 +312,7 @@ async function FPTPlay(idChannel) {
 
 // ─────────────────────────────────────────────
 // Main orchestrator
+
 // ─────────────────────────────────────────────
 
 async function data() {
@@ -344,7 +345,7 @@ async function data() {
   ];
 
   return {
-    src: [safeSrc(resTv360), safeSrc(resOnplus), safeSrc(resWC_Onplus), safeSrc(resMytv), safeSrc(resFPTPlay), safeSrc(resVTVGo)],
+    src: [safeSrc(resTv360), safeSrc(resOnplus), safeSrc(resWC_Onplus), safeSrc(resMytv), safeSrc(resFPTPlay)],
     broadCast: filterDuplicatePrograms(sortByStartTime(combined)),
     liveThumB: sheetResult?.data ?? [],
   };
