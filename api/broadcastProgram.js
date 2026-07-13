@@ -300,11 +300,11 @@ async function FPTPlay(idChannel) {
 }
 
 
-// async function vtvGo() {
-//   const API = await getAPI("https://andanh.site/VTVGo/v2/event.php")
-//   console.log("VTVGo API:", API);
-//   return { src: "VTVGo", data: API };
-// }
+async function vtvGo() {
+  const API = await getAPI("https://andanh.site/VTVGo/v2/event.php")
+  console.log("VTVGo API:", API);
+  return { src: "VTVGo", data: API };
+}
 
 
 
@@ -328,8 +328,8 @@ async function data() {
     onplus(idChannel.onplus),
     WC_onplus(idChannel.onplus),
     mytv(idChannel.mytv),
-    FPTPlay(idChannel.fptplay)
-    // vtvGo()
+    FPTPlay(idChannel.fptplay),
+    vtvGo()
   ]);
 
   const safe = (res) => (res.status === "fulfilled" && res.value?.data) ? res.value.data : [];
@@ -340,12 +340,12 @@ async function data() {
     ...safe(resWC_Onplus),
     ...safe(resFPTPlay),
     ...safe(resMytv),
-    ...safe(resTv360)
-    // ...safe(resVTVGo),
+    ...safe(resTv360),
+    ...safe(resVTVGo),
   ];
 
   return {
-    src: [safeSrc(resTv360), safeSrc(resOnplus), safeSrc(resWC_Onplus), safeSrc(resMytv), safeSrc(resFPTPlay)],
+    src: [safeSrc(resTv360), safeSrc(resOnplus), safeSrc(resWC_Onplus), safeSrc(resMytv), safeSrc(resFPTPlay), safeSrc(resVTVGo)],
     broadCast: filterDuplicatePrograms(sortByStartTime(combined)),
     liveThumB: sheetResult?.data ?? [],
   };
