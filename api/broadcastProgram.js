@@ -303,7 +303,7 @@ async function FPTPlay(idChannel) {
 async function vtvGo() {
   const API = await getAPI("https://andanh.site/VTVGo/v2/event.php")
   console.log("VTVGo API:", API);
-  return { src: "VTVGo", data: API };
+  return { src: "VTVGo", data: [] };
 }
 
 
