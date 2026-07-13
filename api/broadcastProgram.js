@@ -302,8 +302,8 @@ async function FPTPlay(idChannel) {
 
 async function vtvGo() {
   const API = await getAPI("https://andanh.site/VTVGo/v2/event.php")
-  console.log("VTVGo API:", API);
-  return { src: "VTVGo", data: [] };
+  // console.log("VTVGo API:", API);
+  return { src: "VTVGo", data: API };
 }
 
 
@@ -323,7 +323,7 @@ async function data() {
   ]);
 
   // ✅ Sau khi có idChannel, gọi tất cả 4 nguồn song song
-  const [resTv360, resOnplus, resWC_Onplus, resMytv, resFPTPlay] = await Promise.allSettled([
+  const [resTv360, resOnplus, resWC_Onplus, resMytv, resFPTPlay, resVTVGo] = await Promise.allSettled([
     tv360(idChannel.tv360),
     onplus(idChannel.onplus),
     WC_onplus(idChannel.onplus),
