@@ -277,7 +277,7 @@ async function mytv(idChannel, page = 1, num = 20) {
 
 async function FPTPlay(idChannel) {
   const API = await getAPI(
-    "https://re.ghiminh1.workers.dev/?url=https://andanh.site/proxyipvn.php?url=https://api.fptplay.net/api/v7.1_ios/playos/block/highlight/632f01322089bd00e5c5ed3d"
+    "https://andanh.site/proxyipvn.php?url=https://api.fptplay.net/api/v7.1_ios/playos/block/highlight/632f01322089bd00e5c5ed3d"
   );
 
   const data = (API?.data ?? []).map(i => {
@@ -300,11 +300,11 @@ async function FPTPlay(idChannel) {
 }
 
 
-async function vtvGo() {
-  const API = await getAPI("https://andanh.site/VTVGo/v2/event.php")
-  // console.log("VTVGo API:", API);
-  return { src: "VTVGo", data: API };
-}
+// async function vtvGo() {
+//   const API = await getAPI("https://andanh.site/VTVGo/v2/event.php")
+//   // console.log("VTVGo API:", API);
+//   return { src: "VTVGo", data: API };
+// }
 
 
 
@@ -323,29 +323,29 @@ async function data() {
   ]);
 
   // ✅ Sau khi có idChannel, gọi tất cả 4 nguồn song song
-  const [resTv360, resOnplus, resWC_Onplus, resMytv, resFPTPlay, resVTVGo] = await Promise.allSettled([
+  const [resTv360, resOnplus, resWC_Onplus, resMytv, resFPTPlay] = await Promise.allSettled([
+    // vtvGo(),
     tv360(idChannel.tv360),
     onplus(idChannel.onplus),
     WC_onplus(idChannel.onplus),
     mytv(idChannel.mytv),
-    FPTPlay(idChannel.fptplay),
-    vtvGo()
+    FPTPlay(idChannel.fptplay)
   ]);
 
   const safe = (res) => (res.status === "fulfilled" && res.value?.data) ? res.value.data : [];
   const safeSrc = (res) => res.status === "fulfilled" ? res.value?.src : null;
 
   const combined = [
+    // ...safe(resVTVGo),
     ...safe(resOnplus),
     ...safe(resWC_Onplus),
     ...safe(resFPTPlay),
     ...safe(resMytv),
     ...safe(resTv360),
-    ...safe(resVTVGo),
   ];
 
   return {
-    src: [safeSrc(resTv360), safeSrc(resOnplus), safeSrc(resWC_Onplus), safeSrc(resMytv), safeSrc(resFPTPlay), safeSrc(resVTVGo)],
+    src: [safeSrc(resTv360), safeSrc(resOnplus), safeSrc(resWC_Onplus), safeSrc(resMytv), safeSrc(resFPTPlay)],
     broadCast: filterDuplicatePrograms(sortByStartTime(combined)),
     liveThumB: sheetResult?.data ?? [],
   };
