@@ -69,6 +69,7 @@ function channels(id, data) {
                     "idGroup": item.idGroup || "",
                     "logo": item.logo || "",
                     "watermark": item.watermark || "",
+                    "type": item.type || "auto",
                     "status": item.status,
                     "schedule": item.schedule,
                     "drm": item.drm === "action" ? true : false,
@@ -76,8 +77,7 @@ function channels(id, data) {
                     "origin": item.origin || "",
                     "keyID": encodeCustom(item.keyID || ""),
                     "key": encodeCustom(item.key || ""),
-                    "license": encodeCustom(item.license || ""),
-                    "catchUP": item.review || ""
+                    "license": encodeCustom(item.license || "")
                 }
             ];            // trả ra object tìm được
         }
